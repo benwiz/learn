@@ -41,6 +41,7 @@ func (cli *CLI) Run() {
 			addBlockCmd.Usage()
 			os.Exit(1)
 		}
+		cli.addBlock(*addBlockData)
 	}
 	if printChainCmd.Parsed() {
 		cli.printChain()

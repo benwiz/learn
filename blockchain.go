@@ -32,7 +32,6 @@ func (blockchain *Blockchain) Iterator() *BlockchainIterator {
 
 // AddBlock appends a new block to the blockchain.
 func (blockchain *Blockchain) AddBlock(data string) {
-
 	// Look up last hash
 	var lastHash []byte
 	err := blockchain.db.View(func(tx *bolt.Tx) error {

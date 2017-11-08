@@ -14,7 +14,7 @@ var (
 
 // Difficulty. 24 is an arbitrary number, our goal is to have a target that takes less than 256 bits in memory.
 // We check the resulting hash against the target. If it is smaller, we are good. If bigger, proof-of-work is not enough.
-const targetBits = 1 // 24
+const targetBits = 16 // 24
 
 // ProofOfWork represents a proof-of-work
 type ProofOfWork struct {
