@@ -13,11 +13,49 @@ type Blockchain struct {
 	db  *bolt.DB
 }
 
-// AddBlock appends a new block to the blockchain
-func (bc *Blockchain) AddBlock(data string) {
-	prevBlock := bc.blocks[len(bc.blocks)-1]
-	newBlock := NewBlock(data, prevBlock.Hash)
-	bc.blocks = append(bc.blocks, newBlock)
+// BlockchainIterator holds a sequence of blocks. The BlockchainIterator
+// is short lived. It will be created each time we want to iterate over
+// blocks in a blockchain.
+type BlockchainIterator struct {
+	currentHash []byte
+	db          *bolt.DB
+}
+
+// Iterator initializes an iterator that will iterate over the blockchain
+// from newest to oldest.
+func (blockchain *Blockchain) Iterator() *BlockchainIterator {
+	blockchainIterator := &BlockchainIterator{blockchain.tip, blockchain.db}
+	return blockchainIterator
+}
+
+// AddBlock appends a new block to the blockchain.
+func (blockchain *Blockchain) AddBlock(data string) {
+
+	// Look up last hash
+	var lastHash []byte
+	err := blockchain.db.View(func(tx *bolt.Tx) error {
+		bucket := tx.Bucket([]byte(blocksBucket))
+		lastHash = bucket.Get([]byte("l"))
+		return nil
+	})
+
+	// Use the last hash to mine a new block
+	newBlock := NewBlock(data, lastHash)
+
+	// Update the database with last hash and tip
+	err = blockchain.db.Update(func(tx *bolt.Tx) error {
+		// Connect to the bucket in the database
+		bucket := tx.Bucket([]byte(blocksBucket))
+		err = bucket.Put(newBlock.Hash, newBlock.Serialize())
+
+		// Update the last hash
+		err = bucket.Put([]byte("l"), newBlock.Hash)
+
+		// Update the newest hash (the tip)
+		blockchain.tip = newBlock.Hash
+
+		return nil
+	})
 }
 
 // NewBlockchain creates a new blockchain with a genesis block
@@ -45,4 +83,21 @@ func NewBlockchain() *Blockchain {
 	blockchain := Blockchain{tip, db}
 
 	return &blockchain
+}
+
+// Next return the next block in the blockchain
+func (iterator *BlockchainIterator) Next() *Block {
+	var block *Block
+
+	err := iterator.db.View(func(tx *bolt.Tx) error {
+		bucket := tx.Bucket([]byte(blocksBucket))
+		encodedBock := bucket.Get(iterator.currentHash)
+		block = DeserializeBlock(encodedBock)
+
+		return nil
+	})
+
+	iterator.currentHash = block.PrevBlockHash
+
+	return block
 }

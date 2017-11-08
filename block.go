@@ -58,8 +58,8 @@ func (block *Block) Serialize() []byte {
 	return result.Bytes()
 }
 
-// Deserialize the byte array into a struct
-func Deserialize(data []byte) *Block {
+// DeserializeBlock the byte array into a struct
+func DeserializeBlock(data []byte) *Block {
 	var block Block
 
 	decoder := gob.NewDecoder(bytes.NewReader(data))
