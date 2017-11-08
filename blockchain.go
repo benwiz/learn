@@ -1,7 +1,9 @@
 package main
 
 import (
+	"fmt"
 	"github.com/boltdb/bolt"
+	"log"
 )
 
 const dbFile = "blockchain.db"
@@ -64,14 +66,31 @@ func NewBlockchain() *Blockchain {
 
 	// Open the BoltDB file
 	db, err := bolt.Open(dbFile, 0600, nil)
+	if err != nil {
+		log.Panic(err)
+	}
+
 	err = db.Update(func(tx *bolt.Tx) error {
 		bucket := tx.Bucket([]byte(blocksBucket))
 
 		if bucket == nil {
+			fmt.Println("No existing blockchain found. Creating a new one...")
 			genesis := NewGenesisBlock()
 			bucket, err := tx.CreateBucket([]byte(blocksBucket))
+			if err != nil {
+				log.Panic(err)
+			}
+
 			err = bucket.Put(genesis.Hash, genesis.Serialize())
+			if err != nil {
+				log.Panic(err)
+			}
+
 			err = bucket.Put([]byte("l"), genesis.Hash)
+			if err != nil {
+				log.Panic(err)
+			}
+
 			tip = genesis.Hash
 		} else {
 			tip = bucket.Get([]byte("l"))
@@ -96,6 +115,9 @@ func (iterator *BlockchainIterator) Next() *Block {
 
 		return nil
 	})
+	if err != nil {
+		log.Panic(err)
+	}
 
 	iterator.currentHash = block.PrevBlockHash
 

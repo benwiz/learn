@@ -1,5 +1,8 @@
 #!/bin/bash
 
+echo Installing dependencies
+go install
+
 echo Building project...
 go build
 
