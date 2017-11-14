@@ -8,6 +8,7 @@ import (
 
 const dbFile = "blockchain.db"
 const blocksBucket = "blocks"
+const genesisCoinbaseData = "I mined this!"
 
 // Blockchain holds a sequence of blocks
 type Blockchain struct {
@@ -41,7 +42,7 @@ func (blockchain *Blockchain) AddBlock(data string) {
 	})
 
 	// Use the last hash to mine a new block
-	newBlock := NewBlock(data, lastHash)
+	newBlock := NewBlock(address, lastHash)
 
 	// Update the database with last hash and tip
 	err = blockchain.db.Update(func(tx *bolt.Tx) error {
@@ -60,7 +61,7 @@ func (blockchain *Blockchain) AddBlock(data string) {
 }
 
 // NewBlockchain creates a new blockchain with a genesis block
-func NewBlockchain() *Blockchain {
+func NewBlockchain(address string) *Blockchain {
 	var tip []byte
 
 	// Open the BoltDB file
@@ -74,7 +75,8 @@ func NewBlockchain() *Blockchain {
 
 		if bucket == nil {
 			fmt.Println("No existing blockchain found. Creating a new one...")
-			genesis := NewGenesisBlock()
+			coinbaseTX := NewCoinbaseTX(address, genesisCoinbaseData)
+			genesis := NewGenesisBlock(coinbaseTX)
 			bucket, err := tx.CreateBucket([]byte(blocksBucket))
 			if err != nil {
 				log.Panic(err)

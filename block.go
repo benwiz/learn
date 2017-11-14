@@ -12,7 +12,7 @@ import (
 // Block stores block headers
 type Block struct {
 	Timestamp     int64
-	Data          []byte
+	Transactions  []*Transaction
 	PrevBlockHash []byte
 	Hash          []byte
 	Nonce         int
@@ -28,8 +28,14 @@ func (block *Block) SetHash() {
 }
 
 // NewBlock creates a new block
-func NewBlock(data string, prevBlockHash []byte) *Block {
-	block := &Block{time.Now().Unix(), []byte(data), prevBlockHash, []byte{}, 0}
+func NewBlock(transactions []*Transaction, prevBlockHash []byte) *Block {
+	block := &Block{
+		Timestamp:     time.Now().Unix(),
+		Transactions:  transactions,
+		PrevBlockHash: prevBlockHash,
+		Hash:          []byte{},
+		Nonce:         0,
+	}
 
 	proofOfWork := NewProofOfWork(block)
 	nonce, hash := proofOfWork.Run()
@@ -41,8 +47,8 @@ func NewBlock(data string, prevBlockHash []byte) *Block {
 }
 
 // NewGenesisBlock creates a new genesis (starting) block which has an emmpty prevBlockHash
-func NewGenesisBlock() *Block {
-	return NewBlock("Genesis Block", []byte{})
+func NewGenesisBlock(coinbase *Transaction) *Block {
+	return NewBlock([]*Transaction{coinbase}, []byte{})
 }
 
 // Serialize the struct into a byte array

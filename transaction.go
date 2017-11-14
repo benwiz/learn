@@ -57,7 +57,7 @@ func (tx Transaction) SetID() {
 }
 
 // NewCoinbaseTX creates a transaction that has no inputs
-func NewCoinbaseTX(to, data string) *Transaction {
+func NewCoinbaseTX(to string, data string) *Transaction {
 	if data == "" {
 		data = fmt.Sprintf("Reward to '%s'", to)
 	}
