@@ -27,6 +27,19 @@ func (block *Block) SetHash() {
 	block.Hash = hash[:]
 }
 
+// HashTransactions returns a hash of the transactions in the block
+func (block *Block) HashTransactions() []byte {
+	var txHashes [][]byte
+	var txHash [32]byte
+
+	for _, tx := range block.Transactions {
+		txHashes = append(txHashes, tx.ID)
+	}
+	txHash = sha256.Sum256(bytes.Join(txHashes, []byte{}))
+
+	return txHash[:]
+}
+
 // NewBlock creates a new block
 func NewBlock(transactions []*Transaction, prevBlockHash []byte) *Block {
 	block := &Block{

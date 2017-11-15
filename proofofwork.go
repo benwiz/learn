@@ -38,7 +38,7 @@ func (proofOfWork *ProofOfWork) prepareData(nonce int) []byte {
 	data := bytes.Join(
 		[][]byte{
 			proofOfWork.block.PrevBlockHash,
-			proofOfWork.block.Data,
+			proofOfWork.block.HashTransactions(),
 			IntToHex(proofOfWork.block.Timestamp),
 			IntToHex(int64(targetBits)),
 			IntToHex(int64(nonce)),
@@ -55,7 +55,6 @@ func (proofOfWork *ProofOfWork) Run() (int, []byte) {
 	var hash [32]byte
 	nonce := 0
 
-	fmt.Printf("Mining the block containing \"%s\"\n", proofOfWork.block.Data)
 	for nonce < maxNonce { // We use a check here to prevent a memory overflow, should never reach the end of this loop, though
 		data := proofOfWork.prepareData(nonce)
 		hash = sha256.Sum256(data)

@@ -3,9 +3,6 @@ package main
 import ()
 
 func main() {
-	blockchain := NewBlockchain()
-	defer blockchain.db.Close()
-
-	cli := CLI{blockchain}
+	cli := CLI{}
 	cli.Run()
 }

@@ -8,10 +8,10 @@ import (
 	"strconv"
 )
 
-type CLI struct {
-	blockchain *Blockchain
-}
+// CLI responsible for processing command line arguments
+type CLI struct{}
 
+// Run parses command line arguments and processes the commands
 func (cli *CLI) Run() {
 	cli.validateArgs()
 
