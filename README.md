@@ -6,4 +6,7 @@ Currently at the line `Let’s check that everything is correct so far` where we
 
 ## To Do
 
-- Move this project into `$GOPATH`
+- Pt. 4
+- Pt. 5
+- Pt. 6
+- Pt. 7
