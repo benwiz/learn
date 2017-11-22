@@ -6,13 +6,15 @@ Currently at the line `Let’s check that everything is correct so far` where we
 
 ## To Do
 
-- Pt. 4
 - Pt. 5
 - Pt. 6
 - Pt. 7
+
+- Find a boltDB browser and look at the database itself
 
 ## Questions
 
 - What does Go's `make` do?
 - The block_chain_ is starting to seem more like a block_tree_. Is this a correct view?
 - What are the differences between `blockchain.NewBlockchain()` and `blockchain.CreateBlockchain()`? Actually, why do we have a special `CreateBlockchain` when `NewBlockchain` seems sufficient?
+- What's the value in boltDB? (this is a separate question from blockchains stuff)
