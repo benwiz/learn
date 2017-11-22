@@ -51,7 +51,7 @@ func (cli *CLI) validateArgs() {
 
 // printChain prints the details of each block in the blockchain from newest to oldest
 func (cli *CLI) printChain() {
-	// NOTE: In teh tutorial's code, this line was marked with `// TODO: Fix this`
+	// NOTE: In the tutorial's code, this line was marked with `// TODO: Fix this`
 	bc := NewBlockchain("")
 	defer bc.db.Close()
 
