@@ -51,11 +51,12 @@ func (cli *CLI) validateArgs() {
 
 // printChain prints the details of each block in the blockchain from newest to oldest
 func (cli *CLI) printChain() {
-	// NOTE: In the tutorial's code, this line was marked with `// TODO: Fix this`
-	bc := NewBlockchain("")
-	defer bc.db.Close()
+	// TODO: Check for the existence of a blockchain, don't create a new one.
+	// Instead, alert the user that a blockchain does not yet exist.
+	blockchain := NewBlockchain("Ben")
+	defer blockchain.db.Close()
 
-	blockchainIterator := bc.Iterator()
+	blockchainIterator := blockchain.Iterator()
 	for {
 		block := blockchainIterator.Next()
 
