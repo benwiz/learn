@@ -2,11 +2,10 @@
 
 Learn more about blockchains while gaining experience learning Go. Following a tutorial on [jeiwan.cc](https://jeiwan.cc/posts/building-blockchain-in-go-part-4/).
 
-Currently at the line `Let’s check that everything is correct so far` where we try to build and test. It is not building becuase cli.go (and maybe more) is not completely up to date yet.
-
 ## To Do
 
 - Pt. 5
+  - Left off at `Implementing Addresses`
 - Pt. 6
 - Pt. 7
 
@@ -31,3 +30,6 @@ Let’s now review the full lifecycle of a transaction:
 4. When a miner node is ready to mine a new block, it’ll put the transaction in a block and start mining it.
 5. When the blocked is mined, every other node in the network receives a message saying the block is mined and adds the block to the blockchain.
 6. After a block is added to the blockchain, the transaction is completed, its outputs can be referenced in new transactions.
+
+Number of bitcoin private keys:
+>The curve used by Bitcoin can randomly pick a number between 0 and 2256 (which is approximately 1077, when there are between 1078 and 1082 atoms in the visible universe).
