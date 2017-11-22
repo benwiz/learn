@@ -13,18 +13,18 @@ type CLI struct{}
 
 // createBlockchain creates a new blockchain noting the address of the genesis block's miner
 func (cli *CLI) createBlockchain(address string) {
-	bc := CreateBlockchain(address)
-	bc.db.Close()
+	blockchain := CreateBlockchainDB(address)
+	blockchain.db.Close()
 	fmt.Println("Done creating blockchain!")
 }
 
 // getBalance prints the balance of the given address
 func (cli *CLI) getBalance(address string) {
-	bc := NewBlockchain(address)
-	defer db.db.Close() // remember, `defer` means "run after the function ends"
+	blockchain := NewBlockchain(address)
+	defer blockchain.db.Close() // remember, `defer` means "run after the function ends"
 
 	balance := 0
-	UTXOs := bc.FindUTXO(address)
+	UTXOs := blockchain.FindUTXO(address)
 
 	for _, out := range UTXOs {
 		balance += out.Value
@@ -69,6 +69,16 @@ func (cli *CLI) printChain() {
 			break
 		}
 	}
+}
+
+// send creates a transaction between two address
+func (cli *CLI) send(from string, to string, amount int) {
+	blockchain := NewBlockchain(from)
+	defer blockchain.db.Close()
+
+	tx := NewUTXOTransaction(from, to, amount, blockchain)
+	blockchain.MineBlock([]*Transaction{tx})
+	fmt.Println("Success mining new block!")
 }
 
 // Run parses command line arguments and processes the commands
@@ -117,7 +127,7 @@ func (cli *CLI) Run() {
 
 	if getBalanceCmd.Parsed() {
 		if *getBalanceAddress == "" {
-			getBalanceAddress.Usage()
+			getBalanceCmd.Usage()
 			os.Exit(1)
 		}
 		cli.getBalance(*getBalanceAddress)
@@ -125,7 +135,7 @@ func (cli *CLI) Run() {
 
 	if createBlockchainCmd.Parsed() {
 		if *createBlockchainAddress == "" {
-			createBlockchainAddress.Usage()
+			createBlockchainCmd.Usage()
 			os.Exit(1)
 		}
 		cli.createBlockchain(*createBlockchainAddress)
@@ -138,7 +148,7 @@ func (cli *CLI) Run() {
 	if sendCmd.Parsed() {
 		if *sendFrom == "" || *sendTo == "" || *sendAmount <= 0 {
 			sendCmd.Usage()
-			os.Exit()
+			os.Exit(1)
 		}
 		cli.send(*sendFrom, *sendTo, *sendAmount)
 	}
