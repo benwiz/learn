@@ -134,5 +134,6 @@ if (location.protocol === 'https:') {
   location.href =
     'http:' + window.location.href.substring(window.location.protocol.length);
 } else {
+  debug.innerHTML += 'call main now<br>';
   main();
 }
