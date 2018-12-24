@@ -1,2 +1,33 @@
-body {
-  color: red; }
+@import url(https://fonts.googleapis.com/css?family=Dosis:300,500);body {
+  font-family: "Dosis", sans-serif;
+  font-weight: 500;
+  color: #707070; }
+  body #container {
+    max-width: 48rem;
+    margin: auto;
+    text-align: center; }
+    body #container i {
+      color: #c0c0c0; }
+    body #container .burn {
+      color: #ff3860; }
+    body #container h1 {
+      margin: 5px auto;
+      text-align: center;
+      margin-top: 75px;
+      margin-bottom: 50px;
+      font-size: 42px; }
+    body #container #heading-icon {
+      font-size: 64px; }
+    body #container h2 {
+      text-align: center;
+      margin-top: 75px;
+      margin-bottom: 30px; }
+    body #container table {
+      margin: auto;
+      font-size: 24px; }
+      body #container table th {
+        width: 75px; }
+      body #container table td {
+        text-align: right; }
+      body #container table .location {
+        text-align: right; }

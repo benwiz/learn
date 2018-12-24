@@ -9,8 +9,7 @@ Learn TypeScript by creating a simple website to display Spare the Air informati
 
 ## Notes
 
-- Don't forget about new step to imports: https://webpack.js.org/guides/typescript/#using-third-party-libraries
-- rgba(255, 56, 96, 1)
+Don't forget about new step to imports: https://webpack.js.org/guides/typescript/#using-third-party-libraries
 
 ## To Do
 
