@@ -32,7 +32,7 @@
 
     <!-- Today's details -->
     <h2>Today</h2>
-    <table>
+    <table class="regions">
       <tr>
         <th></th>
         <th></th> 
@@ -57,7 +57,7 @@
 
     <!-- Tomorrrow's details -->
     <h2>Tomorrow</h2>
-    <table>
+    <table class="regions">
       <tr>
         <th></th>
         <th></th> 
@@ -80,9 +80,29 @@
       </tr>
     </table>
 
-    <h3>Sources</h3> <!-- NOTE: I should probably use a UL here, but simpler to get spacing correct without. -->
+    <h3>Legend</h3>
+    <!-- <div id="legend">
+      <span><i class="fas fa-fire burn"></i> Burn</span><br>
+      <span><i class="fas fa-fire"></i> Do not burn</span>
+    </div> -->
+    <table id="legend">
+      <tr>
+        <th></th>
+        <th></th>
+      </tr>
+      <tr>
+        <td class="icon"><i class="fas fa-fire burn"></i></td>
+        <td>Burn</td>
+      </tr>
+      <tr>
+        <td class="icon"><i class="fas fa-fire"></i></td>
+        <td>Do not burn</td>
+      </tr>
+    </table>
+
+    <h3>Sources</h3>
     <div id="sources">
-      <a href="http://www.baaqmd.gov/online-services/rss-feeds">Data</a><br>
+      <a href="http://www.baaqmd.gov/online-services/rss-feeds">BAAQMD Data</a><br>
       <a href="http://sparetheair.org">Spare the Air</a>
     </div>
   </div>

@@ -20,22 +20,28 @@
     body #container h2 {
       margin-top: 75px;
       margin-bottom: 30px; }
-    body #container table {
+    body #container .regions {
       margin: auto;
       font-size: 24px; }
-      body #container table th {
+      body #container .regions th {
         width: 100px; }
-      body #container table .location {
+      body #container .regions .location {
         text-align: right; }
-      body #container table .icon {
+      body #container .regions .icon {
         text-align: center; }
-      body #container table .aqi {
+      body #container .regions .aqi {
         text-align: left; }
     body #container h3 {
       margin-top: 75px;
       margin-bottom: 25px; }
+    body #container #legend {
+      margin: auto; }
+      body #container #legend th {
+        width: 20px; }
     body #container #sources a {
+      display: inline-block;
       color: #707070;
+      margin-bottom: 6px;
       text-decoration: none; }
       body #container #sources a:hover {
         text-decoration: underline; }
