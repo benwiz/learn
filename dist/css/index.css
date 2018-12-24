@@ -31,6 +31,14 @@
         text-align: center; }
       body #container .regions .aqi {
         text-align: left; }
+    body #container #today-title {
+      visibility: hidden; }
+    body #container #today {
+      visibility: hidden; }
+    body #container #tomorrow-title {
+      visibility: hidden; }
+    body #container #tomorrow {
+      visibility: hidden; }
     body #container h3 {
       margin-top: 75px;
       margin-bottom: 25px; }

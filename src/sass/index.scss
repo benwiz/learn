@@ -59,6 +59,22 @@ body {
       }
     }
 
+    #today-title {
+      visibility: hidden;
+    }
+
+    #today {
+      visibility: hidden;
+    }
+
+    #tomorrow-title {
+      visibility: hidden;
+    }
+
+    #tomorrow {
+      visibility: hidden;
+    }
+
     h3 {
       margin-top: 75px;
       margin-bottom: 25px;

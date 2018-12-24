@@ -81,6 +81,11 @@ const updateDetails = (
   northernAQIElement.textContent = northernAQI;
   southernAQIElement.textContent = southernAQI;
   coastalAQIElement.textContent = coastalAQI;
+
+  // Make elements visible
+  title.style.visibility = 'visible';
+  const table: Element = document.querySelector(`#${dayID}`);
+  table.style.visibility = 'visible';
 };
 
 const main = async (): Promise<void> => {
