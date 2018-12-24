@@ -53,3 +53,8 @@
       text-decoration: none; }
       body #container #sources a:hover {
         text-decoration: underline; }
+    body #container #links i {
+      margin: 4px;
+      font-size: 22px; }
+      body #container #links i:hover {
+        color: #707070; }

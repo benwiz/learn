@@ -100,5 +100,16 @@ body {
         }
       }
     }
+
+    #links {
+      i {
+        margin: 4px;
+        font-size: 22px;
+
+        &:hover {
+          color: $text-gray;
+        }
+      }
+    }
   }
 }
