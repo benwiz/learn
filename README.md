@@ -10,8 +10,10 @@ Learn TypeScript by creating a simple website to display Spare the Air informati
 ## Notes
 
 - Don't forget about new step to imports: https://webpack.js.org/guides/typescript/#using-third-party-libraries
+- rgba(255, 56, 96, 1)
 
 ## To Do
 
-- Get webpack set up with TypeScript
-- Get webpack set up with SASS
+- Create main h1 or h2 text with overall burn status
+- Create table with more detailed burn status
+- Create table with even more detailed AQI data
