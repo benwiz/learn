@@ -1,8 +1,6 @@
 import * as Parser from 'rss-parser';
 
 const parser = new Parser(); // should this be global?
-const debug: HTMLElement = document.querySelector('#debug1');
-debug.innerHTML += 'hi<br>';
 
 interface Item {
   content: string;
@@ -20,10 +18,8 @@ interface Feed {
 }
 
 const readRSSFeed = async (url: string): Promise<Feed> => {
-  debug.innerHTML += `call ${url}<br>`;
   const CORS_PROXY = 'https://cors-anywhere.herokuapp.com/';
   const feed = await parser.parseURL(CORS_PROXY + url);
-  debug.innerHTML += `called ${url}<br>`;
   return feed;
 };
 
@@ -100,7 +96,6 @@ const updateDetails = (
 };
 
 const main = async (): Promise<void> => {
-  debug.innerHTML += 'called main<br>';
   const spareTheAirRSS: string = 'http://www.baaqmd.gov/Feeds/AlertRSS.aspx';
   const openBurnRSS: string = 'http://www.baaqmd.gov/Feeds/OpenBurnRSS.aspx';
   const aqiRSS: string = 'http://www.baaqmd.gov/Feeds/AirForecastRSS.aspx';
@@ -109,7 +104,6 @@ const main = async (): Promise<void> => {
   const spareTheAir: Feed = await readRSSFeed(spareTheAirRSS);
   const summaryStatus = spareTheAir.items[0].content;
   updateSummary(summaryStatus);
-  debug.innerHTML += 'updated summary<br>';
 
   // Read openBurn and aqi RSS feeds
   const openBurn: Feed = await readRSSFeed(openBurnRSS);
@@ -122,7 +116,6 @@ const main = async (): Promise<void> => {
   const todayOpenBurnStatuses: string = openBurn.items[0].content;
   const todayAQIs: string = aqi.items[0].content;
   updateDetails('today', today, todayOpenBurnStatuses, todayAQIs);
-  debug.innerHTML += 'updated today<br>';
 
   // Update tomorrow
   const tomorrow: string = openBurn.items[1].title
