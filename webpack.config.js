@@ -3,7 +3,7 @@ const path = require("path");
 module.exports = [
   {
     entry: {
-      index: "./src/index.ts"
+      index: "./src/ts/index.ts"
     },
     devtool: "inline-source-map",
     mode: "none",
@@ -20,13 +20,13 @@ module.exports = [
       extensions: [".tsx", ".ts", ".js"]
     },
     output: {
-      filename: "[name].js",
+      filename: "js/[name].js",
       path: path.resolve(__dirname, "dist")
     }
   },
   {
     entry: {
-      index: "./src/index.scss"
+      index: "./src/sass/index.scss"
     },
     // I guess it isn't necessary?
     // output: {
@@ -42,7 +42,7 @@ module.exports = [
             {
               loader: "file-loader",
               options: {
-                name: "[name].css"
+                name: "css/[name].css"
               }
             },
             { loader: "extract-loader" },
