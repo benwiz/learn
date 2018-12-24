@@ -20,7 +20,9 @@ interface Feed {
 }
 
 const readRSSFeed = async (url: string): Promise<Feed> => {
+  debug.innerHTML += `call ${url}`;
   const feed = await parser.parseURL(url);
+  debug.innerHTML += `called ${url}`;
   return feed;
 };
 
