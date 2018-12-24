@@ -27,12 +27,12 @@
 <body>
   <div id="container">
     <!-- Main info -->
-    <h1>Feel free to BURN</h1>
-    <i id="heading-icon" class="fas fa-fire burn"></i>
+    <h1 id="summary-title"></h1>
+    <i id="summary-icon" class="fas fa-fire"></i>
 
     <!-- Today's details -->
-    <h2>Today</h2>
-    <table class="regions">
+    <h2 id="today-title">Today</h2>
+    <table id="today" class="regions">
       <tr>
         <th></th>
         <th></th> 
@@ -40,24 +40,24 @@
       </tr>
       <tr>
         <td class="location">North</td>
-        <td class="icon"><i class="fas fa-fire burn"></i></td> 
-        <td class="aqi">63</td>
+        <td class="icon"><i class="fas fa-fire"></i></td> 
+        <td class="aqi"></td>
       </tr>
       <tr>
         <td class="location">South</td>
-        <td class="icon"><i class="fas fa-fire burn"></i></td> 
-        <td class="aqi">50</td>
+        <td class="icon"><i class="fas fa-fire"></i></td> 
+        <td class="aqi"></td>
       </tr>
       <tr>
         <td class="location">Coastal</td>
-        <td class="icon"><i class="fas fa-fire burn"></i></td> 
-        <td class="aqi">46</td>
+        <td class="icon"><i class="fas fa-fire"></i></td> 
+        <td class="aqi"></td>
       </tr>
     </table>
 
     <!-- Tomorrrow's details -->
-    <h2>Tomorrow</h2>
-    <table class="regions">
+    <h2 id="tomorrow-title">Tomorrow</h2>
+    <table id="tomorrow" class="regions">
       <tr>
         <th></th>
         <th></th> 
@@ -66,25 +66,21 @@
       <tr>
         <td class="location">North</td>
         <td class="icon"><i class="fas fa-fire"></i></td> 
-        <td class="aqi">108</td>
+        <td class="aqi"></td>
       </tr>
       <tr>
         <td class="location">South</td>
         <td class="icon"><i class="fas fa-fire"></i></td> 
-        <td class="aqi">97</td>
+        <td class="aqi"></td>
       </tr>
       <tr>
         <td class="location">Coastal</td>
-        <td class="icon"><i class="fas fa-fire burn"></i></td> 
-        <td class="aqi">56</td>
+        <td class="icon"><i class="fas fa-fire"></i></td> 
+        <td class="aqi"></td>
       </tr>
     </table>
 
     <h3>Legend</h3>
-    <!-- <div id="legend">
-      <span><i class="fas fa-fire burn"></i> Burn</span><br>
-      <span><i class="fas fa-fire"></i> Do not burn</span>
-    </div> -->
     <table id="legend">
       <tr>
         <th></th>
