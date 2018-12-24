@@ -75,6 +75,12 @@ body {
 
       .aqi {
         text-align: left;
+
+        .aqi-label {
+          font-size: 13px;
+          margin-left: 6px;
+          color: gray;
+        }
       }
     }
 

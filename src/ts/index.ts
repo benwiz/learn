@@ -77,13 +77,13 @@ const updateDetails = (
 
   // Get and set aqi values
   const northernAQIElement: HTMLElement = document.querySelector(
-    `#${dayID} #northern .aqi`,
+    `#${dayID} #northern .aqi .aqi-value`,
   );
   const southernAQIElement: HTMLElement = document.querySelector(
-    `#${dayID} #southern .aqi`,
+    `#${dayID} #southern .aqi .aqi-value`,
   );
   const coastalAQIElement: HTMLElement = document.querySelector(
-    `#${dayID} #coastal .aqi`,
+    `#${dayID} #coastal .aqi .aqi-value`,
   );
   northernAQIElement.textContent = northernAQI;
   southernAQIElement.textContent = southernAQI;
