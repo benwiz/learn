@@ -57,25 +57,31 @@ const updateDetails = (
   /* tslint:enable:no-magic-numbers */
 
   // Get and set title
-  const title: Element = document.querySelector(`#${dayID}-title`);
+  const title: HTMLElement = document.querySelector(`#${dayID}-title`);
   title.textContent = day;
 
   // Get and set icon status
-  const northernIcon: Element = document.querySelector(`#${dayID} #northern i`);
-  const southernIcon: Element = document.querySelector(`#${dayID} #southern i`);
-  const coastalIcon: Element = document.querySelector(`#${dayID} #coastal i`);
+  const northernIcon: HTMLElement = document.querySelector(
+    `#${dayID} #northern i`,
+  );
+  const southernIcon: HTMLElement = document.querySelector(
+    `#${dayID} #southern i`,
+  );
+  const coastalIcon: HTMLElement = document.querySelector(
+    `#${dayID} #coastal i`,
+  );
   if (northernStatus === 'Burn') northernIcon.classList.add('burn');
   if (southernStatus === 'Burn') southernIcon.classList.add('burn');
   if (coastalStatus === 'Burn') coastalIcon.classList.add('burn');
 
   // Get and set aqi values
-  const northernAQIElement: Element = document.querySelector(
+  const northernAQIElement: HTMLElement = document.querySelector(
     `#${dayID} #northern .aqi`,
   );
-  const southernAQIElement: Element = document.querySelector(
+  const southernAQIElement: HTMLElement = document.querySelector(
     `#${dayID} #southern .aqi`,
   );
-  const coastalAQIElement: Element = document.querySelector(
+  const coastalAQIElement: HTMLElement = document.querySelector(
     `#${dayID} #coastal .aqi`,
   );
   northernAQIElement.textContent = northernAQI;
@@ -84,7 +90,7 @@ const updateDetails = (
 
   // Make elements visible
   title.style.visibility = 'visible';
-  const table: Element = document.querySelector(`#${dayID}`);
+  const table: HTMLElement = document.querySelector(`#${dayID}`);
   table.style.visibility = 'visible';
 };
 
