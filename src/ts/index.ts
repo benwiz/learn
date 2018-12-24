@@ -95,6 +95,8 @@ const updateDetails = (
 };
 
 const main = async (): Promise<void> => {
+  const debug: HTMLElement = document.querySelector('#debug');
+
   const spareTheAirRSS: string = 'http://www.baaqmd.gov/Feeds/AlertRSS.aspx';
   const openBurnRSS: string = 'http://www.baaqmd.gov/Feeds/OpenBurnRSS.aspx';
   const aqiRSS: string = 'http://www.baaqmd.gov/Feeds/AirForecastRSS.aspx';
@@ -103,6 +105,7 @@ const main = async (): Promise<void> => {
   const spareTheAir: Feed = await readRSSFeed(spareTheAirRSS);
   const summaryStatus = spareTheAir.items[0].content;
   updateSummary(summaryStatus);
+  debug.innerHTML += 'updated summary<br>';
 
   // Read openBurn and aqi RSS feeds
   const openBurn: Feed = await readRSSFeed(openBurnRSS);
@@ -115,6 +118,7 @@ const main = async (): Promise<void> => {
   const todayOpenBurnStatuses: string = openBurn.items[0].content;
   const todayAQIs: string = aqi.items[0].content;
   updateDetails('today', today, todayOpenBurnStatuses, todayAQIs);
+  debug.innerHTML += 'updated today<br>';
 
   // Update tomorrow
   const tomorrow: string = openBurn.items[1].title
@@ -123,6 +127,7 @@ const main = async (): Promise<void> => {
   const tomorrowOpenBurnStatuses: string = openBurn.items[1].content;
   const tomorrowAQIs: string = aqi.items[1].content;
   updateDetails('tomorrow', tomorrow, tomorrowOpenBurnStatuses, tomorrowAQIs);
+  debug.innerHTML += 'updated tomorrow<br>';
 };
 
 if (location.protocol === 'https:') {
