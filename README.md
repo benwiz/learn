@@ -20,6 +20,6 @@ Don't forget about new step to imports: https://webpack.js.org/guides/typescript
 
 ## To Do
 
-- Add a small, light gray "AQI" next to each AQI
+- index.ts:L125, instead of grabbing index 1, grab the matching date because indices do not always line up
 - Bug
   - tslint.json not listening to "no-magic-numbers" or "max-length" properly
