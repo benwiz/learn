@@ -16,3 +16,4 @@ Don't forget about new step to imports: https://webpack.js.org/guides/typescript
 - Populate main info. This requires just the main rss feed.
 - Populate region info. This requires the other two rss feeds.
   - Replace "today" and "tomorrow" with the name of the day of the week
+- Sort out "ignore-magic-numbers"

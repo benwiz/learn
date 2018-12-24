@@ -34,6 +34,24 @@ const updateSummary = (status: String): void => {
   }
 };
 
+const updateDetails = (openBurnStatuses: string, aqis: string): void => {
+  /* tslint:disable:no-magic-numbers */
+
+  // TODO: Don't trust these will come in the same order every time
+  const openBurnStatusesSplit = openBurnStatuses.split('\r');
+  const northernStatus: string = openBurnStatusesSplit[1].split(': ')[1];
+  const southernStatus: string = openBurnStatusesSplit[2].split(': ')[1];
+  const coastalStatus: string = openBurnStatusesSplit[3].split(': ')[1];
+
+  // TODO: Don't trust these will come in the same order every time
+  const aqisplit: string[] = aqis.split('\r');
+  const northernAQI: number = +aqisplit[1].split(',')[0].split('AQI: ')[1];
+  const southernAQI: number = +aqisplit[4].split(',')[0].split('AQI: ')[1];
+  const coastalAQI: number = +aqisplit[2].split(',')[0].split('AQI: ')[1];
+
+  /* tslint:enable:no-magic-numbers */
+};
+
 const main = async (): Promise<void> => {
   const spareTheAirRSS: string = 'http://www.baaqmd.gov/Feeds/AlertRSS.aspx';
   const openBurnRSS: string = 'http://www.baaqmd.gov/Feeds/OpenBurnRSS.aspx';
@@ -44,11 +62,14 @@ const main = async (): Promise<void> => {
   const summaryStatus = spareTheAir.items[0].content;
   updateSummary(summaryStatus);
 
-  // Update today
+  // Read openBurn and aqi RSS feeds
   const openBurn: Feed = await readRSSFeed(openBurnRSS);
   const aqi: Feed = await readRSSFeed(aqiRSS);
-  // console.log(openBurn.items);
-  // console.log(aqi.items);
+
+  // Update today
+  const todayOpenBurnStatuses: string = openBurn.items[0].content;
+  const todayAQIs: string = aqi.items[0].content;
+  updateDetails(todayOpenBurnStatuses, todayAQIs);
 
   // Update tomorrow
 };
