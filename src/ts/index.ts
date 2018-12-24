@@ -35,6 +35,7 @@ const updateSummary = (status: String): void => {
 };
 
 const updateDetails = (
+  dayID: string,
   day: string,
   openBurnStatuses: string,
   aqis: string,
@@ -56,26 +57,26 @@ const updateDetails = (
   /* tslint:enable:no-magic-numbers */
 
   // Get and set title
-  const title: Element = document.querySelector('#today-title');
+  const title: Element = document.querySelector(`#${dayID}-title`);
   title.textContent = day;
 
   // Get and set icon status
-  const northernIcon: Element = document.querySelector('#today #northern i');
-  const southernIcon: Element = document.querySelector('#today #southern i');
-  const coastalIcon: Element = document.querySelector('#today #coastal i');
+  const northernIcon: Element = document.querySelector(`#${dayID} #northern i`);
+  const southernIcon: Element = document.querySelector(`#${dayID} #southern i`);
+  const coastalIcon: Element = document.querySelector(`#${dayID} #coastal i`);
   if (northernStatus === 'Burn') northernIcon.classList.add('burn');
   if (southernStatus === 'Burn') southernIcon.classList.add('burn');
   if (coastalStatus === 'Burn') coastalIcon.classList.add('burn');
 
   // Get and set aqi values
   const northernAQIElement: Element = document.querySelector(
-    '#today #northern .aqi',
+    `#${dayID} #northern .aqi`,
   );
   const southernAQIElement: Element = document.querySelector(
-    '#today #southern .aqi',
+    `#${dayID} #southern .aqi`,
   );
   const coastalAQIElement: Element = document.querySelector(
-    '#today #coastal .aqi',
+    `#${dayID} #coastal .aqi`,
   );
   northernAQIElement.textContent = northernAQI;
   southernAQIElement.textContent = southernAQI;
@@ -102,9 +103,15 @@ const main = async (): Promise<void> => {
     .split(',')[0];
   const todayOpenBurnStatuses: string = openBurn.items[0].content;
   const todayAQIs: string = aqi.items[0].content;
-  updateDetails(today, todayOpenBurnStatuses, todayAQIs);
+  updateDetails('today', today, todayOpenBurnStatuses, todayAQIs);
 
   // Update tomorrow
+  const tomorrow: string = openBurn.items[1].title
+    .split('Spare the Air Status for ')[1]
+    .split(',')[0];
+  const tomorrowOpenBurnStatuses: string = openBurn.items[1].content;
+  const tomorrowAQIs: string = aqi.items[1].content;
+  updateDetails('tomorrow', tomorrow, tomorrowOpenBurnStatuses, tomorrowAQIs);
 };
 
 // Run
