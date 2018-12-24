@@ -61,12 +61,18 @@ body {
 
     h3 {
       margin-top: 75px;
-      margin-bottom: 30px;
+      margin-bottom: 25px;
     }
 
-    ul {
-      list-style-type: none;
-      background-color: lightblue;
+    #sources {
+      a {
+        color: $text-gray;
+        text-decoration: none;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
     }
   }
 }
