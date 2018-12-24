@@ -20,5 +20,6 @@ Don't forget about new step to imports: https://webpack.js.org/guides/typescript
 
 ## To Do
 
+- Footer for home and github buttons
 - Bug
   - tslint.json not listening to "no-magic-numbers" or "max-length" properly
