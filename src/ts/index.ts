@@ -20,9 +20,10 @@ interface Feed {
 }
 
 const readRSSFeed = async (url: string): Promise<Feed> => {
-  debug.innerHTML += `call ${url}`;
-  const feed = await parser.parseURL(url);
-  debug.innerHTML += `called ${url}`;
+  debug.innerHTML += `call ${url}<br>`;
+  const CORS_PROXY = 'https://cors-anywhere.herokuapp.com/';
+  const feed = await parser.parseURL(CORS_PROXY + url);
+  debug.innerHTML += `called ${url}<br>`;
   return feed;
 };
 
