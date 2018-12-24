@@ -34,7 +34,11 @@ const updateSummary = (status: String): void => {
   }
 };
 
-const updateDetails = (openBurnStatuses: string, aqis: string): void => {
+const updateDetails = (
+  day: string,
+  openBurnStatuses: string,
+  aqis: string,
+): void => {
   /* tslint:disable:no-magic-numbers */
 
   // TODO: Don't trust these will come in the same order every time
@@ -45,11 +49,37 @@ const updateDetails = (openBurnStatuses: string, aqis: string): void => {
 
   // TODO: Don't trust these will come in the same order every time
   const aqisplit: string[] = aqis.split('\r');
-  const northernAQI: number = +aqisplit[1].split(',')[0].split('AQI: ')[1];
-  const southernAQI: number = +aqisplit[4].split(',')[0].split('AQI: ')[1];
-  const coastalAQI: number = +aqisplit[2].split(',')[0].split('AQI: ')[1];
+  const northernAQI: string = aqisplit[1].split(',')[0].split('AQI: ')[1];
+  const southernAQI: string = aqisplit[4].split(',')[0].split('AQI: ')[1];
+  const coastalAQI: string = aqisplit[2].split(',')[0].split('AQI: ')[1];
 
   /* tslint:enable:no-magic-numbers */
+
+  // Get and set title
+  const title: Element = document.querySelector('#today-title');
+  title.textContent = day;
+
+  // Get and set icon status
+  const northernIcon: Element = document.querySelector('#today #northern i');
+  const southernIcon: Element = document.querySelector('#today #southern i');
+  const coastalIcon: Element = document.querySelector('#today #coastal i');
+  if (northernStatus === 'Burn') northernIcon.classList.add('burn');
+  if (southernStatus === 'Burn') southernIcon.classList.add('burn');
+  if (coastalStatus === 'Burn') coastalIcon.classList.add('burn');
+
+  // Get and set aqi values
+  const northernAQIElement: Element = document.querySelector(
+    '#today #northern .aqi',
+  );
+  const southernAQIElement: Element = document.querySelector(
+    '#today #southern .aqi',
+  );
+  const coastalAQIElement: Element = document.querySelector(
+    '#today #coastal .aqi',
+  );
+  northernAQIElement.textContent = northernAQI;
+  southernAQIElement.textContent = southernAQI;
+  coastalAQIElement.textContent = coastalAQI;
 };
 
 const main = async (): Promise<void> => {
@@ -67,9 +97,12 @@ const main = async (): Promise<void> => {
   const aqi: Feed = await readRSSFeed(aqiRSS);
 
   // Update today
+  const today: string = openBurn.items[0].title
+    .split('Spare the Air Status for ')[1]
+    .split(',')[0];
   const todayOpenBurnStatuses: string = openBurn.items[0].content;
   const todayAQIs: string = aqi.items[0].content;
-  updateDetails(todayOpenBurnStatuses, todayAQIs);
+  updateDetails(today, todayOpenBurnStatuses, todayAQIs);
 
   // Update tomorrow
 };
