@@ -131,13 +131,13 @@ const main = async (): Promise<void> => {
   const tomorrowOpenBurnStatuses: string = openBurn.items[1].content;
   const tomorrowAQIs: string = aqi.items[1].content;
   updateDetails('tomorrow', tomorrow, tomorrowOpenBurnStatuses, tomorrowAQIs);
-  debug.innerHTML += 'updated tomorrow<br>';
 };
 
-if (location.protocol === 'https:') {
-  location.href =
-    'http:' + window.location.href.substring(window.location.protocol.length);
-} else {
-  debug.innerHTML += 'call main now<br>';
-  main();
-}
+// if (location.protocol === 'https:') {
+//   location.href =
+//     'http:' + window.location.href.substring(window.location.protocol.length);
+// } else {
+//   main();
+// }
+
+main();
