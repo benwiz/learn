@@ -43,7 +43,7 @@
       body #container .regions .aqi {
         text-align: left; }
         body #container .regions .aqi .aqi-label {
-          font-size: 13px;
+          font-size: 12px;
           margin-left: 6px;
           color: gray; }
     body #container #today-title {
