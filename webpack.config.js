@@ -28,11 +28,6 @@ module.exports = [
     entry: {
       index: "./src/sass/index.scss"
     },
-    // I guess it isn't necessary?
-    // output: {
-    //   // This is necessary for webpack to compile. But we never use it.
-    //   // filename: "tmp.js"
-    // },
     mode: "none",
     module: {
       rules: [
