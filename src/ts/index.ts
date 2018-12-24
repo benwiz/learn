@@ -125,5 +125,9 @@ const main = async (): Promise<void> => {
   updateDetails('tomorrow', tomorrow, tomorrowOpenBurnStatuses, tomorrowAQIs);
 };
 
-// Run
-main();
+if (location.protocol === 'https:') {
+  location.href =
+    'http:' + window.location.href.substring(window.location.protocol.length);
+} else {
+  main();
+}
