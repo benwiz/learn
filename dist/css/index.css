@@ -1,7 +1,8 @@
 @import url(https://fonts.googleapis.com/css?family=Dosis:300,500);body {
   font-family: "Dosis", sans-serif;
   font-weight: 500;
-  color: #707070; }
+  color: #707070;
+  margin-bottom: 75px; }
   body #container {
     max-width: 48rem;
     margin: auto;
@@ -12,7 +13,6 @@
       color: #ff3860; }
     body #container h1 {
       margin: 5px auto;
-      text-align: center;
       margin-top: 75px;
       margin-bottom: 50px;
       font-size: 42px; }
@@ -26,8 +26,10 @@
       margin: auto;
       font-size: 24px; }
       body #container table th {
-        width: 75px; }
-      body #container table td {
-        text-align: right; }
+        width: 100px; }
       body #container table .location {
         text-align: right; }
+      body #container table .icon {
+        text-align: center; }
+      body #container table .aqi {
+        text-align: left; }

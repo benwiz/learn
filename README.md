@@ -13,6 +13,5 @@ Don't forget about new step to imports: https://webpack.js.org/guides/typescript
 
 ## To Do
 
-- Create main h1 or h2 text with overall burn status
-- Create table with more detailed burn status
-- Create table with even more detailed AQI data
+- Sources
+- I need a legend somewhere to indicate gray means no-burn. Or use a different, more obvious icon.

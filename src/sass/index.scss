@@ -8,6 +8,7 @@ body {
   font-family: "Dosis", sans-serif;
   font-weight: 500;
   color: $text-gray;
+  margin-bottom: 75px;
 
   #container {
     max-width: 48rem;
@@ -24,7 +25,6 @@ body {
 
     h1 {
       margin: 5px auto;
-      text-align: center;
       margin-top: 75px;
       margin-bottom: 50px;
       font-size: 42px;
@@ -45,15 +45,19 @@ body {
       font-size: 24px;
 
       th {
-        width: 75px;
-      }
-
-      td {
-        text-align: right;
+        width: 100px;
       }
 
       .location {
         text-align: right;
+      }
+
+      .icon {
+        text-align: center;
+      }
+
+      .aqi {
+        text-align: left;
       }
     }
   }
