@@ -20,6 +20,7 @@ Don't forget about new step to imports: https://webpack.js.org/guides/typescript
 
 ## To Do
 
+- Show a loading spinner or something to indicate that we are trying to access RSS
 - BAAQMD serves their RSS feeds over HTTP, I can't serve mixed content over HTTPS. One option is to build a Lambda function that consumes the RSS feeds then exposes them.
 - Bug
   - tslint.json not listening to "no-magic-numbers" or "max-length" properly
