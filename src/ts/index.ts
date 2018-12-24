@@ -1,6 +1,8 @@
 import * as Parser from 'rss-parser';
 
 const parser = new Parser(); // should this be global?
+const debug: HTMLElement = document.querySelector('#debug');
+debug.innerHTML += 'hi<br>';
 
 interface Item {
   content: string;
@@ -95,8 +97,6 @@ const updateDetails = (
 };
 
 const main = async (): Promise<void> => {
-  const debug: HTMLElement = document.querySelector('#debug');
-
   const spareTheAirRSS: string = 'http://www.baaqmd.gov/Feeds/AlertRSS.aspx';
   const openBurnRSS: string = 'http://www.baaqmd.gov/Feeds/OpenBurnRSS.aspx';
   const aqiRSS: string = 'http://www.baaqmd.gov/Feeds/AirForecastRSS.aspx';
