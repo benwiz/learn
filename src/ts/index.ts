@@ -122,7 +122,7 @@ const main = async (): Promise<void> => {
     .split('Spare the Air Status for ')[1]
     .split(',')[0];
   const tomorrowOpenBurnStatuses: string = openBurn.items[1].content;
-  const tomorrowAQIs: string = aqi.items[1].content; // TODO: instead of grabbing index 1, grab the matching date
+  const tomorrowAQIs: string = aqi.items[1].content;
   updateDetails('tomorrow', tomorrow, tomorrowOpenBurnStatuses, tomorrowAQIs);
 };
 
