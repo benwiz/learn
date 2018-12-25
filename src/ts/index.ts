@@ -17,6 +17,21 @@ interface Feed {
   title: string;
 }
 
+const burnPhrases = [
+  'Feel free to burn',
+  'Burn it all!',
+  'Burn burn burn!',
+  'Burn the midnight oil',
+  'Smoke on the water, fire in the sky',
+  "Fire that's closest kept burns most of all.",
+  "Give a man a fire and he's warm for the day. But set fire to him and he's warm for the rest of his life.",
+  'Burn not your house to rid it of the mouse.',
+  'Do not let your fire go out.',
+  'Fires all go out eventually.',
+  'Fire it up!',
+  'Run like a bunny with his tail on fire',
+];
+
 const readRSSFeed = async (url: string): Promise<Feed> => {
   const CORS_PROXY = 'https://cors-anywhere.herokuapp.com/';
   const feed = await parser.parseURL(CORS_PROXY + url);
@@ -27,7 +42,8 @@ const updateSummary = (status: String): void => {
   const title: Element = document.querySelector('#summary-title');
   const icon: Element = document.querySelector('#summary-icon');
   if (status === 'No Alert') {
-    title.textContent = 'Feel free to burn';
+    title.textContent =
+      burnPhrases[Math.floor(Math.random() * burnPhrases.length)];
     icon.classList.add('burn');
   } else {
     title.textContent = 'Do not burn';
