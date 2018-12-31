@@ -1,11 +1,16 @@
 // program.c
 #include <webassembly.h>
 
-extern void jsFillRect(int x);
+struct Vertex
+{
+    int x;
+    int y;
+};
 
-export int add(int a, int b, int c)
+extern void jsDrawVertex(int x, int y);
+
+export void start()
 {
     console_log("This is a log from C");
-    jsFillRect(99);
-    return a + b + c;
+    jsDrawVertex(10, 30);
 }

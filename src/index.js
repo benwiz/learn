@@ -1,18 +1,47 @@
 import WebAssembly from 'webassembly';
 
-// The path to the wasm binary. I need to figure out how to make it work with webpack bundler.
-const wasmPath = './node_modules/@benwiz/boba.wasm/dist/boba.wasm';
+// Function to create canvas
+const createCanvas = (x, y, width, height) => {
+  // Create canvas
+  const canvas = document.createElement('canvas');
+  canvas.width = width;
+  canvas.height = height;
 
-const run = (module) => {
-  console.log(`SUM = ${module.exports.add(1, 2, 3)}`);
+  // Set css-based location
+  canvas.style.position = 'absolute';
+  canvas.style.left = String(x);
+  canvas.style.top = String(y);
+  canvas.style.zIndex = '-1';
+
+  // Append canvas to dom and return canvas
+  document.body.appendChild(canvas);
+  return canvas;
 };
 
-// Load the wasm
+// Create the canvas
+const canvas = createCanvas(
+  0,
+  0,
+  document.documentElement.scrollWidth,
+  document.documentElement.scrollHeight,
+);
+const ctx = canvas.getContext('2d');
+
+// Load and initialize the wasm binary
+// TODO: Sort out the wasmPath
+const wasmPath = './node_modules/@benwiz/boba.wasm/dist/boba.wasm';
 const options = {
   imports: {
-    jsFillRect: (x) => {
-      console.log('x:', x);
+    jsDrawVertex: (x, y) => {
+      console.log('vertex:', x, y);
+      ctx.fillStyle = 'orange';
+      const w = 20;
+      const h = 20;
+      ctx.fillRect(x, y, w, h);
     },
   },
 };
-WebAssembly.load(wasmPath, options).then(run);
+WebAssembly.load(wasmPath, options).then((module) => {
+  // TODO: Call a C function (main?) to start the game loop
+  module.exports.start();
+});
