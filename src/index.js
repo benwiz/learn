@@ -30,13 +30,11 @@ const ctx = canvas.getContext('2d');
 // Load and initialize the wasm binary
 // TODO: Sort out the wasmPath
 const wasmPath = './node_modules/@benwiz/boba.wasm/dist/boba.wasm';
-let cCallback;
 const options = {
   imports: {
     jsSetInterval: (f, n) => {
       setInterval(() => {
-        // module.exports.runCallback(f); // TODO: How do I access the callback before I have the module?
-        cCallback(f);
+        module.exports.runCallback(f); // TODO: How do I access the callback before I have the module? I _think_ I can do this using async/await because then `module` will be available in the global scope
       }, n);
     },
     jsDrawVertex: (x, y) => {
@@ -49,8 +47,6 @@ const options = {
   },
 };
 WebAssembly.load(wasmPath, options).then((module) => {
-  cCallback = module.exports.runCallback;
-
   // Call a function that enables C to control the game loop
   module.exports.start();
 });
