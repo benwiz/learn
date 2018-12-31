@@ -8,4 +8,11 @@ const run = (module) => {
 };
 
 // Load the wasm
-WebAssembly.load(wasmPath).then(run);
+const options = {
+  imports: {
+    jsFillRect: (x) => {
+      console.log('x:', x);
+    },
+  },
+};
+WebAssembly.load(wasmPath, options).then(run);
