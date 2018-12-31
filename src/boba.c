@@ -9,12 +9,12 @@ struct Vertex
 
 extern void jsSetInterval(void (*callback)());
 extern void jsDrawVertex(int x, int y);
-extern void jsClearCanvas(int x, int y);
+extern void jsClearCanvas();
 
 void tick()
 {
     console_log("c.tick");
-    jsClearCanvas(0, 0);
+    jsClearCanvas();
 }
 
 export int runCallback(void (*callback)())

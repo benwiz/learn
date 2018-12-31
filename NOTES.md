@@ -28,5 +28,4 @@ emcc test.c -s WASM=1 -s "EXTRA_EXPORTED_RUNTIME_METHODS=['ccall', 'cwrap']"
 
 ## To Do
 
-
-- Then figure out how to set up game loop using https://medium.com/@mbebenita/lets-write-pong-in-webassembly-ac3a8e7c4591
+- Move a dot across the screen
