@@ -4,7 +4,8 @@
   "description": "WASM based animated background as an NPM module written in C with no dependencies.",
   "main": "./dist/bundle.js",
   "scripts": {
-    "webpack": "webpack --config webpack.config.js --watch"
+    "webpack": "webpack --config webpack.config.js --watch",
+    "wasm": "wa compile -o ./dist/boba.wasm ./src/boba.c"
   },
   "files": [
     "dist",
