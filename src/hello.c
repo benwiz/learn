@@ -1,9 +1,9 @@
-#include <stdio.h>
 #include <emscripten/emscripten.h>
+#include <stdio.h>
 
 int main(int argc, char **argv)
 {
-    printf("Main is called\n");
+    printf("Hello World\n");
 }
 
 int EMSCRIPTEN_KEEPALIVE hello(int argc, char **argv)

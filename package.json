@@ -2,60 +2,41 @@
   "name": "@benwiz/boba.wasm",
   "version": "1.0.0",
   "description": "WASM based animated background as an NPM module written in C with no dependencies.",
-  "main": "./lib/index.js",
-  "typings": "./lib/index.d.ts",
+  "main": "./dist/bundle.js",
   "scripts": {
-    "prepare": "npm run build",
-    "build": "tsc && webpack",
-    "test": "jest",
-    "watch": "npm-watch"
-  },
-  "watch": {
-    "build": {
-      "patterns": [
-        "src/*"
-      ],
-      "extensions": "ts",
-      "quiet": false
-    }
+    "webpack": "webpack --config webpack.config.js --watch"
   },
   "files": [
-    "lib",
-    "dist"
+    "dist",
+    "src"
   ],
-  "jest": {
-    "moduleFileExtensions": [
-      "ts",
-      "js"
-    ],
-    "transform": {
-      "\\.ts$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
-    },
-    "testRegex": "/src/.*\\.spec\\.ts$"
-  },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/benwiz/boba.js.git"
+    "url": "git+https://github.com/benwiz/boba.wasm.git"
   },
   "keywords": [
     "animation",
-    "background"
+    "background",
+    "wasm"
   ],
   "author": "Ben Wisialowski <bwisialowski@gmail.com>",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/benwiz/boba.js/issues"
+    "url": "https://github.com/benwiz/boba.wasm/issues"
   },
-  "homepage": "https://github.com/benwiz/boba.js#readme",
+  "homepage": "https://github.com/benwiz/boba.wasm#readme",
   "devDependencies": {
-    "@types/jest": "^23.3.10",
-    "jest": "^23.6.0",
-    "npm-watch": "^0.5.0",
-    "ts-jest": "^23.10.5",
-    "tslint": "^5.12.0",
-    "tslint-config-airbnb-base": "^0.2.0",
-    "typescript": "^3.2.2",
-    "webpack": "^4.28.2",
-    "webpack-cli": "^3.1.2"
-  }
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.5",
+    "babel-plugin-transform-inline-environment-variables": "^0.4.3",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-es2015": "^6.24.1",
+    "eslint": "^5.11.1",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.14.0",
+    "wasm-loader": "^1.3.0",
+    "webpack": "^3.12.0"
+  },
+  "dependencies": {}
 }
