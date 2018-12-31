@@ -59,11 +59,11 @@ const loadWasm = async (ctx) => {
 //
 const main = async () => {
   // Create the canvas
-  const canvasX = 0;
-  const canvasY = 0;
-  const canvasWidth = document.documentElement.scrollWidth;
-  const canvasHeight = document.documentElement.scrollHeight;
-  const canvas = createCanvas(canvasX, canvasY, canvasWidth, canvasHeight);
+  const x = 0;
+  const y = 0;
+  const width = document.documentElement.scrollWidth;
+  const height = document.documentElement.scrollHeight;
+  const canvas = createCanvas(x, y, width, height);
   const ctx = canvas.getContext('2d');
 
   // Start the wasm module
