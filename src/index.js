@@ -30,8 +30,15 @@ const ctx = canvas.getContext('2d');
 // Load and initialize the wasm binary
 // TODO: Sort out the wasmPath
 const wasmPath = './node_modules/@benwiz/boba.wasm/dist/boba.wasm';
+let cCallback;
 const options = {
   imports: {
+    jsSetInterval: (f, n) => {
+      setInterval(() => {
+        // module.exports.runCallback(f); // TODO: How do I access the callback before I have the module?
+        cCallback(f);
+      }, n);
+    },
     jsDrawVertex: (x, y) => {
       console.log('vertex:', x, y);
       ctx.fillStyle = 'orange';
@@ -42,6 +49,8 @@ const options = {
   },
 };
 WebAssembly.load(wasmPath, options).then((module) => {
-  // TODO: Call a C function (main?) to start the game loop
+  cCallback = module.exports.runCallback;
+
+  // Call a function that enables C to control the game loop
   module.exports.start();
 });

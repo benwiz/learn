@@ -7,10 +7,20 @@ struct Vertex
     int y;
 };
 
+extern setInterval(int (*callback)());
 extern void jsDrawVertex(int x, int y);
+
+void tick()
+{
+    console_log("tick");
+}
+
+export int runCallback(int (*callback)())
+{
+    return callback();
+}
 
 export void start()
 {
-    console_log("This is a log from C");
-    jsDrawVertex(10, 30);
+    jsSetInterval(tick);
 }
