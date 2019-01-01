@@ -24,7 +24,7 @@ const createCanvas = (x, y, width, height) => {
 // Drawing function
 // Generally (maybe always?) these will map 1:1 to the WASM-C imports
 //
-const drawVertex = (ctx, x, y) => {
+const drawVertex = (ctx, id, x, y) => {
   ctx.strokeStyle = 'rgba(255, 128, 0, 0.8)';
   ctx.fillStyle = 'rgba(255, 128, 0, 0.5)';
 
@@ -36,6 +36,11 @@ const drawVertex = (ctx, x, y) => {
   ctx.arc(x, y, r, startAngle, endAngle, false);
   ctx.stroke();
   ctx.fill();
+
+  ctx.font = '12px Arial black';
+  ctx.fillStyle = 'black';
+  ctx.textAlign = 'center';
+  ctx.fillText(id, x, y);
 };
 
 const drawEdge = (ctx, x1, y1, x2, y2) => {
@@ -65,7 +70,7 @@ const loadWasm = async (ctx) => {
         setInterval(() => wasmModule.exports.runCallback(f), n);
       },
       jsClearCanvas: () => clearCanvas(ctx),
-      jsDrawVertex: (x, y) => drawVertex(ctx, x, y),
+      jsDrawVertex: (id, x, y) => drawVertex(ctx, id, x, y),
       jsDrawEdge: (x1, y1, x2, y2) => drawEdge(ctx, x1, y1, x2, y2),
     },
   });

@@ -10,7 +10,7 @@
 //
 extern void jsSetInterval(void (*callback)());
 extern void jsClearCanvas();
-extern void jsDrawVertex(float x, float y);
+extern void jsDrawVertex(int id, float x, float y);
 extern void jsDrawEdge(float x1, float y1, float x2, float y2);
 
 //
@@ -181,18 +181,24 @@ void drawVertices()
     for (int i = 0; i < n; i++)
     {
         Vertex *vertex = &VERTICES[i];
-        jsDrawVertex(vertex->x, vertex->y);
+        jsDrawVertex(i, vertex->x, vertex->y);
     }
 }
 
 void drawEdges()
 {
+    console_log(""); // For some reason unless I prime console_log sometimes I won't get anything to print within the function.
+
     int n = sizeof(EDGES) / sizeof(Edge);
     for (int i = 0; i < n; i++)
     {
         Edge *edge = &EDGES[i];
         Vertex *vertexA = &VERTICES[edge->vertexID_A];
         Vertex *vertexB = &VERTICES[edge->vertexID_B];
+
+        console_log("IDs: %d, %d", edge->vertexID_A, edge->vertexID_B);
+        // console_log("VALUES: %lf, %lf, %lf, %lf", vertexA->x, vertexA->y, vertexB->x, vertexB->y);
+
         jsDrawEdge(vertexA->x, vertexA->y, vertexB->x, vertexB->y);
     }
 }
