@@ -32,6 +32,7 @@ emcc test.c -s WASM=1 -s "EXTRA_EXPORTED_RUNTIME_METHODS=['ccall', 'cwrap']"
 
 - Is it normal to use global variables? What is the correct way to avoid global `VERTICES`, `EDGES`, and `SHAPES` array? Should I?
 - I think I understand when to use value and when to use pointer, but not sure.
+- If I have an array of structs, can I set an element to NULL or set the pointer for that index to NULL? I couldn't figure it out. I think exactly what I'm imagining isn't possible.
 
 ## Notes
 

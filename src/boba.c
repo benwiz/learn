@@ -166,30 +166,42 @@ void updateEdges()
     // TODO: I think this should work even if the edge is unsorted IF I sort
     // the IDs in this function when checking the matrix. So I can remove that
     // code logic from above.
-    console_log("");
-    // int matrix[NUM_VERTICES][NUM_VERTICES] = {0};
+    // Initialize count matrix and set all values to 0.
+    // TODO: There must be a better way of initializing to 0. But `= {{0}}` did
+    // not work. Console gave a "memset" error.
+    int matrix[NUM_VERTICES][NUM_VERTICES];
+    for (int i = 0; i < NUM_VERTICES; i++)
+    {
+        for (int j = 0; j < NUM_VERTICES; j++)
+        {
+            matrix[i][j] = 0;
+        }
+    }
+
     int numEdges = sizeof(EDGES) / sizeof(Edge);
-    // for (int i = 0; i > numEdges; i++)
-    // {
-    //     Edge *edge = &EDGES[i];
-
-    //     // // If we already have incremented the count matrix at this location,
-    //     // // then mark as NULL pointer to signal another duplicate.
-    //     // if (matrix[edge->vertexID_A][edge->vertexID_B] > 0)
-    //     // {
-    //     //     // edge = NULL;
-    //     // }
-
-    //     // // Increase the counter
-    //     // matrix[edge->vertexID_A][edge->vertexID_B] += 1;
-    // }
-
-    // Check the edges (tmp for debugging)
     for (int i = 0; i < numEdges; i++)
     {
         Edge *edge = &EDGES[i];
-        console_log("%d: %d, %d", i, edge->vertexID_A, edge->vertexID_B);
+
+        // If we already have incremented the count matrix at this location,
+        // then mark edge inidices with -1 to signal "do not draw".
+        if (matrix[edge->vertexID_A][edge->vertexID_B] > 0)
+        {
+            edge->vertexID_A = -1;
+            edge->vertexID_B = -1;
+        }
+
+        // Increase the counter
+        matrix[edge->vertexID_A][edge->vertexID_B] += 1;
     }
+
+    // // Check the edges (tmp for debugging)
+    // console_log("");
+    // for (int i = 0; i < numEdges; i++)
+    // {
+    //     Edge *edge = &EDGES[i];
+    //     console_log("%d: %d, %d", i, edge->vertexID_A, edge->vertexID_B);
+    // }
 }
 
 //
@@ -211,6 +223,9 @@ void drawEdges()
     for (int i = 0; i < n; i++)
     {
         Edge *edge = &EDGES[i];
+        if (edge->vertexID_A == -1 || edge->vertexID_B == -1)
+            continue;
+
         Vertex *vertexA = &VERTICES[edge->vertexID_A];
         Vertex *vertexB = &VERTICES[edge->vertexID_B];
         jsDrawEdge(vertexA->x, vertexA->y, vertexB->x, vertexB->y);
