@@ -132,7 +132,7 @@ void updateEdges()
             Vertex *edge1_vertexB = &VERTICES[edge1->vertexID_B];
             float dist1 = distance(edge1_vertexA->x, edge1_vertexA->y, edge1_vertexB->x, edge1_vertexB->y);
 
-            for (m = n + 1; m < numEdges; m++)
+            for (int m = n + 1; m < numEdges; m++)
             {
                 Edge *edge2 = edgesForVertex[m];
                 Vertex *edge2_vertexA = &VERTICES[edge2->vertexID_A];

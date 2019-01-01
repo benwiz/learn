@@ -70,10 +70,6 @@ const loadWasm = async (ctx) => {
     },
   });
 
-ctx.beginPath();
-  ctx.moveTo(edge.vertex1.x, edge.vertex1.y);
-  ctx.lineTo(edge.vertex2.x, edge.vertex2.y);
-  ctx.stroke();
   return wasmModule;
 };
 
