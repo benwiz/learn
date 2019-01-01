@@ -1,5 +1,7 @@
 # Development notes
 
+This is my first real C program.
+
 ## How I learned to use Emscripten and compile a C program to WebAssembly
 
 https://flaviocopes.com/webassembly/
@@ -25,6 +27,10 @@ Compile `test.c` to wasm
 ```sh
 emcc test.c -s WASM=1 -s "EXTRA_EXPORTED_RUNTIME_METHODS=['ccall', 'cwrap']"
 ```
+
+## Things that confuse me about C
+
+- Is it normal to use global variables? How can I avoid using a global `VERTICES` array?
 
 ## To Do
 

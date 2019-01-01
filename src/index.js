@@ -68,7 +68,7 @@ const main = async () => {
 
   // Start the wasm module
   const wasmModule = await loadWasm(ctx);
-  wasmModule.exports.start();
+  wasmModule.exports.start(width, height);
 };
 
 main();
