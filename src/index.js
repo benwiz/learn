@@ -27,11 +27,13 @@ const createCanvas = (x, y, width, height) => {
 const drawVertex = (ctx, x, y) => {
   ctx.strokeStyle = 'rgba(255, 128, 0, 0.8)';
   ctx.fillStyle = 'rgba(255, 128, 0, 0.5)';
-  const w = 20;
-  const h = 20;
+
   const r = 12;
+  const startAngle = 0;
+  const endAngle = 2 * Math.PI;
+
   ctx.beginPath();
-  ctx.arc(x, y, r, 0, 2 * Math.PI, false);
+  ctx.arc(x, y, r, startAngle, endAngle, false);
   ctx.stroke();
   ctx.fill();
 };
