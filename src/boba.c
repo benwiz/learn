@@ -85,7 +85,6 @@ void updateVertices()
 // the EDGES array. Every EDGE in EDGES is replaced.
 void updateEdges()
 {
-    console_log("");
     // For each vertex
     int numVertices = sizeof(VERTICES) / sizeof(Vertex);
     for (int i = 0; i < numVertices; i++)
@@ -94,7 +93,8 @@ void updateEdges()
         // the lower index comes first and uses the Edge struct.
 
         // Create a edge to all vertices other than itself. Use `k` to track the current index.
-        Edge edgesForVertex[numVertices - 1];
+        int numEdgesForVertex = numVertices - 1;
+        Edge edgesForVertex[numEdgesForVertex];
         int k = 0;
         for (int j = 0; j < numVertices; j++)
         {
@@ -114,8 +114,6 @@ void updateEdges()
                 edge->vertexID_B = i;
             }
 
-            console_log("edge: %d, %d", edge->vertexID_A, edge->vertexID_B);
-
             // Update `edgesForVertex` index counter `k`
             k += 1;
         }
@@ -126,15 +124,14 @@ void updateEdges()
 
         // Selection sort. Run's in O(n^2) time so it can definitely be replaced with a faster
         // sorting algorithm.
-        int numEdges = sizeof(edgesForVertex) / sizeof(Edge);
-        for (int n = 0; n < numEdges; n++)
+        for (int n = 0; n < numEdgesForVertex; n++)
         {
             Edge *edge1 = &edgesForVertex[n];
             Vertex *edge1_vertexA = &VERTICES[edge1->vertexID_A];
             Vertex *edge1_vertexB = &VERTICES[edge1->vertexID_B];
             float dist1 = distance(edge1_vertexA->x, edge1_vertexA->y, edge1_vertexB->x, edge1_vertexB->y);
 
-            for (int m = n + 1; m < numEdges; m++)
+            for (int m = n + 1; m < numEdgesForVertex; m++)
             {
                 Edge *edge2 = &edgesForVertex[m];
                 Vertex *edge2_vertexA = &VERTICES[edge2->vertexID_A];
@@ -154,9 +151,44 @@ void updateEdges()
         // Insert the NUM_NEIGHBORS-nearest-neighbors into the EDGES array
         for (int edgesForVertexIndex = 0; edgesForVertexIndex < NUM_NEIGHBORS; edgesForVertexIndex++)
         {
-            int edgeIndex = i * NUM_NEIGHBORS + NUM_NEIGHBORS;
+            int edgeIndex = i * NUM_NEIGHBORS + edgesForVertexIndex;
             EDGES[edgeIndex] = edgesForVertex[edgesForVertexIndex];
         }
+    }
+
+    // Remove duplicate edges. Duplicates exist because edges are undirected.
+    // The main reason to remove duplicates is to avoid drawing the same edge
+    // twice. Drawing is the main slow down of the app. Rather than messing with
+    // the size of the EDGES array, assign the appropriate element to the null
+    // pointer `NULL` then skip it when drawing.
+    // To find the duplicates use a count matrix. If the cell already has a
+    // value >0, then we know the element we have come across in a duplicate.
+    // TODO: I think this should work even if the edge is unsorted IF I sort
+    // the IDs in this function when checking the matrix. So I can remove that
+    // code logic from above.
+    console_log("");
+    // int matrix[NUM_VERTICES][NUM_VERTICES] = {0};
+    int numEdges = sizeof(EDGES) / sizeof(Edge);
+    // for (int i = 0; i > numEdges; i++)
+    // {
+    //     Edge *edge = &EDGES[i];
+
+    //     // // If we already have incremented the count matrix at this location,
+    //     // // then mark as NULL pointer to signal another duplicate.
+    //     // if (matrix[edge->vertexID_A][edge->vertexID_B] > 0)
+    //     // {
+    //     //     // edge = NULL;
+    //     // }
+
+    //     // // Increase the counter
+    //     // matrix[edge->vertexID_A][edge->vertexID_B] += 1;
+    // }
+
+    // Check the edges (tmp for debugging)
+    for (int i = 0; i < numEdges; i++)
+    {
+        Edge *edge = &EDGES[i];
+        console_log("%d: %d, %d", i, edge->vertexID_A, edge->vertexID_B);
     }
 }
 
@@ -175,18 +207,12 @@ void drawVertices()
 
 void drawEdges()
 {
-    // console_log(""); // For some reason unless I prime console_log sometimes I won't get anything to print within the function.
-
     int n = sizeof(EDGES) / sizeof(Edge);
     for (int i = 0; i < n; i++)
     {
         Edge *edge = &EDGES[i];
         Vertex *vertexA = &VERTICES[edge->vertexID_A];
         Vertex *vertexB = &VERTICES[edge->vertexID_B];
-
-        // console_log("IDs: %d, %d", edge->vertexID_A, edge->vertexID_B);
-        // console_log("VALUES: %lf, %lf, %lf, %lf", vertexA->x, vertexA->y, vertexB->x, vertexB->y);
-
         jsDrawEdge(vertexA->x, vertexA->y, vertexB->x, vertexB->y);
     }
 }

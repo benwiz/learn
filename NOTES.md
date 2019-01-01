@@ -44,7 +44,8 @@ emcc test.c -s WASM=1 -s "EXTRA_EXPORTED_RUNTIME_METHODS=['ccall', 'cwrap']"
 
 ## To Do
 
-- BUG: Edges aren't coming out correctly
+- De-dupe edges
+- Learn to use the debugger
 - Draw edges
 - Update shapes
 - Draw shapes
