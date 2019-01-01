@@ -4,8 +4,9 @@
 // External JavaScript functions
 //
 extern void jsSetInterval(void (*callback)());
-extern void jsDrawVertex(int x, int y);
 extern void jsClearCanvas();
+extern void jsDrawVertex(int x, int y);
+extern void jsDrawEdge(int x1, int y1, int x2, int y2);
 
 //
 // Structs
@@ -69,6 +70,7 @@ void setupVertices()
 //
 // Update functions
 //
+// updateVertices moves all vertices according to their speed and angle. It also reflects off walls.
 void updateVertices()
 {
     int n = sizeof(VERTICES) / sizeof(Vertex);
@@ -80,6 +82,8 @@ void updateVertices()
     }
 }
 
+// updateEdges finds the nearest NUM_NEIGHBORS-neighbors to each point and stores them as edges in
+// the EDGES array. Every EDGE in EDGES is replaced.
 void updateEdges()
 {
     // For each vertex
@@ -163,6 +167,18 @@ void drawVertices()
     {
         Vertex *vertex = &VERTICES[i];
         jsDrawVertex(vertex->x, vertex->y);
+    }
+}
+
+void drawEdges()
+{
+    int n = sizeof(EDGES) / sizeof(Edge);
+    for (int i = 0; i < n; i++)
+    {
+        Edge *edge = &EDGES[i];
+        Vertex *vertexA = &VERTICES[edge->vertexID_A];
+        Vertex *vertexB = &VERTICES[edge->vertexID_B];
+        jsDrawLine(vertexA->x, vertexA->y, vertexB->x, vertexB->y);
     }
 }
 

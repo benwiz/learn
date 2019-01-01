@@ -38,6 +38,15 @@ const drawVertex = (ctx, x, y) => {
   ctx.fill();
 };
 
+const drawEdge = (ctx, x1, y1, x2, y2) => {
+  ctx.strokeStyle = 'rgba(255, 128, 0, 0.8)';
+
+  ctx.beginPath();
+  ctx.moveTo(x1, y1);
+  ctx.lineTo(x2, y2);
+  ctx.stroke();
+};
+
 const clearCanvas = (ctx) => {
   const x = 0;
   const y = 0;
@@ -55,11 +64,16 @@ const loadWasm = async (ctx) => {
         // setInterval is a JS function that calls the provided function every n milliseconds
         setInterval(() => wasmModule.exports.runCallback(f), n);
       },
-      jsDrawVertex: (x, y) => drawVertex(ctx, x, y), // May have return type issues
-      jsClearCanvas: () => clearCanvas(ctx), // May have return type issues
+      jsClearCanvas: () => clearCanvas(ctx),
+      jsDrawVertex: (x, y) => drawVertex(ctx, x, y),
+      jsdrawEdge: (x1, y1, x2, y2) => drawEdge(ctx, x1, y1, x2, y2),
     },
   });
 
+ctx.beginPath();
+  ctx.moveTo(edge.vertex1.x, edge.vertex1.y);
+  ctx.lineTo(edge.vertex2.x, edge.vertex2.y);
+  ctx.stroke();
   return wasmModule;
 };
 

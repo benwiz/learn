@@ -30,7 +30,8 @@ emcc test.c -s WASM=1 -s "EXTRA_EXPORTED_RUNTIME_METHODS=['ccall', 'cwrap']"
 
 ## Things that confuse me about C
 
-- Is it normal to use global variables? How can I avoid using a global `VERTICES` array?
+- Is it normal to use global variables? What is the correct way to avoid global `VERTICES`, `EDGES`, and `SHAPES` array? Should I?
+- I think I understand when to use value and when to use pointer, but not sure.
 
 ## Notes
 
@@ -43,4 +44,7 @@ emcc test.c -s WASM=1 -s "EXTRA_EXPORTED_RUNTIME_METHODS=['ccall', 'cwrap']"
 
 ## To Do
 
-- Move a dot across the screen
+- Draw edges
+- Update shapes
+- Draw shapes
+- Update vertices
