@@ -31,10 +31,10 @@ void setupVertices()
     int n = sizeof(VERTICES) / sizeof(Vertex);
     for (int i = 0; i < n; i++)
     {
-        float f = (double)rand() / RAND_MAX;
+        float f = Math_random(); // (double)rand() / RAND_MAX;
         float x = f * WIDTH;
 
-        f = (double)rand() / RAND_MAX;
+        f = Math_random(); // (double)rand() / RAND_MAX;
         float y = f * HEIGHT;
 
         VERTICES[i].x = x;
@@ -100,8 +100,8 @@ export void start(int width, int height)
     WIDTH = width;
     HEIGHT = height;
 
-    // Prime the `rand` function
-    rand();
+    // Seed rand
+    srand(1); // time(NULL)
 
     // Call setup functions
     setupVertices();
