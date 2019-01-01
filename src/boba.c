@@ -280,7 +280,7 @@ void drawTriangles()
         Vertex *vertexB = &VERTICES[triangle->vertexID_B];
         Vertex *vertexC = &VERTICES[triangle->vertexID_C];
         console_log("%i: %lf, %lf, %lf, %lf, %lf, %lf", i, vertexA->x, vertexA->y, vertexB->x, vertexB->y, vertexC->x, vertexC->y);
-        jsDrawTriangle(vertexA->x, vertexA->y, vertexB->x, vertexB->y, vertexC->x, vertexC->y);
+        // jsDrawTriangle(vertexA->x, vertexA->y, vertexB->x, vertexB->y, vertexC->x, vertexC->y);
     }
 }
 
