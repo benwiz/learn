@@ -229,13 +229,13 @@ void updateTriangles()
         {
             triangle->vertexID_A = 2;
             triangle->vertexID_B = 3;
-            triangle->vertexID_C = 4;
+            triangle->vertexID_C = 0;
         }
         else
         {
             triangle->vertexID_A = 3;
-            triangle->vertexID_B = 4;
-            triangle->vertexID_C = 0;
+            triangle->vertexID_B = 0;
+            triangle->vertexID_C = 1;
         }
     }
 }
@@ -280,7 +280,7 @@ void drawTriangles()
         Vertex *vertexB = &VERTICES[triangle->vertexID_B];
         Vertex *vertexC = &VERTICES[triangle->vertexID_C];
         console_log("%i: %lf, %lf, %lf, %lf, %lf, %lf", i, vertexA->x, vertexA->y, vertexB->x, vertexB->y, vertexC->x, vertexC->y);
-        // jsDrawTriangle(vertexA->x, vertexA->y, vertexB->x, vertexB->y, vertexC->x, vertexC->y);
+        jsDrawTriangle(vertexA->x, vertexA->y, vertexB->x, vertexB->y, vertexC->x, vertexC->y);
     }
 }
 
