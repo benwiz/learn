@@ -45,6 +45,16 @@ void setupVertices()
 //
 // Update functions
 //
+void updateVertices()
+{
+    int n = sizeof(VERTICES) / sizeof(Vertex);
+    for (int i = 0; i < n; i++)
+    {
+        Vertex *vertex = &VERTICES[i]; // ???: I am doing this thinking I am helping readability. Am I slowing anything down? Is this more readable?
+        vertex->x += 1;
+        vertex->y += 0;
+    }
+}
 
 //
 // Draw functions
@@ -70,7 +80,8 @@ void tick()
     // Clear canvas
     jsClearCanvas();
 
-    // TODO: Call update functions
+    // Call update functions
+    updateVertices();
 
     // Call draw functions
     drawVertices();
