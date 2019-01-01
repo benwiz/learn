@@ -85,6 +85,7 @@ void updateVertices()
 // the EDGES array. Every EDGE in EDGES is replaced.
 void updateEdges()
 {
+
     // For each vertex
     int numVertices = sizeof(VERTICES) / sizeof(Vertex);
     for (int i = 0; i < numVertices; i++)
@@ -187,13 +188,12 @@ void drawEdges()
 // tick executes the drawing and updating functions
 void tick()
 {
-    // console_log("c.tick");
-
     // Clear canvas
     jsClearCanvas();
 
     // Call update functions
     updateVertices();
+    updateEdges();
 
     // Call draw functions
     drawVertices();

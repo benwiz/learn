@@ -44,6 +44,7 @@ emcc test.c -s WASM=1 -s "EXTRA_EXPORTED_RUNTIME_METHODS=['ccall', 'cwrap']"
 
 ## To Do
 
+- BUG: All edges are the same!
 - Draw edges
 - Update shapes
 - Draw shapes
