@@ -31,7 +31,9 @@ const drawVertex = (ctx, x, y) => {
   ctx.fillRect(x, y, w, h);
 };
 
-const clearCanvas = (ctx, x, y) => {
+const clearCanvas = (ctx) => {
+  const x = 0;
+  const y = 0;
   ctx.clearRect(x, y, ctx.canvas.width, ctx.canvas.height);
 };
 
@@ -47,7 +49,7 @@ const loadWasm = async (ctx) => {
         setInterval(() => wasmModule.exports.runCallback(f), n);
       },
       jsDrawVertex: (x, y) => drawVertex(ctx, x, y), // May have return type issues
-      jsClearCanvas: (x, y) => clearCanvas(ctx, x, y), // May have return type issues
+      jsClearCanvas: (x, y) => clearCanvas(ctx), // May have return type issues
     },
   });
 
