@@ -3,7 +3,8 @@
 // TODO: Figure out how to not do it like this
 #define NUM_VERTICES 4
 #define NUM_NEIGHBORS 2
-#define NUM_EDGES 8
+#define NUM_EDGES 8     // NUM_VERTICES * NUM_NEIGHBORS
+#define NUM_TRIANGLES 4 // N! / 3(N-3)! = max num possible triangles
 
 //
 // External JavaScript functions
@@ -12,6 +13,7 @@ extern void jsSetInterval(void (*callback)());
 extern void jsClearCanvas();
 extern void jsDrawVertex(int id, float x, float y);
 extern void jsDrawEdge(float x1, float y1, float x2, float y2);
+extern void jsDrawTriangle(float x1, float y1, float x2, float y2, float x3, float y3);
 
 //
 // Structs
@@ -28,6 +30,13 @@ typedef struct
     int vertexID_B;
 } Edge;
 
+typedef struct
+{
+    int vertexID_A;
+    int vertexID_B;
+    int vertexID_C;
+} Triangle;
+
 //
 // Global variables store the state
 //
@@ -35,6 +44,7 @@ int WIDTH;
 int HEIGHT;
 Vertex VERTICES[NUM_VERTICES];
 Edge EDGES[NUM_EDGES];
+Triangle TRIANGLES[NUM_TRIANGLES];
 
 //
 // Util and Math functions
@@ -194,14 +204,40 @@ void updateEdges()
         // Increase the counter
         matrix[edge->vertexID_A][edge->vertexID_B] += 1;
     }
+}
 
-    // // Check the edges (tmp for debugging)
-    // console_log("");
-    // for (int i = 0; i < numEdges; i++)
-    // {
-    //     Edge *edge = &EDGES[i];
-    //     console_log("%d: %d, %d", i, edge->vertexID_A, edge->vertexID_B);
-    // }
+void updateTriangles()
+{
+    int n = sizeof(TRIANGLES) / sizeof(Triangle);
+    for (int i = 0; i < n; i++)
+    {
+        Triangle *triangle = &TRIANGLES[i];
+
+        if (i == 0)
+        {
+            triangle->vertexID_A = 0;
+            triangle->vertexID_B = 1;
+            triangle->vertexID_C = 2;
+        }
+        else if (i == 1)
+        {
+            triangle->vertexID_A = 1;
+            triangle->vertexID_B = 2;
+            triangle->vertexID_C = 3;
+        }
+        else if (i == 2)
+        {
+            triangle->vertexID_A = 2;
+            triangle->vertexID_B = 3;
+            triangle->vertexID_C = 4;
+        }
+        else
+        {
+            triangle->vertexID_A = 3;
+            triangle->vertexID_B = 4;
+            triangle->vertexID_C = 0;
+        }
+    }
 }
 
 //
@@ -232,6 +268,20 @@ void drawEdges()
     }
 }
 
+void drawTriangles()
+{
+    int n = sizeof(TRIANGLES) / sizeof(Triangle);
+    for (int i = 0; i < n; i++)
+    {
+        Triangle *triangle = &TRIANGLES[i];
+
+        Vertex *vertexA = &VERTICES[triangle->vertexID_A];
+        Vertex *vertexB = &VERTICES[triangle->vertexID_B];
+        Vertex *vertexC = &VERTICES[triangle->vertexID_C];
+        jsDrawTriangle(vertexA->x, vertexA->y, vertexB->x, vertexB->y, vertexC->x, vertexC->y);
+    }
+}
+
 //
 // Loop functions
 //
@@ -244,10 +294,12 @@ void tick()
     // Call update functions
     updateVertices();
     updateEdges();
+    updateTriangles();
 
     // Call draw functions
     drawVertices();
     drawEdges();
+    drawTriangles();
 }
 
 // runCallback executes `tick` and is the entry point into the main loop

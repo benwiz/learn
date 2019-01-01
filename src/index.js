@@ -24,6 +24,12 @@ const createCanvas = (x, y, width, height) => {
 // Drawing function
 // Generally (maybe always?) these will map 1:1 to the WASM-C imports
 //
+const clearCanvas = (ctx) => {
+  const x = 0;
+  const y = 0;
+  ctx.clearRect(x, y, ctx.canvas.width, ctx.canvas.height);
+};
+
 const drawVertex = (ctx, id, x, y) => {
   ctx.strokeStyle = 'rgba(255, 128, 0, 0.8)';
   ctx.fillStyle = 'rgba(255, 128, 0, 0.5)';
@@ -52,10 +58,15 @@ const drawEdge = (ctx, x1, y1, x2, y2) => {
   ctx.stroke();
 };
 
-const clearCanvas = (ctx) => {
-  const x = 0;
-  const y = 0;
-  ctx.clearRect(x, y, ctx.canvas.width, ctx.canvas.height);
+const drawTriangle = (ctx, x1, y1, x2, y2, x3, y3) => {
+  ctx.fillStyle = 'rgba(255, 128, 0, 0.5)';
+
+  console.log('draw triangle');
+  ctx.beginPath();
+  ctx.moveTo(x1, y2);
+  ctx.lineTo(x2, y2);
+  ctx.lineTo(x3, y3);
+  ctx.fill();
 };
 
 //
@@ -72,6 +83,7 @@ const loadWasm = async (ctx) => {
       jsClearCanvas: () => clearCanvas(ctx),
       jsDrawVertex: (id, x, y) => drawVertex(ctx, id, x, y),
       jsDrawEdge: (x1, y1, x2, y2) => drawEdge(ctx, x1, y1, x2, y2),
+      jsDrawTriangle: (x1, y1, x2, y2, x3, y3) => drawTriangle(ctx, x1, y1, x2, y2, x3, y3),
     },
   });
 
