@@ -1,12 +1,17 @@
 #include <webassembly.h>
 
+// TODO: Figure out how to not do it like this
+#define NUM_VERTICES 20
+#define NUM_NEIGHBORS 2
+#define NUM_EDGES 40
+
 //
 // External JavaScript functions
 //
 extern void jsSetInterval(void (*callback)());
 extern void jsClearCanvas();
-extern void jsDrawVertex(int x, int y);
-extern void jsDrawEdge(int x1, int y1, int x2, int y2);
+extern void jsDrawVertex(float x, float y);
+extern void jsDrawEdge(float x1, float y1, float x2, float y2);
 
 //
 // Structs
@@ -24,23 +29,17 @@ typedef struct
 } Edge;
 
 //
-// For now, global variables. Later, configs.
-//
-int NUM_VERTICES = 20;
-int NUM_NEIGHBORS = 2;
-
-//
 // Global variables store the state
 //
 int WIDTH;
 int HEIGHT;
 Vertex VERTICES[NUM_VERTICES];
-Edge EDGES[NUM_VERTICES * NUM_NEIGHBORS];
+Edge EDGES[NUM_EDGES];
 
 //
 // Util and Math functions
 //
-void distance(float x1, float y1, float x2, float y2)
+float distance(float x1, float y1, float x2, float y2)
 {
     float a = Math_pow((x1 - x2), 2);
     float b = Math_pow((y1 - y2), 2);
@@ -88,7 +87,7 @@ void updateEdges()
 {
     // For each vertex
     int numVertices = sizeof(VERTICES) / sizeof(Vertex);
-    for (int i = 0; i < n; i++)
+    for (int i = 0; i < numVertices; i++)
     {
         // The following block simply creates an array that contains all pairs of indices where
         // the lower index comes first and uses the Edge struct.
@@ -96,7 +95,7 @@ void updateEdges()
         // Create a edge to all vertices other than itself. Use `k` to track the current index.
         Edge edgesForVertex[numVertices - 1];
         int k = 0;
-        for (int j = 0; j < n; j++)
+        for (int j = 0; j < numVertices; j++)
         {
             if (i == j)
                 continue;
@@ -127,14 +126,14 @@ void updateEdges()
         int numEdges = sizeof(edgesForVertex) / sizeof(Edge);
         for (int n = 0; n < numEdges; n++)
         {
-            Edge *edge1 = edgesForVertex[n];
+            Edge *edge1 = &edgesForVertex[n];
             Vertex *edge1_vertexA = &VERTICES[edge1->vertexID_A];
             Vertex *edge1_vertexB = &VERTICES[edge1->vertexID_B];
             float dist1 = distance(edge1_vertexA->x, edge1_vertexA->y, edge1_vertexB->x, edge1_vertexB->y);
 
             for (int m = n + 1; m < numEdges; m++)
             {
-                Edge *edge2 = edgesForVertex[m];
+                Edge *edge2 = &edgesForVertex[m];
                 Vertex *edge2_vertexA = &VERTICES[edge2->vertexID_A];
                 Vertex *edge2_vertexB = &VERTICES[edge2->vertexID_B];
                 float dist2 = distance(edge2_vertexA->x, edge2_vertexA->y, edge2_vertexB->x, edge2_vertexB->y);
@@ -178,7 +177,7 @@ void drawEdges()
         Edge *edge = &EDGES[i];
         Vertex *vertexA = &VERTICES[edge->vertexID_A];
         Vertex *vertexB = &VERTICES[edge->vertexID_B];
-        jsDrawLine(vertexA->x, vertexA->y, vertexB->x, vertexB->y);
+        jsDrawEdge(vertexA->x, vertexA->y, vertexB->x, vertexB->y);
     }
 }
 
