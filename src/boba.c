@@ -118,7 +118,8 @@ void updateEdges()
         // We want to only keep those edges that have the smallest Cartesian distance. To do this,
         // we must sort the array.
 
-        // This code was a copy-paste but can be modified easily
+        // Selection sort. Run's in O(n^2) time so it can definitely be replaced with a faster
+        // sorting algorithm.
         int numEdges = sizeof(edgesForVertex) / sizeof(Edge);
         for (int n = 0; n < numEdges; n++)
         {
@@ -141,6 +142,13 @@ void updateEdges()
                     edgesForVertex[m] = edge;
                 }
             }
+        }
+
+        // Insert the NUM_NEIGHBORS-nearest-neighbors into the EDGES array
+        for (int edgesForVertexIndex = 0; edgesForVertexIndex < NUM_NEIGHBORS; edgesForVertexIndex++)
+        {
+            int edgeIndex = i * NUM_NEIGHBORS + NUM_NEIGHBORS;
+            EDGES[edgeIndex] = edgesForVertex[edgesForVertexIndex];
         }
     }
 }

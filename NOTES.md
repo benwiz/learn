@@ -36,6 +36,11 @@ emcc test.c -s WASM=1 -s "EXTRA_EXPORTED_RUNTIME_METHODS=['ccall', 'cwrap']"
 
 - The data structure of having an array for vertices, an array for edges, and an array for shapes is not ideal. I decided to take this structure from boba.js because the point of this project is to learn C and WASM not to create an optmized program. In this same vein, some of the updating algorithms, `updateEdges` for example, can be greatly optmized but I am more interested in C language optmizations, for exmaple when to use values vs. addresses.
 
+## Algorithm Optimizations
+
+- `updateEdges` creates all possible edges, there almost certainly a way of simply finding the N-nearest neighbors without checking all neighbors. This would remove the need for the following sort algorithm.
+- `updateEdges` uses selection sort which runs in O(n^2). Choose a faster sorting algorithm.
+
 ## To Do
 
 - Move a dot across the screen
