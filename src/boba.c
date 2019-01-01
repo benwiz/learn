@@ -197,6 +197,7 @@ void tick()
 
     // Call draw functions
     drawVertices();
+    drawEdges();
 }
 
 // runCallback executes `tick` and is the entry point into the main loop

@@ -66,7 +66,7 @@ const loadWasm = async (ctx) => {
       },
       jsClearCanvas: () => clearCanvas(ctx),
       jsDrawVertex: (x, y) => drawVertex(ctx, x, y),
-      jsdrawEdge: (x1, y1, x2, y2) => drawEdge(ctx, x1, y1, x2, y2),
+      jsDrawEdge: (x1, y1, x2, y2) => drawEdge(ctx, x1, y1, x2, y2),
     },
   });
 
