@@ -154,6 +154,7 @@ void updateEdges()
                     dist2 = distance(edge2_vertexA->x, edge2_vertexA->y, edge2_vertexB->x, edge2_vertexB->y);
                 }
 
+                // If dist1 is greater, move edge2 to it's spot toward the front
                 if (dist1 > dist2)
                 {
                     Edge edge = edgesForVertex[n];
