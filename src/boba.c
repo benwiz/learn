@@ -18,8 +18,8 @@ typedef struct
 
 typedef struct
 {
-    int id1;
-    int id2;
+    int vertexID_A;
+    int vertexID_B;
 } Edge;
 
 //
@@ -75,7 +75,51 @@ void updateEdges()
     int numVertices = sizeof(EDGES) / sizeof(Edge);
     for (int i = 0; i < n; i++)
     {
-        Vertex *vertex = &VERTICES[i];
+        // The following block simply creates an array that contains all pairs of indices where
+        // the lower index comes first and uses the Edge struct.
+
+        // Create a edge to all vertices other than itself. Use `k` to track the current index.
+        int edgesForVertex[numVertices - 1];
+        int k = 0;
+        for (int j = 0; j < n; j++)
+        {
+            if (i == j)
+                continue;
+
+            // Create the edge so that vertexA has the lower id
+            if (i < j)
+            {
+                edge->vertexID_A = i;
+                edge->vertexID_B = j;
+            }
+            else
+            {
+                edge->vertexID_A = j;
+                edge->vertexID_B = i;
+            }
+
+            // Update `edgesForVertex` index counter `k`
+            k += 1;
+        }
+
+        // Now, we have an array `edgesForVertex` that contains every edge for the current vertex.
+        // We want to only keep those edges that have the smallest Cartesian distance. To do this,
+        // we must sort the array.
+
+        // This code was a copy-paste but can be modified easily
+        for (int n = 0; n < n; n++)
+        {
+            for (m = n + 1; m < n; m++)
+            {
+                // TODO: compare cartesian distances
+                if (number[n] > number[m])
+                {
+                    a = number[n];
+                    number[n] = number[m];
+                    number[m] = a;
+                }
+            }
+        }
     }
 }
 
