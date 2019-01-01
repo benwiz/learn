@@ -85,7 +85,7 @@ void updateVertices()
 // the EDGES array. Every EDGE in EDGES is replaced.
 void updateEdges()
 {
-
+    console_log("");
     // For each vertex
     int numVertices = sizeof(VERTICES) / sizeof(Vertex);
     for (int i = 0; i < numVertices; i++)
@@ -114,6 +114,8 @@ void updateEdges()
                 edge->vertexID_B = i;
             }
 
+            console_log("edge: %d, %d", edge->vertexID_A, edge->vertexID_B);
+
             // Update `edgesForVertex` index counter `k`
             k += 1;
         }
@@ -135,26 +137,11 @@ void updateEdges()
             for (int m = n + 1; m < numEdges; m++)
             {
                 Edge *edge2 = &edgesForVertex[m];
+                Vertex *edge2_vertexA = &VERTICES[edge2->vertexID_A];
+                Vertex *edge2_vertexB = &VERTICES[edge2->vertexID_B];
+                float dist2 = distance(edge2_vertexA->x, edge2_vertexA->y, edge2_vertexB->x, edge2_vertexB->y);
 
-                // TODO: Either this edge comparison is not the right strategy or I have another issue with edges.
-
-                // If edge1 and edge2 contain the same vertex IDs, then the edges are duplicates.
-                // In this case, we want to remove the edge. The simplest way, for now, is just to
-                // assign `dist2` a very large distance value to move it to the end of the array.
-                float dist2;
-                if (edge1->vertexID_A == edge2->vertexID_A && edge1->vertexID_B == edge2->vertexID_B)
-                {
-                    // I'm not sure how to assign something like "MAX_FLOAT", so I'm assigning 10*width;
-                    dist2 = 10 * WIDTH;
-                }
-                else
-                {
-                    Vertex *edge2_vertexA = &VERTICES[edge2->vertexID_A];
-                    Vertex *edge2_vertexB = &VERTICES[edge2->vertexID_B];
-                    dist2 = distance(edge2_vertexA->x, edge2_vertexA->y, edge2_vertexB->x, edge2_vertexB->y);
-                }
-
-                // If dist1 is greater, move edge2 to it's spot toward the front
+                // If dist1 is greater, move edge2 to edge1's spot toward the front
                 if (dist1 > dist2)
                 {
                     Edge edge = edgesForVertex[n];
@@ -188,7 +175,7 @@ void drawVertices()
 
 void drawEdges()
 {
-    console_log(""); // For some reason unless I prime console_log sometimes I won't get anything to print within the function.
+    // console_log(""); // For some reason unless I prime console_log sometimes I won't get anything to print within the function.
 
     int n = sizeof(EDGES) / sizeof(Edge);
     for (int i = 0; i < n; i++)
@@ -197,7 +184,7 @@ void drawEdges()
         Vertex *vertexA = &VERTICES[edge->vertexID_A];
         Vertex *vertexB = &VERTICES[edge->vertexID_B];
 
-        console_log("IDs: %d, %d", edge->vertexID_A, edge->vertexID_B);
+        // console_log("IDs: %d, %d", edge->vertexID_A, edge->vertexID_B);
         // console_log("VALUES: %lf, %lf, %lf, %lf", vertexA->x, vertexA->y, vertexB->x, vertexB->y);
 
         jsDrawEdge(vertexA->x, vertexA->y, vertexB->x, vertexB->y);
