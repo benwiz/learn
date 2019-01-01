@@ -37,6 +37,17 @@ Vertex VERTICES[NUM_VERTICES];
 Edge EDGES[NUM_VERTICES * NUM_NEIGHBORS];
 
 //
+// Util and Math functions
+//
+void distance(float x1, float y1, float x2, float y2)
+{
+    float a = Math_pow((x1 - x2), 2);
+    float b = Math_pow((y1 - y2), 2);
+    float c = Math_sqrt(a + b);
+    return c;
+}
+
+//
 // Setup functions
 //
 void setupVertices()
@@ -72,19 +83,20 @@ void updateVertices()
 void updateEdges()
 {
     // For each vertex
-    int numVertices = sizeof(EDGES) / sizeof(Edge);
+    int numVertices = sizeof(VERTICES) / sizeof(Vertex);
     for (int i = 0; i < n; i++)
     {
         // The following block simply creates an array that contains all pairs of indices where
         // the lower index comes first and uses the Edge struct.
 
         // Create a edge to all vertices other than itself. Use `k` to track the current index.
-        int edgesForVertex[numVertices - 1];
+        Edge edgesForVertex[numVertices - 1];
         int k = 0;
         for (int j = 0; j < n; j++)
         {
             if (i == j)
                 continue;
+            Edge *edge = &edgesForVertex[k];
 
             // Create the edge so that vertexA has the lower id
             if (i < j)
@@ -107,16 +119,26 @@ void updateEdges()
         // we must sort the array.
 
         // This code was a copy-paste but can be modified easily
-        for (int n = 0; n < n; n++)
+        int numEdges = sizeof(edgesForVertex) / sizeof(Edge);
+        for (int n = 0; n < numEdges; n++)
         {
-            for (m = n + 1; m < n; m++)
+            Edge *edge1 = edgesForVertex[n];
+            Vertex *edge1_vertexA = &VERTICES[edge1->vertexID_A];
+            Vertex *edge1_vertexB = &VERTICES[edge1->vertexID_B];
+            float dist1 = distance(edge1_vertexA->x, edge1_vertexA->y, edge1_vertexB->x, edge1_vertexB->y);
+
+            for (m = n + 1; m < numEdges; m++)
             {
-                // TODO: compare cartesian distances
-                if (number[n] > number[m])
+                Edge *edge2 = edgesForVertex[m];
+                Vertex *edge2_vertexA = &VERTICES[edge2->vertexID_A];
+                Vertex *edge2_vertexB = &VERTICES[edge2->vertexID_B];
+                float dist2 = distance(edge2_vertexA->x, edge2_vertexA->y, edge2_vertexB->x, edge2_vertexB->y);
+
+                if (dist1 > dist2)
                 {
-                    a = number[n];
-                    number[n] = number[m];
-                    number[m] = a;
+                    Edge edge = edgesForVertex[n];
+                    edgesForVertex[n] = edgesForVertex[m];
+                    edgesForVertex[m] = edge;
                 }
             }
         }
