@@ -259,7 +259,7 @@ export int runCallback(void (*callback)())
 // start sets up vertices and begins the main loop
 export void start(int width, int height)
 {
-    // Store width and height of canvas
+    // Store width and height of canvas globally
     WIDTH = width;
     HEIGHT = height;
 
