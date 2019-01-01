@@ -54,7 +54,8 @@ void drawVertices()
     int n = sizeof(VERTICES) / sizeof(Vertex);
     for (int i = 0; i < n; i++)
     {
-        console_log("%lf, %lf", VERTICES[i].x, VERTICES[i].y);
+        Vertex *vertex = &VERTICES[i]; // ???: I am doing this thinking I am helping readability. Am I slowing anything down? Is this more readable?
+        jsDrawVertex(vertex->x, vertex->y);
     }
 }
 
