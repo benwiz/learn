@@ -51,7 +51,7 @@ void updateVertices()
     for (int i = 0; i < n; i++)
     {
         Vertex *vertex = &VERTICES[i]; // ???: I am doing this thinking I am helping readability. Am I slowing anything down? Is this more readable?
-        vertex->x += 1;
+        vertex->x += 0;
         vertex->y += 0;
     }
 }

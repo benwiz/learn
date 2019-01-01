@@ -25,10 +25,15 @@ const createCanvas = (x, y, width, height) => {
 // Generally (maybe always?) these will map 1:1 to the WASM-C imports
 //
 const drawVertex = (ctx, x, y) => {
-  ctx.fillStyle = 'orange';
+  ctx.strokeStyle = 'rgba(255, 128, 0, 0.8)';
+  ctx.fillStyle = 'rgba(255, 128, 0, 0.5)';
   const w = 20;
   const h = 20;
-  ctx.fillRect(x, y, w, h);
+  const r = 12;
+  ctx.beginPath();
+  ctx.arc(x, y, r, 0, 2 * Math.PI, false);
+  ctx.stroke();
+  ctx.fill();
 };
 
 const clearCanvas = (ctx) => {
@@ -49,7 +54,7 @@ const loadWasm = async (ctx) => {
         setInterval(() => wasmModule.exports.runCallback(f), n);
       },
       jsDrawVertex: (x, y) => drawVertex(ctx, x, y), // May have return type issues
-      jsClearCanvas: (x, y) => clearCanvas(ctx), // May have return type issues
+      jsClearCanvas: () => clearCanvas(ctx), // May have return type issues
     },
   });
 
