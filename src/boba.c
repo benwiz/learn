@@ -1,9 +1,9 @@
 #include <webassembly.h>
 
 // TODO: Figure out how to not do it like this
-#define NUM_VERTICES 20
+#define NUM_VERTICES 4
 #define NUM_NEIGHBORS 2
-#define NUM_EDGES 40
+#define NUM_EDGES 8
 
 //
 // External JavaScript functions
@@ -135,9 +135,24 @@ void updateEdges()
             for (int m = n + 1; m < numEdges; m++)
             {
                 Edge *edge2 = &edgesForVertex[m];
-                Vertex *edge2_vertexA = &VERTICES[edge2->vertexID_A];
-                Vertex *edge2_vertexB = &VERTICES[edge2->vertexID_B];
-                float dist2 = distance(edge2_vertexA->x, edge2_vertexA->y, edge2_vertexB->x, edge2_vertexB->y);
+
+                // TODO: Either this edge comparison is not the right strategy or I have another issue with edges.
+
+                // If edge1 and edge2 contain the same vertex IDs, then the edges are duplicates.
+                // In this case, we want to remove the edge. The simplest way, for now, is just to
+                // assign `dist2` a very large distance value to move it to the end of the array.
+                float dist2;
+                if (edge1->vertexID_A == edge2->vertexID_A && edge1->vertexID_B == edge2->vertexID_B)
+                {
+                    // I'm not sure how to assign something like "MAX_FLOAT", so I'm assigning 10*width;
+                    dist2 = 10 * WIDTH;
+                }
+                else
+                {
+                    Vertex *edge2_vertexA = &VERTICES[edge2->vertexID_A];
+                    Vertex *edge2_vertexB = &VERTICES[edge2->vertexID_B];
+                    dist2 = distance(edge2_vertexA->x, edge2_vertexA->y, edge2_vertexB->x, edge2_vertexB->y);
+                }
 
                 if (dist1 > dist2)
                 {
