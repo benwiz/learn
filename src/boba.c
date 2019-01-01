@@ -16,12 +16,25 @@ typedef struct
     float y;
 } Vertex;
 
+typedef struct
+{
+    int id1;
+    int id2;
+} Edge;
+
+//
+// For now, global variables. Later, configs.
+//
+int NUM_VERTICES = 20;
+int NUM_NEIGHBORS = 2;
+
 //
 // Global variables store the state
 //
 int WIDTH;
 int HEIGHT;
-Vertex VERTICES[20];
+Vertex VERTICES[NUM_VERTICES];
+Edge EDGES[NUM_VERTICES * NUM_NEIGHBORS];
 
 //
 // Setup functions
@@ -56,6 +69,16 @@ void updateVertices()
     }
 }
 
+void updateEdges()
+{
+    // For each vertex
+    int numVertices = sizeof(EDGES) / sizeof(Edge);
+    for (int i = 0; i < n; i++)
+    {
+        Vertex *vertex = &VERTICES[i];
+    }
+}
+
 //
 // Draw functions
 //
@@ -64,7 +87,7 @@ void drawVertices()
     int n = sizeof(VERTICES) / sizeof(Vertex);
     for (int i = 0; i < n; i++)
     {
-        Vertex *vertex = &VERTICES[i]; // ???: I am doing this thinking I am helping readability. Am I slowing anything down? Is this more readable?
+        Vertex *vertex = &VERTICES[i];
         jsDrawVertex(vertex->x, vertex->y);
     }
 }
