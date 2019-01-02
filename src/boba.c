@@ -16,12 +16,14 @@
 //
 int WIDTH;
 int HEIGHT;
+bool DRAW_VERTICES;
+bool DRAW_EDGES;
+bool DRAW_TRIANGLES;
 
 //
 // External JavaScript functions
 //
-extern void
-jsSetInterval(void (*callback)());
+extern void jsSetInterval(void (*callback)());
 extern void jsClearCanvas();
 extern void jsDrawVertex(int id, float x, float y);
 extern void jsDrawEdge(float x1, float y1, float x2, float y2);
@@ -102,10 +104,13 @@ bool edgeExists(int vertexID_A, int vertexID_B)
 //
 // Setup functions
 //
-void setupConfigs(int width, int height)
+void setupConfigs(int width, int height, bool drawVertices, bool drawEdges, bool drawTriangles)
 {
     WIDTH = width;
     HEIGHT = height;
+    DRAW_VERTICES = drawVertices;
+    DRAW_EDGES = drawEdges;
+    DRAW_TRIANGLES = drawTriangles;
 }
 
 void setupVertices(float minRadius, float maxRadius, float minSpeed, float maxSpeed)
@@ -396,10 +401,8 @@ void drawTriangles()
 // Loop functions
 //
 // tick executes the drawing and updating functions
-void tick(int test)
+void tick()
 {
-    console_log("test: %d", test);
-
     // Clear canvas
     jsClearCanvas();
 
@@ -409,9 +412,12 @@ void tick(int test)
     updateTriangles();
 
     // Call draw functions
-    drawVertices();
-    drawEdges();
-    drawTriangles();
+    if (DRAW_VERTICES)
+        drawVertices();
+    if (DRAW_EDGES)
+        drawEdges();
+    if (DRAW_TRIANGLES)
+        drawTriangles();
 }
 
 // runCallback executes `tick` and is the entry point into the main loop
@@ -421,13 +427,10 @@ export int runCallback(void (*callback)())
 }
 
 // start sets up vertices and begins the main loop
-export void start(int width, int height, float minRadius, float maxRadius, float minSpeed, float maxSpeed)
+export void start(int width, int height, float minRadius, float maxRadius, float minSpeed, float maxSpeed, bool drawVertices, bool drawEdges, bool drawTriangles)
 {
-    // Seed rand
-    srand(1); // time(NULL)
-
     // Call setup functions
-    setupConfigs(width, height);
+    setupConfigs(width, height, drawVertices, drawEdges, drawTriangles);
     setupVertices(minRadius, maxRadius, minSpeed, maxSpeed);
     setupEdges();
     setupTriangles();

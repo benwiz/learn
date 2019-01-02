@@ -105,6 +105,11 @@ const main = async () => {
     maxRadius: 16,
     minSpeed: 0.1,
     maxSpeed: 0.5,
+    drawVertices: true,
+    // Edges
+    drawEdges: true,
+    // Triangles
+    drawTriangles: true,
   };
 
   // Create the canvas
@@ -120,6 +125,9 @@ const main = async () => {
     options.maxRadius,
     options.minSpeed,
     options.maxSpeed,
+    options.drawVertices,
+    options.drawEdges,
+    options.drawTriangles,
   );
 };
 
