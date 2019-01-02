@@ -403,12 +403,15 @@ void updateTriangles()
             mid = triangle->vertexID_A;
         }
 
+        // Check if we have already seen this triangle
         if (matrix[min][mid][max] > 0)
         {
             triangle->vertexID_A = -1;
             triangle->vertexID_B = -1;
             triangle->vertexID_C = -1;
         }
+
+        // Update the count for this triangle
         matrix[min][mid][max] += 1;
     }
 }
