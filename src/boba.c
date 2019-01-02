@@ -57,6 +57,22 @@ float distance(float x1, float y1, float x2, float y2)
     return c;
 }
 
+bool edgeExists(int vertexID_A, int vertexID_B)
+{
+    int n = sizeof(VERTICES) / sizeof(Vertex);
+    for (int i = 0; i < n; i++)
+    {
+        Edge *edge = &EDGES[i];
+        if (edge->vertexID_A == vertexID_A && edge->vertexID_B == vertexID_B ||
+            edge->vertexID_A == vertexID_B && edge->vertexID_B == vertexID_A)
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
+
 //
 // Setup functions
 //
@@ -73,6 +89,27 @@ void setupVertices()
 
         VERTICES[i].x = x;
         VERTICES[i].y = y;
+    }
+}
+
+void setupEdges()
+{
+    int n = sizeof(EDGES) / sizeof(Edge);
+    for (int i = 0; i < n; i++)
+    {
+        EDGES[i].vertexID_A = -1;
+        EDGES[i].vertexID_B = -1;
+    }
+}
+
+void setupTriangles()
+{
+    int n = sizeof(TRIANGLES) / sizeof(Triangle);
+    for (int i = 0; i < n; i++)
+    {
+        TRIANGLES[i].vertexID_A = -1;
+        TRIANGLES[i].vertexID_B = -1;
+        TRIANGLES[i].vertexID_C = -1;
     }
 }
 
@@ -175,7 +212,7 @@ void updateEdges()
     // value >0, then we know the element we have come across in a duplicate.
     // TODO: I think this should work even if the edge is unsorted IF I sort
     // the IDs in this function when checking the matrix. So I can remove that
-    // code logic from above.
+    // code logic from above after I make the change below.
     // Initialize count matrix and set all values to 0.
     // TODO: There must be a better way of initializing to 0. But `= {{0}}` did
     // not work. Console gave a "memset" error.
@@ -208,34 +245,32 @@ void updateEdges()
 
 void updateTriangles()
 {
-    int n = sizeof(TRIANGLES) / sizeof(Triangle);
-    for (int i = 0; i < n; i++)
+    int triangleIndex = 0;
+    int numEdges = sizeof(EDGES) / sizeof(Edge);
+    int numVertices = sizeof(VERTICES) / sizeof(Vertex);
+    for (int i = 0; i < numEdges; i++)
     {
-        Triangle *triangle = &TRIANGLES[i];
+        Edge *edge = &EDGES[i];
 
-        if (i == 0)
+        for (int j = 0; j < numVertices; j++)
         {
-            triangle->vertexID_A = 0;
-            triangle->vertexID_B = 1;
-            triangle->vertexID_C = 2;
-        }
-        else if (i == 1)
-        {
-            triangle->vertexID_A = 1;
-            triangle->vertexID_B = 2;
-            triangle->vertexID_C = 3;
-        }
-        else if (i == 2)
-        {
-            triangle->vertexID_A = 2;
-            triangle->vertexID_B = 3;
-            triangle->vertexID_C = 0;
-        }
-        else
-        {
-            triangle->vertexID_A = 3;
-            triangle->vertexID_B = 0;
-            triangle->vertexID_C = 1;
+            // If the vertex is part of the edge, skip this vertex
+            if (edge->vertexID_A == j || edge->vertexID_B == j)
+                continue;
+
+            // Check to see if the edges (vertexID_A, vertexID) and
+            // (vertexID_B, vertexID) exist.
+            bool testA = edgeExists(j, edge->vertexID_A);
+            bool testB = edgeExists(j, edge->vertexID_B);
+            if (testA && testB)
+            {
+                Triangle *triangle = &TRIANGLES[triangleIndex];
+                triangle->vertexID_A = edge->vertexID_A;
+                triangle->vertexID_B = edge->vertexID_B;
+                triangle->vertexID_C = j;
+
+                triangleIndex += 1;
+            }
         }
     }
 }
@@ -274,6 +309,8 @@ void drawTriangles()
     for (int i = 0; i < n; i++)
     {
         Triangle *triangle = &TRIANGLES[i];
+        if (triangle->vertexID_A == -1 || triangle->vertexID_B == -1 || triangle->vertexID_C == -1)
+            continue;
 
         Vertex *vertexA = &VERTICES[triangle->vertexID_A];
         Vertex *vertexB = &VERTICES[triangle->vertexID_B];
@@ -320,6 +357,8 @@ export void start(int width, int height)
 
     // Call setup functions
     setupVertices();
+    setupEdges();
+    setupTriangles();
 
     // Start loop
     jsSetInterval(tick);
