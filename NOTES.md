@@ -47,8 +47,6 @@ emcc test.c -s WASM=1 -s "EXTRA_EXPORTED_RUNTIME_METHODS=['ccall', 'cwrap']"
 
 ## To Do
 
-- Create the initialization api
-  - Do not allow any vertex/neighbor configs, just the current ones: color, speed, size, drawBooleans
 - Deploy to NPM and sort out the WASM file download 
 - Update readme
   - Include a disclaimer that this was a WASM learning project and it is still recommended to use Boba.js
