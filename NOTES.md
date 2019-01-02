@@ -47,10 +47,10 @@ emcc test.c -s WASM=1 -s "EXTRA_EXPORTED_RUNTIME_METHODS=['ccall', 'cwrap']"
 
 ## To Do
 
+- Sort out my global array issue, I think I can do this using static variables
+
 - Set up configuration tooling
-  - Num vertices
-  - Num neighbors
-  - Get default configs function from JS
+  - Make the API for it
 - Update readme
 - Deploy to NPM
 - Create demo website

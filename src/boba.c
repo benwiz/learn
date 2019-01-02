@@ -25,7 +25,10 @@
 //
 int WIDTH;
 int HEIGHT;
+int NUM_VERTICES;
 int NUM_NEIGHBORS;
+int NUM_EDGES;
+int NUM_TRIANGLES;
 bool DRAW_VERTICES;
 bool DRAW_EDGES;
 bool DRAW_TRIANGLES;
@@ -67,7 +70,6 @@ typedef struct
 //
 // Global variables store the state
 //
-int N = 6;
 Vertex VERTICES[MAX_NUM_VERTICES];
 Edge EDGES[MAX_NUM_EDGES];
 Triangle TRIANGLES[MAX_NUM_TRIANGLES];
@@ -466,6 +468,15 @@ void drawTriangles()
 // tick executes the drawing and updating functions
 void tick()
 {
+    // Initialize arrays
+    static bool arraysInitialized;
+    if (!arraysInitialized)
+    {
+        console_log("init arrays");
+
+        arraysInitialized = true;
+    }
+
     // Clear canvas
     jsClearCanvas();
 
