@@ -48,7 +48,6 @@ emcc test.c -s WASM=1 -s "EXTRA_EXPORTED_RUNTIME_METHODS=['ccall', 'cwrap']"
 ## To Do
 
 - Set up configuration tooling
-  - Colors
   - Num vertices
   - Num neighbors
   - Get default configs function from JS
