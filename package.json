@@ -1,6 +1,6 @@
 {
   "name": "@benwiz/boba.wasm",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "WASM based animated background as an NPM module written in C with no dependencies.",
   "main": "./dist/bundle.js",
   "scripts": {
