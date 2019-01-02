@@ -260,9 +260,7 @@ void drawEdges()
     {
         Edge *edge = &EDGES[i];
         if (edge->vertexID_A == -1 || edge->vertexID_B == -1)
-        {
             continue;
-        }
 
         Vertex *vertexA = &VERTICES[edge->vertexID_A];
         Vertex *vertexB = &VERTICES[edge->vertexID_B];
