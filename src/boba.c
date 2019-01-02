@@ -1,15 +1,31 @@
 #include <webassembly.h>
 
-// TODO: Figure out how to not do it like this
+//
+// Constant definitions that are being used as configs
+// TODO: Figure out how not to use constants for configs, because
+//  they are not configurable
+//
 #define NUM_VERTICES 6
 #define NUM_NEIGHBORS 2
 #define NUM_EDGES 12    // NUM_VERTICES * NUM_NEIGHBORS
 #define NUM_TRIANGLES 4 // N! / 3(N-3)! = max num possible triangles
 
 //
-// External JavaScript functions
+// Global variables that are being used as configs
+// TODO: Figure out if there is a better method
 //
-extern void jsSetInterval(void (*callback)());
+int WIDTH;
+int HEIGHT;
+float MIN_RADIUS;
+float MAX_RADIUS;
+float MIN_SPEED;
+float MAX_SPEED :
+
+    //
+    // External JavaScript functions
+    //
+    extern void
+    jsSetInterval(void (*callback)());
 extern void jsClearCanvas();
 extern void jsDrawVertex(int id, float x, float y);
 extern void jsDrawEdge(float x1, float y1, float x2, float y2);
@@ -43,8 +59,6 @@ typedef struct
 //
 // Global variables store the state
 //
-int WIDTH;
-int HEIGHT;
 Vertex VERTICES[NUM_VERTICES];
 Edge EDGES[NUM_EDGES];
 Triangle TRIANGLES[NUM_TRIANGLES];
@@ -58,6 +72,11 @@ float distance(float x1, float y1, float x2, float y2)
     float b = Math_pow((y1 - y2), 2);
     float c = Math_sqrt(a + b);
     return c;
+}
+
+float getRandomFloat(float min, float max)
+{
+    return Math_random() * (max - min) + min;
 }
 
 bool edgeExists(int vertexID_A, int vertexID_B)
@@ -86,8 +105,11 @@ void setupVertices()
     {
         Vertex *vertex = &VERTICES[i];
 
-        vertex->x = Math_random() * WIDTH;
-        vertex->y = Math_random() * HEIGHT;
+        vertex->x = getRandomFloat(0, WIDTH - 1);
+        vertex->y = getRandomFloat(0, HEIGHT - 1);
+        vertex->radius = getRandomFloat(MIN_RADIUS, MAX_RADIUS);
+        vertex->speed = getRandomFloat(MIN_SPEED, MAX_SPEED);
+        vertex->angle = getRandomFloat(0, 360);
     }
 }
 

@@ -48,7 +48,7 @@ emcc test.c -s WASM=1 -s "EXTRA_EXPORTED_RUNTIME_METHODS=['ccall', 'cwrap']"
 
 - Update vertices
 - Try to remove global variables, if that is smart in C
-- Achieve configuration feature parity with boba.js
+- Set up configuration tooling
 - Update readme
 - Deploy to NPM
 - Create demo website
