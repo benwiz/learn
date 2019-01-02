@@ -302,7 +302,8 @@ void updateEdges()
     // value >0, then we know the element we have come across in a duplicate.
     // TODO: I think this should work even if the edge is unsorted IF I sort
     // the IDs in this function when checking the matrix. So I can remove that
-    // code logic from above after I make the change below.
+    // code logic from above after I make the change below. I can use the macros
+    // used in deduping the triangles.
     // Initialize count matrix and set all values to 0.
     // TODO: There must be a better way of initializing to 0. But `= {{0}}` did
     // not work. Console gave a "memset" error.
