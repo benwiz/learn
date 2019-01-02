@@ -30,9 +30,9 @@ const clearCanvas = (ctx) => {
   ctx.clearRect(x, y, ctx.canvas.width, ctx.canvas.height);
 };
 
-const drawVertex = (ctx, id, x, y) => {
-  ctx.strokeStyle = 'rgba(255, 128, 0, 0.8)';
-  ctx.fillStyle = 'rgba(255, 128, 0, 0.5)';
+const drawVertex = (ctx, id, x, y, color) => {
+  ctx.strokeStyle = `rgba(${color.r}, ${color.g}, ${color.b}, ${color.a})`;
+  ctx.fillStyle = `rgba(${color.r}, ${color.g}, ${color.b}, ${color.a / 2})`;
 
   const r = 12;
   const startAngle = 0;
@@ -49,8 +49,8 @@ const drawVertex = (ctx, id, x, y) => {
   // ctx.fillText(id, x, y);
 };
 
-const drawEdge = (ctx, x1, y1, x2, y2) => {
-  ctx.strokeStyle = 'rgba(255, 128, 0, 0.8)';
+const drawEdge = (ctx, x1, y1, x2, y2, color) => {
+  ctx.strokeStyle = `rgba(${color.r}, ${color.g}, ${color.b}, ${color.a})`;
 
   ctx.beginPath();
   ctx.moveTo(x1, y1);
@@ -58,8 +58,8 @@ const drawEdge = (ctx, x1, y1, x2, y2) => {
   ctx.stroke();
 };
 
-const drawTriangle = (ctx, x1, y1, x2, y2, x3, y3) => {
-  ctx.fillStyle = 'rgba(255, 128, 0, 0.2)';
+const drawTriangle = (ctx, x1, y1, x2, y2, x3, y3, color) => {
+  ctx.fillStyle = `rgba(${color.r}, ${color.g}, ${color.b}, ${color.a})`;
 
   ctx.beginPath();
   ctx.moveTo(x1, y1);
@@ -72,7 +72,7 @@ const drawTriangle = (ctx, x1, y1, x2, y2, x3, y3) => {
 //
 // Wasm
 //
-const loadWasm = async (ctx) => {
+const loadWasm = async (ctx, vertexColor, edgeColor, triangleColor) => {
   const wasmPath = './node_modules/@benwiz/boba.wasm/dist/boba.wasm'; // TODO: Solve the wasmPath
   const wasmModule = await WebAssembly.load(wasmPath, {
     imports: {
@@ -81,9 +81,9 @@ const loadWasm = async (ctx) => {
         setInterval(() => wasmModule.exports.runCallback(f), n);
       },
       jsClearCanvas: () => clearCanvas(ctx),
-      jsDrawVertex: (id, x, y) => drawVertex(ctx, id, x, y),
-      jsDrawEdge: (x1, y1, x2, y2) => drawEdge(ctx, x1, y1, x2, y2),
-      jsDrawTriangle: (x1, y1, x2, y2, x3, y3) => drawTriangle(ctx, x1, y1, x2, y2, x3, y3),
+      jsDrawVertex: (id, x, y) => drawVertex(ctx, id, x, y, vertexColor),
+      jsDrawEdge: (x1, y1, x2, y2) => drawEdge(ctx, x1, y1, x2, y2, edgeColor),
+      jsDrawTriangle: (x1, y1, x2, y2, x3, y3) => drawTriangle(ctx, x1, y1, x2, y2, x3, y3, triangleColor),
     },
   });
 
@@ -101,15 +101,35 @@ const main = async () => {
     width: document.documentElement.scrollWidth,
     height: document.documentElement.scrollHeight,
     // Vertices
-    minRadius: 8,
-    maxRadius: 16,
-    minSpeed: 0.1,
-    maxSpeed: 0.5,
+    numVertices: 30,
     drawVertices: true,
+    vertexMinRadius: 8,
+    vertexMaxRadius: 16,
+    vertexMinSpeed: 0.1,
+    vertexMaxSpeed: 0.5,
+    vertexColor: {
+      r: 30,
+      g: 144,
+      b: 255,
+      a: 0.1,
+    },
     // Edges
+    numNeighbors: 2,
     drawEdges: true,
+    edgeColor: {
+      r: 30,
+      g: 144,
+      b: 255,
+      a: 0.1,
+    },
     // Triangles
     drawTriangles: true,
+    triangleColor: {
+      r: 30,
+      g: 144,
+      b: 255,
+      a: 0.1,
+    },
   };
 
   // Create the canvas
@@ -117,14 +137,19 @@ const main = async () => {
   const ctx = canvas.getContext('2d');
 
   // Start the wasm module
-  const wasmModule = await loadWasm(ctx);
+  const wasmModule = await loadWasm(
+    ctx,
+    options.vertexColor,
+    options.edgeColor,
+    options.triangleColor,
+  );
   wasmModule.exports.start(
     options.width,
     options.height,
-    options.minRadius,
-    options.maxRadius,
-    options.minSpeed,
-    options.maxSpeed,
+    options.vertexMinRadius,
+    options.vertexMaxRadius,
+    options.vertexMinSpeed,
+    options.vertexMaxSpeed,
     options.drawVertices,
     options.drawEdges,
     options.drawTriangles,

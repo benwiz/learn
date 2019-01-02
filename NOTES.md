@@ -47,7 +47,11 @@ emcc test.c -s WASM=1 -s "EXTRA_EXPORTED_RUNTIME_METHODS=['ccall', 'cwrap']"
 
 ## To Do
 
-- Set up configuration tooling. The main input from the NPM lib should be exactly the same as Boba.js, then mapped to the better named options for boba.wasm.
+- Set up configuration tooling
+  - Colors
+  - Num vertices
+  - Num neighbors
+  - Get default configs function from JS
 - Update readme
 - Deploy to NPM
 - Create demo website
