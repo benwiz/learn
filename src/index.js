@@ -91,45 +91,9 @@ const loadWasm = async (ctx, vertexColor, edgeColor, triangleColor) => {
 };
 
 //
-// Main
+// Start
 //
-const main = async () => {
-  const options = {
-    // Canvas
-    x: 0,
-    y: 0,
-    width: document.documentElement.scrollWidth,
-    height: document.documentElement.scrollHeight,
-    // Vertices
-    drawVertices: true,
-    vertexMinRadius: 8,
-    vertexMaxRadius: 16,
-    vertexMinSpeed: 0.5,
-    vertexMaxSpeed: 0.8,
-    vertexColor: {
-      r: 30,
-      g: 144,
-      b: 255,
-      a: 0.2,
-    },
-    // Edges
-    drawEdges: true,
-    edgeColor: {
-      r: 30,
-      g: 144,
-      b: 255,
-      a: 0.2,
-    },
-    // Triangles
-    drawTriangles: true,
-    triangleColor: {
-      r: 30,
-      g: 144,
-      b: 255,
-      a: 0.2,
-    },
-  };
-
+export const start = async (options) => {
   // Create the canvas
   const canvas = createCanvas(options.x, options.y, options.width, options.height);
   const ctx = canvas.getContext('2d');
@@ -154,4 +118,39 @@ const main = async () => {
   );
 };
 
-main();
+// const options = {
+//   // Canvas
+//   x: 0,
+//   y: 0,
+//   width: document.documentElement.scrollWidth,
+//   height: document.documentElement.scrollHeight,
+//   // Vertices
+//   drawVertices: true,
+//   vertexMinRadius: 8,
+//   vertexMaxRadius: 16,
+//   vertexMinSpeed: 0.5,
+//   vertexMaxSpeed: 0.8,
+//   vertexColor: {
+//     r: 30,
+//     g: 144,
+//     b: 255,
+//     a: 0.2,
+//   },
+//   // Edges
+//   drawEdges: true,
+//   edgeColor: {
+//     r: 30,
+//     g: 144,
+//     b: 255,
+//     a: 0.2,
+//   },
+//   // Triangles
+//   drawTriangles: true,
+//   triangleColor: {
+//     r: 30,
+//     g: 144,
+//     b: 255,
+//     a: 0.2,
+//   },
+// };
+// start(options);

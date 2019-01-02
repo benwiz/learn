@@ -5,7 +5,7 @@ module.exports = {
   output: {
     path: Path.resolve(__dirname, 'dist'),
     filename: 'bundle.js',
-    libraryTarget: 'var',
+    libraryTarget: 'commonjs2',
     library: 'Boba',
   },
   devtool: 'source-map',
