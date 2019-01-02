@@ -1,9 +1,9 @@
 #include <webassembly.h>
 
 // TODO: Figure out how to not do it like this
-#define NUM_VERTICES 4
+#define NUM_VERTICES 6
 #define NUM_NEIGHBORS 2
-#define NUM_EDGES 8     // NUM_VERTICES * NUM_NEIGHBORS
+#define NUM_EDGES 12    // NUM_VERTICES * NUM_NEIGHBORS
 #define NUM_TRIANGLES 4 // N! / 3(N-3)! = max num possible triangles
 
 //
@@ -260,7 +260,9 @@ void drawEdges()
     {
         Edge *edge = &EDGES[i];
         if (edge->vertexID_A == -1 || edge->vertexID_B == -1)
+        {
             continue;
+        }
 
         Vertex *vertexA = &VERTICES[edge->vertexID_A];
         Vertex *vertexB = &VERTICES[edge->vertexID_B];
@@ -270,7 +272,6 @@ void drawEdges()
 
 void drawTriangles()
 {
-    console_log("");
     int n = sizeof(TRIANGLES) / sizeof(Triangle);
     for (int i = 0; i < n; i++)
     {
@@ -279,7 +280,6 @@ void drawTriangles()
         Vertex *vertexA = &VERTICES[triangle->vertexID_A];
         Vertex *vertexB = &VERTICES[triangle->vertexID_B];
         Vertex *vertexC = &VERTICES[triangle->vertexID_C];
-        console_log("%i: %lf, %lf, %lf, %lf, %lf, %lf", i, vertexA->x, vertexA->y, vertexB->x, vertexB->y, vertexC->x, vertexC->y);
         jsDrawTriangle(vertexA->x, vertexA->y, vertexB->x, vertexB->y, vertexC->x, vertexC->y);
     }
 }
