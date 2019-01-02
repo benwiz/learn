@@ -16,10 +16,6 @@
 //
 int WIDTH;
 int HEIGHT;
-float MIN_RADIUS;
-float MAX_RADIUS;
-float MIN_SPEED;
-float MAX_SPEED;
 
 //
 // External JavaScript functions
@@ -106,17 +102,13 @@ bool edgeExists(int vertexID_A, int vertexID_B)
 //
 // Setup functions
 //
-void setupConfigs(int width, int height, float minRadius, float maxRadius, float minSpeed, float maxSpeed)
+void setupConfigs(int width, int height)
 {
     WIDTH = width;
     HEIGHT = height;
-    MIN_RADIUS = minRadius;
-    MAX_RADIUS = maxRadius;
-    MIN_SPEED = minSpeed;
-    MAX_SPEED = maxSpeed;
 }
 
-void setupVertices()
+void setupVertices(float minRadius, float maxRadius, float minSpeed, float maxSpeed)
 {
     int n = sizeof(VERTICES) / sizeof(Vertex);
     for (int i = 0; i < n; i++)
@@ -125,8 +117,8 @@ void setupVertices()
 
         vertex->x = getRandomFloat(0, WIDTH - 1);
         vertex->y = getRandomFloat(0, HEIGHT - 1);
-        vertex->radius = getRandomFloat(MIN_RADIUS, MAX_RADIUS);
-        vertex->speed = getRandomFloat(MIN_SPEED, MAX_SPEED);
+        vertex->radius = getRandomFloat(minRadius, maxRadius);
+        vertex->speed = getRandomFloat(minSpeed, maxSpeed);
         vertex->angle = getRandomFloat(0, 360);
     }
 }
@@ -433,8 +425,8 @@ export void start(int width, int height, float minRadius, float maxRadius, float
     srand(1); // time(NULL)
 
     // Call setup functions
-    setupConfigs(width, height, minRadius, maxRadius, minSpeed, maxSpeed);
-    setupVertices();
+    setupConfigs(width, height);
+    setupVertices(minRadius, maxRadius, minSpeed, maxSpeed);
     setupEdges();
     setupTriangles();
 
