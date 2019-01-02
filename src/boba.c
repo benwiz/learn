@@ -3,7 +3,7 @@
 //
 // Constant definitions that are being used as configs
 // TODO: Figure out how not to use constants for configs, because
-//  they are not configurable
+// they are not configurable
 //
 #define NUM_VERTICES 6
 #define NUM_NEIGHBORS 2
@@ -11,8 +11,8 @@
 #define NUM_TRIANGLES 4 // N! / 3(N-3)! = max num possible triangles
 
 //
-// Global variables that are being used as configs
-// TODO: Figure out if there is a better method
+// Global variables that are being used as configs. Better to set here than
+// to pass between WebAssembly and JavaScript every iteration of the loop.
 //
 int WIDTH;
 int HEIGHT;
@@ -396,8 +396,10 @@ void drawTriangles()
 // Loop functions
 //
 // tick executes the drawing and updating functions
-void tick()
+void tick(int test)
 {
+    console_log("test: %d", test);
+
     // Clear canvas
     jsClearCanvas();
 

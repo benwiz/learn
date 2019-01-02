@@ -38,6 +38,7 @@ emcc test.c -s WASM=1 -s "EXTRA_EXPORTED_RUNTIME_METHODS=['ccall', 'cwrap']"
 
 - The data structure of having an array for vertices, an array for edges, and an array for shapes is not ideal. I decided to take this structure from boba.js because the point of this project is to learn C and WASM not to create an optmized program. In this same vein, some of the updating algorithms, `updateEdges` for example, can be greatly optmized but I am more interested in C language optmizations, for exmaple when to use values vs. addresses.
 - I'm fairly certain I have some triangle duplicates, but I haven't checked. It's ok though because it causes variation in color which looks nice.
+- I think I must leave many of the configs as global variables in C because it's better to not pass the data back and forth between WebAssembly and JavaScript
 
 ## Algorithm Optimizations
 
@@ -46,7 +47,6 @@ emcc test.c -s WASM=1 -s "EXTRA_EXPORTED_RUNTIME_METHODS=['ccall', 'cwrap']"
 
 ## To Do
 
-- Try to remove global variables, if that is smart in C
 - Set up configuration tooling. The main input from the NPM lib should be exactly the same as Boba.js, then mapped to the better named options for boba.wasm.
 - Update readme
 - Deploy to NPM
