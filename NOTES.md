@@ -45,8 +45,5 @@ emcc test.c -s WASM=1 -s "EXTRA_EXPORTED_RUNTIME_METHODS=['ccall', 'cwrap']"
 
 ## To Do
 
-- Learn to use the debugger
-- Update shapes
-- Draw shapes
 - Update vertices
 - Try to remove global variables, if that is smart in C
