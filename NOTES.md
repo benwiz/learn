@@ -46,9 +46,8 @@ emcc test.c -s WASM=1 -s "EXTRA_EXPORTED_RUNTIME_METHODS=['ccall', 'cwrap']"
 
 ## To Do
 
-- Update vertices
 - Try to remove global variables, if that is smart in C
-- Set up configuration tooling
+- Set up configuration tooling. The main input from the NPM lib should be exactly the same as Boba.js, then mapped to the better named options for boba.wasm.
 - Update readme
 - Deploy to NPM
 - Create demo website

@@ -64,7 +64,7 @@ Edge EDGES[NUM_EDGES];
 Triangle TRIANGLES[NUM_TRIANGLES];
 
 //
-// Util and Math functions
+// Math functions
 //
 float distance(float x1, float y1, float x2, float y2)
 {
@@ -79,6 +79,14 @@ float getRandomFloat(float min, float max)
     return Math_random() * (max - min) + min;
 }
 
+float degToRadians(float angle)
+{
+    return angle * (Math_PI / 180);
+}
+
+//
+// Util functions
+//
 bool edgeExists(int vertexID_A, int vertexID_B)
 {
     int n = sizeof(VERTICES) / sizeof(Vertex);
@@ -154,8 +162,50 @@ void updateVertices()
     for (int i = 0; i < n; i++)
     {
         Vertex *vertex = &VERTICES[i];
-        vertex->x += 1;
-        vertex->y += 0;
+
+        // Move the vertex
+        vertex->x += vertex->speed * cos(degToRadians(vertex->angle));
+        vertex->y += vertex->speed * sin(degToRadians(vertex->angle));
+
+        // Constrain the vertex within the bounds of the canvas
+        if (vertex->x < 0 + vertex->radius)
+        {
+            vertex->x = 0 + vertex->radius;
+        }
+        if (vertex->x > WIDTH - vertex->radius)
+        {
+            vertex->x = WIDTH - vertex->radius;
+        }
+        if (vertex->y < 0 + vertex->radius)
+        {
+            vertex->y = 0 + vertex->radius;
+        }
+        if (vertex->y > HEIGHT - vertex->radius)
+        {
+            vertex->y = HEIGHT - vertex->radius;
+        }
+
+        // Keep the vertex's angle reasonable
+        if (vertex->angle >= 360)
+        {
+            vertex->angle -= 360;
+        }
+        else if (vertex->angle <= -360)
+        {
+            vertex->angle += 360;
+        }
+
+        // Update angle if hit wall. Account for radius.
+        if (vertex->x <= 0 + vertex->radius ||
+            WIDTH - vertex->radius <= vertex->x)
+        {
+            vertex->angle = 180 - vertex->angle;
+        }
+        else if (vertex->y <= 0 + vertex->radius ||
+                 HEIGHT - vertex->radius <= vertex->y)
+        {
+            vertex->angle = 0 - vertex->angle;
+        }
     }
 }
 

@@ -103,8 +103,8 @@ const main = async () => {
     // Vertices
     minRadius: 8,
     maxRadius: 16,
-    minSpeed: 0.5,
-    maxSpeed: 2.0,
+    minSpeed: 0.1,
+    maxSpeed: 0.5,
   };
 
   // Create the canvas
