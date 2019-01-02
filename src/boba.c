@@ -84,15 +84,10 @@ void setupVertices()
     int n = sizeof(VERTICES) / sizeof(Vertex);
     for (int i = 0; i < n; i++)
     {
-        float f = Math_random(); // (double)rand() / RAND_MAX;
-        float x = f * WIDTH;
-
-        f = Math_random(); // (double)rand() / RAND_MAX;
-        float y = f * HEIGHT;
-
         Vertex *vertex = &VERTICES[i];
-        vertex->x = x;
-        vertex->y = y;
+
+        vertex->x = Math_random() * WIDTH;
+        vertex->y = Math_random() * HEIGHT;
     }
 }
 

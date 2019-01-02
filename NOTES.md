@@ -37,6 +37,7 @@ emcc test.c -s WASM=1 -s "EXTRA_EXPORTED_RUNTIME_METHODS=['ccall', 'cwrap']"
 ## Notes
 
 - The data structure of having an array for vertices, an array for edges, and an array for shapes is not ideal. I decided to take this structure from boba.js because the point of this project is to learn C and WASM not to create an optmized program. In this same vein, some of the updating algorithms, `updateEdges` for example, can be greatly optmized but I am more interested in C language optmizations, for exmaple when to use values vs. addresses.
+- I'm fairly certain I have some triangle duplicates, but I haven't checked. It's ok though because it causes variation in color which looks nice.
 
 ## Algorithm Optimizations
 
@@ -47,3 +48,9 @@ emcc test.c -s WASM=1 -s "EXTRA_EXPORTED_RUNTIME_METHODS=['ccall', 'cwrap']"
 
 - Update vertices
 - Try to remove global variables, if that is smart in C
+- Achieve configuration feature parity with boba.js
+- Update readme
+- Deploy to NPM
+- Create demo website
+- Final deploy to NPM
+- Update benwiz.io to use boba.wasm instead of boba.js
