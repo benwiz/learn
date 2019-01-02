@@ -468,14 +468,26 @@ void drawTriangles()
 // tick executes the drawing and updating functions
 void tick()
 {
-    // Initialize arrays
-    static bool arraysInitialized;
-    if (!arraysInitialized)
-    {
-        console_log("init arrays");
+    // int someSize = 5;
+    // Edge testArray[someSize];
 
-        arraysInitialized = true;
-    }
+    // static bool arraysInitialized;
+    // if (!arraysInitialized)
+    // {
+    //     console_log("init arrays");
+    //     for (int i = 0; i < someSize; i++)
+    //     {
+    //         Edge edge = {Math_random() * 10, Math_random() * 10};
+    //         testArray[i] = edge;
+    //     }
+    //     arraysInitialized = true;
+    // }
+    // console_log("");
+    // for (int i = 0; i < someSize; i++)
+    // {
+    //     Edge *edge = &testArray[i];
+    //     console_log("%d: %d, %d", i, edge->vertexID_A, edge->vertexID_B);
+    // }
 
     // Clear canvas
     jsClearCanvas();
