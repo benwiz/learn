@@ -57,6 +57,7 @@ typedef struct
 //
 // Global variables store the state
 //
+int N = 6;
 Vertex VERTICES[NUM_VERTICES];
 Edge EDGES[NUM_EDGES];
 Triangle TRIANGLES[NUM_TRIANGLES];
@@ -294,10 +295,10 @@ void updateEdges()
     // Initialize count matrix and set all values to 0.
     // TODO: There must be a better way of initializing to 0. But `= {{0}}` did
     // not work. Console gave a "memset" error.
-    int matrix[NUM_VERTICES][NUM_VERTICES];
-    for (int i = 0; i < NUM_VERTICES; i++)
+    int matrix[numVertices][numVertices];
+    for (int i = 0; i < numVertices; i++)
     {
-        for (int j = 0; j < NUM_VERTICES; j++)
+        for (int j = 0; j < numVertices; j++)
         {
             matrix[i][j] = 0;
         }
