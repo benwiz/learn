@@ -14,10 +14,10 @@
 // TODO: Figure out how not to use constants for configs, because
 // they are not configurable
 //
-#define MAX_NUM_VERTICES 3
+#define MAX_NUM_VERTICES 6
 #define MAX_NUM_NEIGHBORS 2
-#define MAX_NUM_EDGES 6      // MAX_NUM_VERTICES * MAX_NUM_NEIGHBORS
-#define MAX_NUM_TRIANGLES 10 // N! / 3(N-3)! = max num possible triangles
+#define MAX_NUM_EDGES 12     // MAX_NUM_VERTICES * MAX_NUM_NEIGHBORS
+#define MAX_NUM_TRIANGLES 40 // N! / 3(N-3)! = max num possible triangles
 
 //
 // Global variables that are being used as configs. Better to set here than
