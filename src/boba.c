@@ -22,6 +22,9 @@ typedef struct
 {
     float x;
     float y;
+    float radius;
+    float speed;
+    float angle;
 } Vertex;
 
 typedef struct
@@ -87,8 +90,9 @@ void setupVertices()
         f = Math_random(); // (double)rand() / RAND_MAX;
         float y = f * HEIGHT;
 
-        VERTICES[i].x = x;
-        VERTICES[i].y = y;
+        Vertex *vertex = &VERTICES[i];
+        vertex->x = x;
+        vertex->y = y;
     }
 }
 
