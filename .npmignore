@@ -1,2 +1,5 @@
 NOTES.md
 .editorconfig
+src/
+.eslintrc.json
+webpack.config.js

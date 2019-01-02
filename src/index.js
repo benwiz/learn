@@ -72,8 +72,7 @@ const drawTriangle = (ctx, x1, y1, x2, y2, x3, y3, color) => {
 //
 // Wasm
 //
-const loadWasm = async (ctx, vertexColor, edgeColor, triangleColor) => {
-  const wasmPath = './node_modules/@benwiz/boba.wasm/dist/boba.wasm'; // TODO: Solve the wasmPath
+const loadWasm = async (wasmPath, ctx, vertexColor, edgeColor, triangleColor) => {
   const wasmModule = await WebAssembly.load(wasmPath, {
     imports: {
       jsSetInterval: (f, n) => {
@@ -93,13 +92,15 @@ const loadWasm = async (ctx, vertexColor, edgeColor, triangleColor) => {
 //
 // Start
 //
-export const start = async (options) => {
+export const start = async (options, version) => {
   // Create the canvas
   const canvas = createCanvas(options.x, options.y, options.width, options.height);
   const ctx = canvas.getContext('2d');
 
   // Start the wasm module
+  const wasmPath = `https://unpkg.com/@benwiz/boba.wasm@${version}/dist/boba.wasm`;
   const wasmModule = await loadWasm(
+    wasmPath,
     ctx,
     options.vertexColor,
     options.edgeColor,
@@ -153,4 +154,4 @@ export const start = async (options) => {
 //     a: 0.2,
 //   },
 // };
-// start(options);
+// start(options, version);
