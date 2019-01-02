@@ -19,13 +19,13 @@ int HEIGHT;
 float MIN_RADIUS;
 float MAX_RADIUS;
 float MIN_SPEED;
-float MAX_SPEED :
+float MAX_SPEED;
 
-    //
-    // External JavaScript functions
-    //
-    extern void
-    jsSetInterval(void (*callback)());
+//
+// External JavaScript functions
+//
+extern void
+jsSetInterval(void (*callback)());
 extern void jsClearCanvas();
 extern void jsDrawVertex(int id, float x, float y);
 extern void jsDrawEdge(float x1, float y1, float x2, float y2);
@@ -85,8 +85,8 @@ bool edgeExists(int vertexID_A, int vertexID_B)
     for (int i = 0; i < n; i++)
     {
         Edge *edge = &EDGES[i];
-        if (edge->vertexID_A == vertexID_A && edge->vertexID_B == vertexID_B ||
-            edge->vertexID_A == vertexID_B && edge->vertexID_B == vertexID_A)
+        if ((edge->vertexID_A == vertexID_A && edge->vertexID_B == vertexID_B) ||
+            (edge->vertexID_A == vertexID_B && edge->vertexID_B == vertexID_A))
         {
             return true;
         }
@@ -153,8 +153,8 @@ void updateVertices()
     int n = sizeof(VERTICES) / sizeof(Vertex);
     for (int i = 0; i < n; i++)
     {
-        Vertex *vertex = &VERTICES[i]; // ???: I am doing this thinking I am helping readability. Am I slowing anything down? Is this more readable?
-        vertex->x += 0;
+        Vertex *vertex = &VERTICES[i];
+        vertex->x += 1;
         vertex->y += 0;
     }
 }
