@@ -1,14 +1,23 @@
 #include <webassembly.h>
 
+#define MAX(a, b) \
+    ({ __typeof__ (a) _a = (a); \
+       __typeof__ (b) _b = (b); \
+     _a > _b ? _a : _b; })
+#define MIN(a, b) \
+    ({ __typeof__ (a) _a = (a); \
+       __typeof__ (b) _b = (b); \
+     _a < _b ? _a : _b; })
+
 //
 // Constant definitions that are being used as configs
 // TODO: Figure out how not to use constants for configs, because
 // they are not configurable
 //
-#define MAX_NUM_VERTICES 6
+#define MAX_NUM_VERTICES 3
 #define MAX_NUM_NEIGHBORS 2
-#define MAX_NUM_EDGES 12    // MAX_NUM_VERTICES * MAX_NUM_NEIGHBORS
-#define MAX_NUM_TRIANGLES 4 // N! / 3(N-3)! = max num possible triangles
+#define MAX_NUM_EDGES 6      // MAX_NUM_VERTICES * MAX_NUM_NEIGHBORS
+#define MAX_NUM_TRIANGLES 10 // N! / 3(N-3)! = max num possible triangles
 
 //
 // Global variables that are being used as configs. Better to set here than
@@ -353,6 +362,53 @@ void updateTriangles()
                 triangleIndex += 1;
             }
         }
+    }
+
+    // Remove duplicate triangles using a count matrix
+    int matrix[numVertices][numVertices][numVertices];
+    for (int i = 0; i < numVertices; i++)
+    {
+        for (int j = 0; j < numVertices; j++)
+        {
+            for (int k = 0; k < numVertices; k++)
+            {
+                matrix[i][j][k] = 0;
+            }
+        }
+    }
+
+    for (int i = 0; i < triangleIndex; i++)
+    {
+        Triangle *triangle = &TRIANGLES[i];
+
+        int min = MIN(MIN(triangle->vertexID_A, triangle->vertexID_B), triangle->vertexID_C);
+        int max = MAX(MAX(triangle->vertexID_A, triangle->vertexID_B), triangle->vertexID_C);
+        int mid;
+        // If C is leftover
+        if ((min == triangle->vertexID_A || min == triangle->vertexID_B) &&
+            (max == triangle->vertexID_A || max == triangle->vertexID_B))
+        {
+            mid = triangle->vertexID_C;
+        }
+        // Else, if B is leftover
+        else if ((min == triangle->vertexID_A || min == triangle->vertexID_C) &&
+                 (max == triangle->vertexID_A || max == triangle->vertexID_C))
+        {
+            mid = triangle->vertexID_B;
+        }
+        // Else, if A is leftover
+        else
+        {
+            mid = triangle->vertexID_A;
+        }
+
+        if (matrix[min][mid][max] > 0)
+        {
+            triangle->vertexID_A = -1;
+            triangle->vertexID_B = -1;
+            triangle->vertexID_C = -1;
+        }
+        matrix[min][mid][max] += 1;
     }
 }
 

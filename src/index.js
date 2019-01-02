@@ -43,10 +43,10 @@ const drawVertex = (ctx, id, x, y, color) => {
   ctx.stroke();
   ctx.fill();
 
-  // ctx.font = '12px Arial black';
-  // ctx.fillStyle = 'black';
-  // ctx.textAlign = 'center';
-  // ctx.fillText(id, x, y);
+  ctx.font = '12px Arial black';
+  ctx.fillStyle = 'black';
+  ctx.textAlign = 'center';
+  ctx.fillText(id, x, y);
 };
 
 const drawEdge = (ctx, x1, y1, x2, y2, color) => {
