@@ -47,10 +47,8 @@ emcc test.c -s WASM=1 -s "EXTRA_EXPORTED_RUNTIME_METHODS=['ccall', 'cwrap']"
 
 ## To Do
 
-- Sort out my global array issue, I think I can do this using static variables
-
-- Set up configuration tooling
-  - Make the API for it
+- Final tweaks to make the project deployable
+  - Do not allow any number configs, just the current ones: color, speed, size, drawBooleans
 - Update readme
 - Deploy to NPM
 - Create demo website

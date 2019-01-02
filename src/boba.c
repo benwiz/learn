@@ -14,10 +14,10 @@
 // TODO: Figure out how not to use constants for configs, because
 // they are not configurable
 //
-#define MAX_NUM_VERTICES 6
-#define MAX_NUM_NEIGHBORS 2
-#define MAX_NUM_EDGES 12     // MAX_NUM_VERTICES * MAX_NUM_NEIGHBORS
-#define MAX_NUM_TRIANGLES 40 // N! / 3(N-3)! = max num possible triangles
+#define NUM_VERTICES 10
+#define NUM_NEIGHBORS 2
+#define NUM_EDGES 20      // NUM_VERTICES * NUM_NEIGHBORS
+#define NUM_TRIANGLES 240 // N! / 3(N-3)! = max num possible triangles
 
 //
 // Global variables that are being used as configs. Better to set here than
@@ -25,10 +25,6 @@
 //
 int WIDTH;
 int HEIGHT;
-int NUM_VERTICES;
-int NUM_NEIGHBORS;
-int NUM_EDGES;
-int NUM_TRIANGLES;
 bool DRAW_VERTICES;
 bool DRAW_EDGES;
 bool DRAW_TRIANGLES;
@@ -70,9 +66,9 @@ typedef struct
 //
 // Global variables store the state
 //
-Vertex VERTICES[MAX_NUM_VERTICES];
-Edge EDGES[MAX_NUM_EDGES];
-Triangle TRIANGLES[MAX_NUM_TRIANGLES];
+Vertex VERTICES[NUM_VERTICES];
+Edge EDGES[NUM_EDGES];
+Triangle TRIANGLES[NUM_TRIANGLES];
 
 //
 // Math functions
@@ -117,11 +113,10 @@ bool edgeExists(int vertexID_A, int vertexID_B)
 //
 // Setup functions
 //
-void setupConfigs(int width, int height, int numNeighbors, bool drawVertices, bool drawEdges, bool drawTriangles)
+void setupConfigs(int width, int height, bool drawVertices, bool drawEdges, bool drawTriangles)
 {
     WIDTH = width;
     HEIGHT = height;
-    NUM_NEIGHBORS = numNeighbors;
     DRAW_VERTICES = drawVertices;
     DRAW_EDGES = drawEdges;
     DRAW_TRIANGLES = drawTriangles;
@@ -468,27 +463,6 @@ void drawTriangles()
 // tick executes the drawing and updating functions
 void tick()
 {
-    // int someSize = 5;
-    // Edge testArray[someSize];
-
-    // static bool arraysInitialized;
-    // if (!arraysInitialized)
-    // {
-    //     console_log("init arrays");
-    //     for (int i = 0; i < someSize; i++)
-    //     {
-    //         Edge edge = {Math_random() * 10, Math_random() * 10};
-    //         testArray[i] = edge;
-    //     }
-    //     arraysInitialized = true;
-    // }
-    // console_log("");
-    // for (int i = 0; i < someSize; i++)
-    // {
-    //     Edge *edge = &testArray[i];
-    //     console_log("%d: %d, %d", i, edge->vertexID_A, edge->vertexID_B);
-    // }
-
     // Clear canvas
     jsClearCanvas();
 
@@ -513,10 +487,10 @@ export int runCallback(void (*callback)())
 }
 
 // start sets up vertices and begins the main loop
-export void start(int width, int height, float minRadius, float maxRadius, float minSpeed, float maxSpeed, int numNeighbors, bool drawVertices, bool drawEdges, bool drawTriangles)
+export void start(int width, int height, float minRadius, float maxRadius, float minSpeed, float maxSpeed, bool drawVertices, bool drawEdges, bool drawTriangles)
 {
     // Call setup functions
-    setupConfigs(width, height, numNeighbors, drawVertices, drawEdges, drawTriangles);
+    setupConfigs(width, height, drawVertices, drawEdges, drawTriangles);
     setupVertices(minRadius, maxRadius, minSpeed, maxSpeed);
     setupEdges();
     setupTriangles();

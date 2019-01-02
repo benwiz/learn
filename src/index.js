@@ -43,10 +43,10 @@ const drawVertex = (ctx, id, x, y, color) => {
   ctx.stroke();
   ctx.fill();
 
-  ctx.font = '12px Arial black';
-  ctx.fillStyle = 'black';
-  ctx.textAlign = 'center';
-  ctx.fillText(id, x, y);
+  // ctx.font = '12px Arial black';
+  // ctx.fillStyle = 'black';
+  // ctx.textAlign = 'center';
+  // ctx.fillText(id, x, y);
 };
 
 const drawEdge = (ctx, x1, y1, x2, y2, color) => {
@@ -101,26 +101,24 @@ const main = async () => {
     width: document.documentElement.scrollWidth,
     height: document.documentElement.scrollHeight,
     // Vertices
-    numVertices: 30,
     drawVertices: true,
     vertexMinRadius: 8,
     vertexMaxRadius: 16,
-    vertexMinSpeed: 0.1,
-    vertexMaxSpeed: 0.5,
+    vertexMinSpeed: 0.5,
+    vertexMaxSpeed: 0.8,
     vertexColor: {
       r: 30,
       g: 144,
       b: 255,
-      a: 0.1,
+      a: 0.2,
     },
     // Edges
-    numNeighbors: 2,
     drawEdges: true,
     edgeColor: {
       r: 30,
       g: 144,
       b: 255,
-      a: 0.1,
+      a: 0.2,
     },
     // Triangles
     drawTriangles: true,
@@ -128,7 +126,7 @@ const main = async () => {
       r: 30,
       g: 144,
       b: 255,
-      a: 0.1,
+      a: 0.2,
     },
   };
 
@@ -150,7 +148,6 @@ const main = async () => {
     options.vertexMaxRadius,
     options.vertexMinSpeed,
     options.vertexMaxSpeed,
-    options.numNeighbors,
     options.drawVertices,
     options.drawEdges,
     options.drawTriangles,
