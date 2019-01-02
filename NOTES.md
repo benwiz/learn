@@ -54,4 +54,6 @@ emcc test.c -s WASM=1 -s "EXTRA_EXPORTED_RUNTIME_METHODS=['ccall', 'cwrap']"
   - Include a disclaimer that this was a WASM learning project and it is still recommended to use Boba.js
 - Create demo website in a `gh-pages` branch
 - Final deploy to NPM
-- Maybe deploy to Burn _if_ it's a burn day (red just triangles)
+- Maybe deploy to Burn
+  - red triangles if burn
+  - gray vertices if no burn
