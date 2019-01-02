@@ -150,6 +150,7 @@ const main = async () => {
     options.vertexMaxRadius,
     options.vertexMinSpeed,
     options.vertexMaxSpeed,
+    options.numNeighbors,
     options.drawVertices,
     options.drawEdges,
     options.drawTriangles,

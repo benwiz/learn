@@ -5,10 +5,10 @@
 // TODO: Figure out how not to use constants for configs, because
 // they are not configurable
 //
-#define NUM_VERTICES 6
-#define NUM_NEIGHBORS 2
-#define NUM_EDGES 12    // NUM_VERTICES * NUM_NEIGHBORS
-#define NUM_TRIANGLES 4 // N! / 3(N-3)! = max num possible triangles
+#define MAX_NUM_VERTICES 6
+#define MAX_NUM_NEIGHBORS 2
+#define MAX_NUM_EDGES 12    // MAX_NUM_VERTICES * MAX_NUM_NEIGHBORS
+#define MAX_NUM_TRIANGLES 4 // N! / 3(N-3)! = max num possible triangles
 
 //
 // Global variables that are being used as configs. Better to set here than
@@ -16,6 +16,7 @@
 //
 int WIDTH;
 int HEIGHT;
+int NUM_NEIGHBORS;
 bool DRAW_VERTICES;
 bool DRAW_EDGES;
 bool DRAW_TRIANGLES;
@@ -58,9 +59,9 @@ typedef struct
 // Global variables store the state
 //
 int N = 6;
-Vertex VERTICES[NUM_VERTICES];
-Edge EDGES[NUM_EDGES];
-Triangle TRIANGLES[NUM_TRIANGLES];
+Vertex VERTICES[MAX_NUM_VERTICES];
+Edge EDGES[MAX_NUM_EDGES];
+Triangle TRIANGLES[MAX_NUM_TRIANGLES];
 
 //
 // Math functions
@@ -105,10 +106,11 @@ bool edgeExists(int vertexID_A, int vertexID_B)
 //
 // Setup functions
 //
-void setupConfigs(int width, int height, bool drawVertices, bool drawEdges, bool drawTriangles)
+void setupConfigs(int width, int height, int numNeighbors, bool drawVertices, bool drawEdges, bool drawTriangles)
 {
     WIDTH = width;
     HEIGHT = height;
+    NUM_NEIGHBORS = numNeighbors;
     DRAW_VERTICES = drawVertices;
     DRAW_EDGES = drawEdges;
     DRAW_TRIANGLES = drawTriangles;
@@ -428,10 +430,10 @@ export int runCallback(void (*callback)())
 }
 
 // start sets up vertices and begins the main loop
-export void start(int width, int height, float minRadius, float maxRadius, float minSpeed, float maxSpeed, bool drawVertices, bool drawEdges, bool drawTriangles)
+export void start(int width, int height, float minRadius, float maxRadius, float minSpeed, float maxSpeed, int numNeighbors, bool drawVertices, bool drawEdges, bool drawTriangles)
 {
     // Call setup functions
-    setupConfigs(width, height, drawVertices, drawEdges, drawTriangles);
+    setupConfigs(width, height, numNeighbors, drawVertices, drawEdges, drawTriangles);
     setupVertices(minRadius, maxRadius, minSpeed, maxSpeed);
     setupEdges();
     setupTriangles();
