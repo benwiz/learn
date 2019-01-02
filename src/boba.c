@@ -98,6 +98,16 @@ bool edgeExists(int vertexID_A, int vertexID_B)
 //
 // Setup functions
 //
+void setupConfigs(int width, int height, float minRadius, float maxRadius, float minSpeed, float maxSpeed)
+{
+    WIDTH = width;
+    HEIGHT = height;
+    MIN_RADIUS = minRadius;
+    MAX_RADIUS = maxRadius;
+    MIN_SPEED = minSpeed;
+    MAX_SPEED = maxSpeed;
+}
+
 void setupVertices()
 {
     int n = sizeof(VERTICES) / sizeof(Vertex);
@@ -367,16 +377,13 @@ export int runCallback(void (*callback)())
 }
 
 // start sets up vertices and begins the main loop
-export void start(int width, int height)
+export void start(int width, int height, float minRadius, float maxRadius, float minSpeed, float maxSpeed)
 {
-    // Store width and height of canvas globally
-    WIDTH = width;
-    HEIGHT = height;
-
     // Seed rand
     srand(1); // time(NULL)
 
     // Call setup functions
+    setupConfigs(width, height, minRadius, maxRadius, minSpeed, maxSpeed);
     setupVertices();
     setupEdges();
     setupTriangles();

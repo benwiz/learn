@@ -94,17 +94,33 @@ const loadWasm = async (ctx) => {
 // Main
 //
 const main = async () => {
+  const options = {
+    // Canvas
+    x: 0,
+    y: 0,
+    width: document.documentElement.scrollWidth,
+    height: document.documentElement.scrollHeight,
+    // Vertices
+    minRadius: 8,
+    maxRadius: 16,
+    minSpeed: 0.5,
+    maxSpeed: 2.0,
+  };
+
   // Create the canvas
-  const x = 0;
-  const y = 0;
-  const width = document.documentElement.scrollWidth;
-  const height = document.documentElement.scrollHeight;
-  const canvas = createCanvas(x, y, width, height);
+  const canvas = createCanvas(options.x, options.y, options.width, options.height);
   const ctx = canvas.getContext('2d');
 
   // Start the wasm module
   const wasmModule = await loadWasm(ctx);
-  wasmModule.exports.start(width, height);
+  wasmModule.exports.start(
+    options.width,
+    options.height,
+    options.minRadius,
+    options.maxRadius,
+    options.minSpeed,
+    options.maxSpeed,
+  );
 };
 
 main();
