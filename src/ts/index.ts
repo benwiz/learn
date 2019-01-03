@@ -1,4 +1,5 @@
-import * as Parser from 'rss-parser';
+import * as Parser from 'rss-parser'; // TODO: What's with this tslint error? It is in package.json
+import * as Boba from '@benwiz/boba.wasm';
 
 const parser = new Parser(); // should this be global?
 
@@ -143,3 +144,46 @@ const main = async (): Promise<void> => {
 };
 
 main();
+
+//
+// Boba.wasm
+//
+// Initialize boba.wasmm options
+const options = {
+  // Canvas
+  x: 0,
+  y: 0,
+  width: document.documentElement.scrollWidth,
+  height: document.documentElement.scrollHeight,
+  // Vertices
+  drawVertices: true,
+  vertexMinRadius: 8,
+  vertexMaxRadius: 16,
+  vertexMinSpeed: 0.5,
+  vertexMaxSpeed: 1.0,
+  vertexColor: {
+    r: 255,
+    g: 56,
+    b: 96,
+    a: 0.1,
+  },
+  // Edges
+  drawEdges: true,
+  edgeColor: {
+    r: 255,
+    g: 56,
+    b: 96,
+    a: 0.1,
+  },
+  // Triangles
+  drawTriangles: true,
+  triangleColor: {
+    r: 255,
+    g: 56,
+    b: 96,
+    a: 0.02,
+  },
+};
+
+// Start the animation
+Boba.start(options, '1.0.6');
