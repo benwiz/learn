@@ -1,34 +1,18 @@
 # boba.wasm
 
-Boba.wasm is animated background JavaScript module published to [NPM](https://www.npmjs.com/package/@benwiz/boba.wasm).
+Boba.wasm is animated background mostly written in C and and compiled to WebAssembly. Drawing is handled by JavaScript and HTML5 Canvas. Published to [NPM](https://www.npmjs.com/package/@benwiz/boba.wasm).
 
 [Demo](https://benwiz.io/boba.wasm/)
 
 ## Why
 
-I created a background for my website but wanted to be able to make it re-usable. Creating the NPM module was an excuse to practice TypeScript and learn how to publish an NPM module.
+This was a project to learn how to use WebAssembly and to re-learn C.
 
 ## How to Use
 
 #### Using a CDN
 
-In the `body`, import the script then call `Boba.start()` and pass in the configuration options.
-
-```html
-<script src="https://unpkg.com/@benwiz/boba.wasm@latest/dist/bundle.js"></script>
-<script>
-  const options = Boba.getDefaultOptions();
-
-  var color1 = { r: 255, g: 0, b: 0, a: 0.1 };
-  options.vertexColors = [color1];
-  options.edgeColors = [color1];
-
-  var color2 = { r: 255, g: 0, b: 0, a: 0.05 };
-  options.shapeColors = [color2];
-
-  Boba.start(options);
-</script>
-```
+No CDN option yet. I need to change WebPack `output.libraryTarget` to `var` to make this work.
 
 #### Using ES6 modules
 
@@ -38,61 +22,50 @@ Install the package
 npm install @benwiz/boba.wasm
 ```
 
-Import the package, override any options, then call the `Boba.start()` function.
+Import the package, override any options, then call the `Boba.start(options, version)` function.
 
 ```js
 import * as Boba from '@benwiz/boba.wasm';
 
-// Initialize boba.wasm options by grabbing the defaults
-const bobaOptions = Boba.getDefaultOptions();
-
-// Canvas configs
-bobaOptions.x = 0;
-bobaOptions.y = 0;
-bobaOptions.width = document.documentElement.scrollWidth;
-bobaOptions.height = document.documentElement.scrollHeight;
-
-// Vertex configs
-bobaOptions.numVertices = 40;
-bobaOptions.drawVertices = true;
-bobaOptions.vertexMinSize = 8;
-bobaOptions.vertexMaxSize = 16;
-bobaOptions.vertexMinSpeed = 0.5;
-bobaOptions.vertexMaxSpeed = 2;
-bobaOptions.vertexColors = [
-  {
-    r: 0,
-    g: 255,
-    b: 0,
-    a: 0.1,
+// Initialize boba.wasmm options
+const options = {
+  // Canvas
+  x: 0,
+  y: 0,
+  width: document.documentElement.scrollWidth,
+  height: document.documentElement.scrollHeight,
+  // Vertices
+  drawVertices: true,
+  vertexMinRadius: 8,
+  vertexMaxRadius: 16,
+  vertexMinSpeed: 0.5,
+  vertexMaxSpeed: 1.0,
+  vertexColor: {
+    r: 101,
+    g: 79,
+    b: 240,
+    a: 0.2,
   },
-];
-
-// Edge configs
-bobaOptions.numNeighbors = 2;
-bobaOptions.drawEdges = true;
-bobaOptions.edgeColors = [
-  {
-    r: 0,
-    g: 255,
-    b: 0,
-    a: 0.1,
+  // Edges
+  drawEdges: true,
+  edgeColor: {
+    r: 101,
+    g: 79,
+    b: 240,
+    a: 0.2,
   },
-];
-
-// Shape configs
-bobaOptions.drawShapes = true;
-bobaOptions.shapeColors = [
-  {
-    r: 0,
-    g: 255,
-    b: 0,
-    a: 0.05,
+  // Triangles
+  drawTriangles: true,
+  triangleColor: {
+    r: 101,
+    g: 79,
+    b: 240,
+    a: 0.2,
   },
-];
+};
 
 // Start the animation
-Boba.start(bobaOptions);
+Boba.start(bobaOptions, '1.0.2');
 ```
 
 #### Mobile considerations
@@ -104,10 +77,6 @@ html {
   height: 100%;
 }
 ```
-
-#### `stop` function
-
-Call `Boba.stop()` to stop the animation and remove the canvas. Right now, call `stop` then `start` if options are changed. In the future, I'd like to handle changing options more elegantly.
 
 ## Development
 
