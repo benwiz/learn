@@ -67,7 +67,7 @@ const options = {
 };
 
 // Start the animation
-Boba.start(bobaOptions, '1.0.5');
+Boba.start(options, '1.0.5');
 ```
 
 #### Mobile considerations
