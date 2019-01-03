@@ -47,7 +47,6 @@ emcc test.c -s WASM=1 -s "EXTRA_EXPORTED_RUNTIME_METHODS=['ccall', 'cwrap']"
 
 ## To Do
 
-- Deploy to NPM and sort out the WASM file download 
 - Update readme
   - Include a disclaimer that this was a WASM learning project and it is still recommended to use Boba.js
 - Create demo website in a `gh-pages` branch
