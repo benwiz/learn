@@ -47,7 +47,7 @@ emcc test.c -s WASM=1 -s "EXTRA_EXPORTED_RUNTIME_METHODS=['ccall', 'cwrap']"
 
 ## To Do
 
-- Final deploy to NPM
+- Add link to benwiz.github.io
 - Maybe deploy to Burn
   - red triangles if burn
   - gray vertices if no burn

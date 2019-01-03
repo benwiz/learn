@@ -4,6 +4,8 @@ Boba.wasm is animated background mostly written in C and and compiled to WebAsse
 
 [Demo](https://benwiz.io/boba.wasm/)
 
+This project was imperfectly ported from [Boba.js](https://www.npmjs.com/package/@benwiz/boba.js).
+
 ## Why
 
 This was a project to learn how to use WebAssembly and to re-learn C.
@@ -65,7 +67,7 @@ const options = {
 };
 
 // Start the animation
-Boba.start(bobaOptions, '1.0.2');
+Boba.start(bobaOptions, '1.0.5');
 ```
 
 #### Mobile considerations
