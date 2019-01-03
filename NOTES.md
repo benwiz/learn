@@ -47,9 +47,6 @@ emcc test.c -s WASM=1 -s "EXTRA_EXPORTED_RUNTIME_METHODS=['ccall', 'cwrap']"
 
 ## To Do
 
-- Maybe deploy to Burn
-  - red triangles if burn
-  - gray vertices if no burn
 - BUG: Look into radius configs, all vertices look the same size and changing the configs has no impact
 - Better handling of wasm download, also need a `dev` version option that then points to the local linked version
 - Later
