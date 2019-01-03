@@ -6,8 +6,7 @@
   "scripts": {
     "webpack": "webpack --config webpack.config.js --watch",
     "wasm": "wa compile -o ./dist/boba.wasm ./src/boba.c",
-    "watch": "npm-watch",
-    "publish": "npm publish --access public"
+    "watch": "npm-watch"
   },
   "watch": {
     "wasm": {
