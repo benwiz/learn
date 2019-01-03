@@ -1,8 +1,12 @@
 @import url("https://fonts.googleapis.com/css?family=Dosis:300,500");
 
-$text-gray: #707070;
+$text-gray: rgba(112, 112, 112, 1);
 $fire-red: rgba(255, 56, 96, 1);
-$fire-gray: #c0c0c0;
+$fire-gray: rgba(192, 192, 192, 1);
+
+html {
+  height: 100%;
+}
 
 body {
   font-family: "Dosis", sans-serif;
@@ -85,7 +89,7 @@ body {
     }
 
     #today-title {
-      visibility: hidden;
+      visibility: visible;
     }
 
     #today {
@@ -93,7 +97,7 @@ body {
     }
 
     #tomorrow-title {
-      visibility: hidden;
+      visibility: visible;
     }
 
     #tomorrow {

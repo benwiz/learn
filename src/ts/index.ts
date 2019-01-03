@@ -1,4 +1,4 @@
-import * as Parser from 'rss-parser'; // TODO: What's with this tslint error? It is in package.json
+import * as Parser from 'rss-parser';
 import * as Boba from '@benwiz/boba.wasm';
 
 const parser = new Parser(); // should this be global?
@@ -112,6 +112,69 @@ const updateDetails = (
   table.style.visibility = 'visible';
 };
 
+const setupBoba = (status: String) => {
+  // Initialize boba.wasmm options
+  const options = {
+    // Canvas
+    x: 0,
+    y: 0,
+    width: document.documentElement.scrollWidth,
+    height: document.documentElement.scrollHeight,
+    // Vertices
+    drawVertices: true,
+    vertexMinRadius: 8,
+    vertexMaxRadius: 16,
+    vertexMinSpeed: 0.5,
+    vertexMaxSpeed: 1.0,
+    vertexColor: {
+      r: 192,
+      g: 192,
+      b: 192,
+      a: 0.1,
+    },
+    // Edges
+    drawEdges: true,
+    edgeColor: {
+      r: 192,
+      g: 192,
+      b: 192,
+      a: 0.1,
+    },
+    // Triangles
+    drawTriangles: true,
+    triangleColor: {
+      r: 192,
+      g: 192,
+      b: 192,
+      a: 0.05,
+    },
+  };
+
+  if (status === 'No Alert') {
+    options.vertexColor = {
+      r: 255,
+      g: 56,
+      b: 96,
+      a: 0.05,
+    };
+    options.edgeColor = {
+      r: 255,
+      g: 56,
+      b: 96,
+      a: 0.05,
+    };
+    options.triangleColor = {
+      r: 255,
+      g: 56,
+      b: 96,
+      a: 0.02,
+    };
+  }
+
+  // Start the animation
+  Boba.start(options, '1.0.6');
+};
+
 const main = async (): Promise<void> => {
   const spareTheAirRSS: string = 'http://www.baaqmd.gov/Feeds/AlertRSS.aspx';
   const openBurnRSS: string = 'http://www.baaqmd.gov/Feeds/OpenBurnRSS.aspx';
@@ -121,6 +184,9 @@ const main = async (): Promise<void> => {
   const spareTheAir: Feed = await readRSSFeed(spareTheAirRSS);
   const summaryStatus = spareTheAir.items[0].content;
   updateSummary(summaryStatus);
+
+  // Setup Boba as early as possible so the user has something to look at
+  setupBoba(summaryStatus);
 
   // Read openBurn and aqi RSS feeds
   const openBurn: Feed = await readRSSFeed(openBurnRSS);
@@ -144,46 +210,3 @@ const main = async (): Promise<void> => {
 };
 
 main();
-
-//
-// Boba.wasm
-//
-// Initialize boba.wasmm options
-const options = {
-  // Canvas
-  x: 0,
-  y: 0,
-  width: document.documentElement.scrollWidth,
-  height: document.documentElement.scrollHeight,
-  // Vertices
-  drawVertices: true,
-  vertexMinRadius: 8,
-  vertexMaxRadius: 16,
-  vertexMinSpeed: 0.5,
-  vertexMaxSpeed: 1.0,
-  vertexColor: {
-    r: 255,
-    g: 56,
-    b: 96,
-    a: 0.1,
-  },
-  // Edges
-  drawEdges: true,
-  edgeColor: {
-    r: 255,
-    g: 56,
-    b: 96,
-    a: 0.1,
-  },
-  // Triangles
-  drawTriangles: true,
-  triangleColor: {
-    r: 255,
-    g: 56,
-    b: 96,
-    a: 0.02,
-  },
-};
-
-// Start the animation
-Boba.start(options, '1.0.6');

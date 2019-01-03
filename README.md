@@ -34,5 +34,8 @@ Don't forget about new step to imports: https://webpack.js.org/guides/typescript
 
 ## To Do
 
+- Don't wait for each rss feed to load, load them all synchronously
+- Better loading messages or animation
 - Bug
-  - tslint.json not listening to "no-magic-numbers" or "max-length" properly
+  - tslint not listening to "no-magic-numbers" or "max-length" properly
+  - tslint not liking my imports in index.js even though they are in package.json

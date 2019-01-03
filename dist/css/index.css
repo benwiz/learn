@@ -1,4 +1,7 @@
-@import url(https://fonts.googleapis.com/css?family=Dosis:300,500);body {
+@import url(https://fonts.googleapis.com/css?family=Dosis:300,500);html {
+  height: 100%; }
+
+body {
   font-family: "Dosis", sans-serif;
   font-weight: 500;
   color: #707070;
@@ -15,7 +18,7 @@
       body #container a:hover {
         text-decoration: underline; }
     body #container i {
-      color: #c0c0c0; }
+      color: silver; }
     body #container .burn {
       color: #ff3860; }
     body #container h1 {
@@ -47,11 +50,11 @@
           margin-left: 6px;
           color: gray; }
     body #container #today-title {
-      visibility: hidden; }
+      visibility: visible; }
     body #container #today {
       visibility: hidden; }
     body #container #tomorrow-title {
-      visibility: hidden; }
+      visibility: visible; }
     body #container #tomorrow {
       visibility: hidden; }
     body #container h3 {
