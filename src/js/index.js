@@ -3,10 +3,13 @@
 import * as BrainLSTMTimeStep from './brainLSTMTimeStep';
 
 const main = async () => {
-  // console.log('Linear Regression Model');
+  const history = [1, 1, 2, 3, 1, 1, 2, 3, 1, 1, 2, 3, 1, 1, 2, 3];
+
+  // console.log('Using tensorflow.js linear regression model');
   // Linear.run(12);
 
-  BrainLSTMTimeStep.run();
+  console.log('Using brain.js LSTMTimeStep');
+  BrainLSTMTimeStep.run(history);
 };
 
 main();

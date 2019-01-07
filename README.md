@@ -1,4 +1,4 @@
-# tensorflow-rock-paper-scissors
+# rock-paper-scissors-ai
 
 Learn to use Tensorflow.js and Brain.js by predicting next play in rock-paper-scissors.
 
