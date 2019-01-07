@@ -18,4 +18,4 @@ npm start
 
 ## To Do
 
-- Figure out how to do multiple training iterations
+- Look into "Maximum Likelihood Estimation"
