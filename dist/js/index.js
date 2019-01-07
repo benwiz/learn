@@ -21095,55 +21095,15 @@ module.exports = withPublic;
 "use strict";
 
 
-var _tfjs = __webpack_require__(76);
+var _linear = __webpack_require__(166);
 
-var tf = _interopRequireWildcard(_tfjs);
+var Linear = _interopRequireWildcard(_linear);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-
-var train = async function train() {
-  // Training data
-  var labels = [1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1];
-  var X = Array.apply(undefined, _toConsumableArray({ length: labels.length })).map(Number.call, Number);
-  var xs = tf.tensor1d(X);
-  var ys = tf.tensor1d(labels);
-  xs.print();
-  ys.print();
-
-  // Define a model for linear regression.
-  var linearModel = tf.sequential();
-  linearModel.add(tf.layers.dense({ units: 1, inputShape: [1] }));
-
-  // Prepare the model for training: Specify the loss and the optimizer.
-  linearModel.compile({ loss: 'meanSquaredError', optimizer: 'sgd' });
-
-  // Train
-  var epochs = 300;
-  console.log('epochs:', epochs);
-  await linearModel.fit(xs, ys, { epochs: epochs });
-
-  return linearModel;
-};
-
-var predict = function predict(linearModel, value) {
-  var output = linearModel.predict(tf.tensor2d([value], [1, 1]));
-  var prediction = Array.from(output.dataSync())[0];
-  return prediction;
-};
-
 var main = async function main() {
-  // Train
-  console.log('train...');
-  var linearModel = await train();
-  console.log('trained!');
-
-  // Predict
-  var value = 12;
-  console.log('predict...', value);
-  var prediction = predict(linearModel, value);
-  console.log('prediction:', prediction);
+  console.log('Linear Regression Model');
+  Linear.run(12);
 };
 
 main();
@@ -37254,6 +37214,68 @@ exports.default = window.fetch.bind(window);
 exports.Headers = window.Headers;
 exports.Request = window.Request;
 exports.Response = window.Response;
+
+/***/ }),
+/* 166 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.run = undefined;
+
+var _tfjs = __webpack_require__(76);
+
+var tf = _interopRequireWildcard(_tfjs);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+var train = async function train() {
+  // Training data
+  var labels = [1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1];
+  var X = Array.apply(undefined, _toConsumableArray({ length: labels.length })).map(Number.call, Number);
+  var xs = tf.tensor1d(X);
+  var ys = tf.tensor1d(labels);
+  xs.print();
+  ys.print();
+
+  // Define a model for linear regression.
+  var linearModel = tf.sequential();
+  linearModel.add(tf.layers.dense({ units: 1, inputShape: [1] }));
+
+  // Prepare the model for training: Specify the loss and the optimizer.
+  linearModel.compile({ loss: 'meanSquaredError', optimizer: 'sgd' });
+
+  // Train
+  var epochs = 300;
+  console.log('epochs:', epochs);
+  await linearModel.fit(xs, ys, { epochs: epochs });
+
+  return linearModel;
+};
+
+var predict = function predict(linearModel, value) {
+  var output = linearModel.predict(tf.tensor2d([value], [1, 1]));
+  var prediction = Array.from(output.dataSync())[0];
+  return prediction;
+};
+
+var run = exports.run = async function run(value) {
+  // Train
+  console.log('train...');
+  var linearModel = await train();
+  console.log('trained!');
+
+  // Predict
+  console.log('predict...', value);
+  var prediction = predict(linearModel, value);
+  console.log('prediction:', prediction);
+};
 
 /***/ })
 /******/ ]);

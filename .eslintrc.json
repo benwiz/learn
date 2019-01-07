@@ -13,7 +13,7 @@
     "no-new": "off",
     "no-mixed-operators": "off",
     "no-return-assign": "off",
-    "no-magic-numbers": ["error", { "ignoreArrayIndexes": true }]
+    "no-magic-numbers": ["error", { "ignoreArrayIndexes": true }],
+    "import/prefer-default-export": false
   }
 }
-
