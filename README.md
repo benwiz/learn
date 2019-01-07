@@ -18,6 +18,8 @@ npm start
 
 ## To Do
 
+- Create the UI
+
 - Try multilayer perceptron
 - Try LSTM
 - Look into "Maximum Likelihood Estimation"

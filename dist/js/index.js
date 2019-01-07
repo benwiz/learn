@@ -77,10 +77,14 @@ var BrainLSTMTimeStep = _interopRequireWildcard(_brainLSTMTimeStep);
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 var main = async function main() {
-  // console.log('Linear Regression Model');
+  var history = [1, 1, 2, 3, 1, 1, 2, 3, 1, 1, 2, 3, 1, 1, 2, 3, 1, 1];
+
+  // console.log('Using tensorflow.js linear regression model');
   // Linear.run(12);
 
-  BrainLSTMTimeStep.run();
+  console.log('Using brain.js LSTMTimeStep');
+  var prediction = BrainLSTMTimeStep.run(history);
+  console.log(prediction);
 }; // import * as Linear from './linear';
 // import * as LSTM from './lstm';
 
@@ -105,15 +109,12 @@ var brain = _interopRequireWildcard(_brain);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
-var run = exports.run = function run() {
-  console.log('run');
+var run = exports.run = function run(data) {
   var net = new brain.recurrent.LSTMTimeStep();
-
-  var data = [1, 1, 2, 3, 1, 1, 2, 3, 1, 1, 2, 3, 1, 1, 2, 3];
   net.train([data]);
-
   var output = net.run(data);
-  console.log(Math.round(output), '\t', output);
+  var rounded = Math.round(output);
+  return rounded;
 };
 
 /***/ }),
