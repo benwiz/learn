@@ -18,4 +18,6 @@ npm start
 
 ## To Do
 
+- Try multilayer perceptron
+- Try LSTM
 - Look into "Maximum Likelihood Estimation"
