@@ -21099,6 +21099,10 @@ var _linear = __webpack_require__(166);
 
 var Linear = _interopRequireWildcard(_linear);
 
+var _lstm = __webpack_require__(167);
+
+var LSTM = _interopRequireWildcard(_lstm);
+
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 var main = async function main() {
@@ -37276,6 +37280,147 @@ var run = exports.run = async function run(value) {
   var prediction = predict(linearModel, value);
   console.log('prediction:', prediction);
 };
+
+/***/ }),
+/* 167 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
+var _tfjs = __webpack_require__(76);
+
+var tf = _interopRequireWildcard(_tfjs);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+// Initial code copied from https://codepen.io/caisq/pen/vrxOvy
+
+// TensorFlow.js example: Trains LSTM model to perform the following sequence task:
+//
+// Given a sequence of 0s and 1s of fixed length (10), output a single binary number (0 or 1).
+//
+// The training data has the following pattern:
+//
+// The output (i.e., label) is 1 if there are four or more consecutive and identical
+// items (either 0s or 1s) in the input sequence. Otherwise, the output is 0. For example:
+//   Sequence [0, 1, 0, 1, 0, 1, 0, 0, 1, 0] --> Label: 0.
+//   Sequence [0, 1, 1, 1, 1, 0, 1, 0, 0, 1] --> Label: 1.
+//   Sequence [0, 0, 0, 0, 0, 0, 1, 0, 0, 1] --> Label: 1.
+
+var sequenceLength = 10;
+var stretchLengthThreshold = 4;
+
+// Generates sequences consisting of 0 and 1 and the associated 0-1 labels.
+//
+// The sequences and labels follow the pattern described above.
+//
+// Args:
+//   len: Length of the sequence.
+//
+// Returns:
+//   1. An Array of randomly-generated 0s and 1s.
+//   2. The associated output (label): a 0 or a 1.
+function generateSequenceAndLabel(len) {
+  var sequence = [];
+  var currentItem = -1;
+  var stretchLength = 0;
+  var label = 0;
+  for (var i = 0; i < len; ++i) {
+    var item = Math.random() > 0.5 ? 1 : 0;
+    sequence.push(item);
+    if (currentItem === item) {
+      stretchLength++;
+    } else {
+      currentItem = item;
+      stretchLength = 1;
+    }
+    if (stretchLength >= stretchLengthThreshold) {
+      label = 1;
+    }
+  }
+  return [sequence, label];
+}
+
+// Generates a dataset consisting of sequences and their corresponding labels.
+//
+// Args:
+//   numExamples: Number of examples to generate.
+//   sequenceLength: Length of each individual sequence.
+//
+// Returns:
+//   1. Sequence Tensor: a Tensor of shape [numExamples, sequenceLength, 2].
+//      The first dimension is the batch examples.
+//      The second dimension is the time axis (sequence items).
+//      The third dimension is the one-hot encoding of the 0/1 items.
+//   2. Label Tensor: a Tensor of shape [numExamples, 1].
+//      Each element of this Tensor is 0 or 1.
+function generateDataset(numExamples, sequenceLength) {
+  var sequencesBuffer = tf.buffer([numExamples, sequenceLength, 2]);
+  var labelsBuffer = tf.buffer([numExamples, 1]);
+  for (var i = 0; i < numExamples; ++i) {
+    var _generateSequenceAndL = generateSequenceAndLabel(sequenceLength),
+        _generateSequenceAndL2 = _slicedToArray(_generateSequenceAndL, 2),
+        sequence = _generateSequenceAndL2[0],
+        label = _generateSequenceAndL2[1];
+
+    for (var j = 0; j < sequenceLength; ++j) {
+      sequencesBuffer.set(1, i, j, sequence[j]);
+    }
+    labelsBuffer.set(label, i, 0);
+  }
+  return [sequencesBuffer.toTensor(), labelsBuffer.toTensor()];
+}
+
+// Train a model to predict the label based on the sequence.
+async function train() {
+  // Define the topology of the model.
+  var model = tf.sequential();
+  model.add(tf.layers.lstm({ units: 8, inputShape: [sequenceLength, 2] }));
+  model.add(tf.layers.dense({ units: 1, activation: 'sigmoid' }));
+
+  // Compile model to prepare for training.
+  var learningRate = 4e-3;
+  var optimizer = tf.train.rmsprop(learningRate);
+  model.compile({
+    loss: 'binaryCrossentropy',
+    optimizer: optimizer,
+    metrics: ['acc']
+  });
+
+  // Generate a number of examples for training.
+  var numTrainExamples = 500;
+  console.log('Generating training data...');
+
+  var _generateDataset = generateDataset(numTrainExamples, 10),
+      _generateDataset2 = _slicedToArray(_generateDataset, 2),
+      trainSequences = _generateDataset2[0],
+      trainLabels = _generateDataset2[1];
+
+  console.log('Training model...');
+  var fitOutput = await model.fit(trainSequences, trainLabels, {
+    epochs: Number.parseInt(document.getElementById('epochs-to-train').value),
+    validationSplit: 0.15,
+    callbacks: {
+      onEpochEnd: async function onEpochEnd(epoch, logs) {
+        // Update the UI to display the current loss and accuracy values.
+        document.getElementById('train-epoch').value = epoch + 1;
+        document.getElementById('train-loss').value = logs.loss;
+        document.getElementById('train-acc').value = logs.acc;
+        document.getElementById('val-loss').value = logs.val_loss;
+        document.getElementById('val-acc').value = logs.val_acc;
+      }
+    }
+  });
+
+  // Memory clean up: Dispose the training data.
+  trainSequences.dispose();
+  trainLabels.dispose();
+}
+
+document.getElementById('start-training').addEventListener('click', train);
 
 /***/ })
 /******/ ]);
