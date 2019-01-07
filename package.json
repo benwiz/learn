@@ -1,5 +1,5 @@
 {
-  "name": "lstm-rock-paper-scissors",
+  "name": "tensorflow-rock-paper-scissors",
   "version": "1.0.0",
   "description": "AI Rock-Paper-Scissors",
   "main": "index.js",
