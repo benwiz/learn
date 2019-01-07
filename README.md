@@ -16,6 +16,19 @@ Run the local serve
 npm start
 ```
 
+## Notes
+
+Use a promise to await multiple async functions
+
+```js
+// wait for the array of results
+let results = await Promise.all([
+  fetch(url1),
+  fetch(url2),
+  ...
+]);
+```
+
 ## To Do
 
 - Create the UI
