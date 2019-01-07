@@ -79,10 +79,6 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 var main = async function main() {
   var history = [1, 1, 2, 3, 1, 1, 2, 3, 1, 1, 2, 3, 1, 1, 2, 3, 1, 1];
 
-  // console.log('Using tensorflow.js linear regression model');
-  // Linear.run(12);
-
-  console.log('Using brain.js LSTMTimeStep');
   var prediction = BrainLSTMTimeStep.run(history);
   console.log(prediction);
 }; // import * as Linear from './linear';
