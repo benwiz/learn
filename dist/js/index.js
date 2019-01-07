@@ -77,7 +77,7 @@ var BrainLSTMTimeStep = _interopRequireWildcard(_brainLSTMTimeStep);
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 var main = async function main() {
-  var history = [1, 1, 2, 3, 1, 1, 2, 3, 1, 1, 2, 3, 1, 1, 2, 3, 1, 1];
+  var history = [1, 1, 2, 3, 1, 1, 2, 3, 1, 1, 2, 3, 1, 1, 2, 3];
 
   var prediction = BrainLSTMTimeStep.run(history);
   console.log(prediction);
