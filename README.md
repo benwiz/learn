@@ -1,6 +1,6 @@
 # tensorflow-rock-paper-scissors
 
-Learn to use Tensorflow.js by predicting next play in rock-paper-scissors.
+Learn to use Tensorflow.js and Brain.js by predicting next play in rock-paper-scissors.
 
 ## Development
 
