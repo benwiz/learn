@@ -1,8 +1,11 @@
 import * as brain from '../../vendor/brain';
 
-export const run = (data) => {
+export const train = (data) => {
   const net = new brain.recurrent.LSTMTimeStep();
   net.train([data]);
+};
+
+export const run = (net, data) => {
   const output = net.run(data);
   const rounded = Math.round(output);
   return rounded;

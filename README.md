@@ -31,8 +31,9 @@ let results = await Promise.all([
 
 ## To Do
 
-- Sequence for agent
+- Interactions with UI
 - BUG: Weird first row
+- Go back and layer in cookie usage
 
 - Try multilayer perceptron
 - Try LSTM

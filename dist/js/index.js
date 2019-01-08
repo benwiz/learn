@@ -76,12 +76,99 @@ var BrainLSTMTimeStep = _interopRequireWildcard(_brainLSTMTimeStep);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
-var predict = async function predict(history) {
-  // const history = [1, 1, 2, 3, 1, 1, 2, 3, 1, 1, 2, 3, 1, 1, 2, 3];
-  var prediction = BrainLSTMTimeStep.run(history);
-  console.log(prediction);
-}; // import * as Linear from './linear';
+var ROCK = 0; // import * as Linear from './linear';
 // import * as LSTM from './lstm';
+
+var PAPER = 1;
+var SCISSORS = 2;
+var HISTORY = [0, 0, 1, 2, 0, 0, 1, 2, 0, 0, 1, 2, 0, 0, 1, 2];
+var AGENT_ATTACK = -1;
+
+// Although Brain.js isn't async, future Tensorflow stuff will be. So make the function async.
+var updateModel = async function updateModel(history) {
+  var model = BrainLSTMTimeStep.train(history);
+  return model;
+};
+
+// Although Brain.js isn't async, future Tensorflow stuff might be. So make the function async.
+var predict = async function predict(model, history) {
+  var prediction = BrainLSTMTimeStep.run(model, history);
+  return prediction;
+};
+
+var updatePlayerCard = function updatePlayerCard(attack) {
+  // TODO: Update the player card to show which attack was selected
+  console.log('TODO: updatePlayerCard(attack)');
+};
+
+var updateHistory = function updateHistory(attack) {
+  HISTORY.push(attack);
+  // TODO: add attack to cookie
+};
+
+var determineWinner = function determineWinner(playerAttack, agentAttack) {
+  var result = void 0;
+  if (playerAttack === ROCK && agentAttack === ROCK) result = null;else if (playerAttack === ROCK && agentAttack === PAPER) result = 'agent';else if (playerAttack === ROCK && agentAttack === SCISSORS) result = 'player';else if (playerAttack === PAPER && agentAttack === ROCK) result = 'player';else if (playerAttack === PAPER && agentAttack === PAPER) result = null;else if (playerAttack === PAPER && agentAttack === SCISSORS) result = 'agent';else if (playerAttack === SCISSORS && agentAttack === ROCK) result = 'agent';else if (playerAttack === SCISSORS && agentAttack === PAPER) result = 'player';else result = null; // SCISSORS and SCISSORS
+
+  return result;
+};
+
+var updateScoreCard = function updateScoreCard(winner) {
+  var emoji = '⭕';
+  if (winner === 'player') {
+    emoji = '🙂';
+  } else if (winner === 'agent') {
+    emoji = '🤖';
+  }
+
+  var p = document.querySelector('#score p');
+  p.innerHTML += emoji;
+};
+
+var pickAgentAttack = async function pickAgentAttack(model, history) {
+  var prediction = await predict(model, history);
+  AGENT_ATTACK = prediction;
+};
+
+//
+// Main functions are the following two event handlers
+//
+
+var onPlayerPicksAttack = async function onPlayerPicksAttack(event) {
+  var playerAttack = 0; // event.something;
+
+  // Update player card with selected attack
+  updatePlayerCard(playerAttack);
+
+  // Record the attack in global HISTORY array
+  updateHistory(playerAttack);
+
+  // Identify the winner
+  var winner = determineWinner(playerAttack, AGENT_ATTACK);
+
+  // Update the score card UI
+  updateScoreCard(winner);
+
+  // Update the model
+  var model = await updateModel(HISTORY);
+
+  // Select the next computer attack
+  pickAgentAttack(model, HISTORY);
+};
+
+var onDomContentLoaded = function onDomContentLoaded() {
+  // TODO: Load history from cookie
+  pickAgentAttack(HISTORY);
+};
+
+//
+// Event listeners trigger the above function
+//
+
+// When DOM is loaded
+document.addEventListener('DOMContentLoaded', onDomContentLoaded);
+
+// TODO: When payer picks attack
 
 /***/ }),
 /* 1 */
@@ -93,7 +180,7 @@ var predict = async function predict(history) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.run = undefined;
+exports.run = exports.train = undefined;
 
 var _brain = __webpack_require__(2);
 
@@ -101,9 +188,12 @@ var brain = _interopRequireWildcard(_brain);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
-var run = exports.run = function run(data) {
+var train = exports.train = function train(data) {
   var net = new brain.recurrent.LSTMTimeStep();
   net.train([data]);
+};
+
+var run = exports.run = function run(net, data) {
   var output = net.run(data);
   var rounded = Math.round(output);
   return rounded;
