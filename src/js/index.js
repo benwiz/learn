@@ -5,6 +5,7 @@ import * as BrainLSTMTimeStep from './brainLSTMTimeStep';
 const ROCK = 0;
 const PAPER = 1;
 const SCISSORS = 2;
+
 const HISTORY = [];
 let AGENT_ATTACK = -1;
 
