@@ -29,6 +29,8 @@
 </head>
 
 <body>
+  <h1>Rock Paper Scissors</h1>
+
   <div id="links">
     <a href="https://benwiz.io/"><i class="fas fa-home"></i></a>
     <a href="https://github.com/benwiz/rock-paper-scissors-ai/"><i class="fab fa-github"></i></a>
@@ -40,17 +42,20 @@
     A level 1 computer picks its attacks randomly.
   </h3>
   <div id="game">
-    <div id="player" class="board-piece">
-      <h2>You 🙂</h2>
-      <button id="rock" value="0"><i class="far fa-hand-rock"></i></button>
-      <button id="paper" value="1"><i class="far fa-hand-paper"></i></button>
-      <button id="scissors" value="2"><i class="far fa-hand-scissors"></i></button>
-      <p hidden><i></i></p>
+    <div id="players">
+      <div id="player" class="board-piece">
+        <h2>You 🙂</h2>
+        <button id="rock" value="0"><i class="far fa-hand-rock"></i></button>
+        <button id="paper" value="1"><i class="far fa-hand-paper"></i></button>
+        <button id="scissors" value="2"><i class="far fa-hand-scissors"></i></button>
+        <p hidden><i></i></p>
+      </div>
+      <div id="agent" class="board-piece">
+        <h2>🤖 Computer (Lv. <span>1</span>)</h2>
+        <p><i></i><span></span></p>
+      </div>
     </div>
-    <div id="agent" class="board-piece">
-      <h2>🤖 Computer (Lv. <span>1</span>)</h2>
-      <p><i></i><span></span></p>
-    </div>
+
     <div id="score" class="board-piece">
       <h2>History</h2>
       <p></p>
