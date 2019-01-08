@@ -49,6 +49,20 @@ const updateAgentCardWithAttack = (attack) => {
   p.innerHTML = string;
 };
 
+const updatePlayerCardWithWaiting = () => {
+  const playerDiv = document.querySelector('#player');
+
+  // Show buttons
+  const buttons = playerDiv.querySelectorAll('button');
+  buttons.forEach((button) => {
+    button.setAttribute('hidden', null);
+  });
+
+  // Hide selection
+  const p = playerDiv.querySelector('p');
+  p.setAttribute('hidden', null);
+};
+
 const updatePlayerCardWithOptions = () => {
   const playerDiv = document.querySelector('#player');
 
@@ -145,14 +159,17 @@ const onPlayerPicksAttack = async (event) => {
 
   // Wait some time for the user to read the result of the game.
   // TODO: Allow a click to exit this early.
-  let waitDuration = 2000;
+  const waitDuration = 2000;
   await sleep(waitDuration);
 
   //
   // Next Round starting
   //
 
-  // Update player and/or agent UI to signal that the agent is thinking
+  // Update player UI so the UX is a little nicer
+  updatePlayerCardWithWaiting();
+
+  // Update agent UI to signal that the agent is thinking
   updateAgentCardWithThinking();
 
   // Update the model and select attack
@@ -162,9 +179,9 @@ const onPlayerPicksAttack = async (event) => {
   await pickAgentAttack(model, HISTORY);
   const duration = new Date() - start;
 
-  // Wait some time so the `thinking...` status is readable
-  waitDuration = 2000 - duration;
-  await sleep(waitDuration);
+  // // Wait some time so the `thinking...` status is readable
+  // waitDuration = 2000 - duration;
+  // await sleep(waitDuration);
 
   // Update player and/or agent UI to signal that the agent is ready and the player must
   // pick his next action.

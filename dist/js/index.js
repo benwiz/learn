@@ -127,6 +127,20 @@ var updateAgentCardWithAttack = function updateAgentCardWithAttack(attack) {
   p.innerHTML = string;
 };
 
+var updatePlayerCardWithWaiting = function updatePlayerCardWithWaiting() {
+  var playerDiv = document.querySelector('#player');
+
+  // Show buttons
+  var buttons = playerDiv.querySelectorAll('button');
+  buttons.forEach(function (button) {
+    button.setAttribute('hidden', null);
+  });
+
+  // Hide selection
+  var p = playerDiv.querySelector('p');
+  p.setAttribute('hidden', null);
+};
+
 var updatePlayerCardWithOptions = function updatePlayerCardWithOptions() {
   var playerDiv = document.querySelector('#player');
 
@@ -218,7 +232,10 @@ var onPlayerPicksAttack = async function onPlayerPicksAttack(event) {
   // Next Round starting
   //
 
-  // Update player and/or agent UI to signal that the agent is thinking
+  // Update player UI so the UX is a little nicer
+  updatePlayerCardWithWaiting();
+
+  // Update agent UI to signal that the agent is thinking
   updateAgentCardWithThinking();
 
   // Update the model and select attack
@@ -228,9 +245,9 @@ var onPlayerPicksAttack = async function onPlayerPicksAttack(event) {
   await pickAgentAttack(model, HISTORY);
   var duration = new Date() - start;
 
-  // Wait some time so the `thinking...` status is readable
-  waitDuration = 2000 - duration;
-  await sleep(waitDuration);
+  // // Wait some time so the `thinking...` status is readable
+  // waitDuration = 2000 - duration;
+  // await sleep(waitDuration);
 
   // Update player and/or agent UI to signal that the agent is ready and the player must
   // pick his next action.
