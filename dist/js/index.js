@@ -84,6 +84,13 @@ var SCISSORS = 2;
 var HISTORY = [0, 0, 1, 2, 0, 0, 1, 2, 0, 0, 1, 2, 0, 0, 1, 2];
 var AGENT_ATTACK = -1;
 
+var ROCK_EMOJI = '💎';
+var PAPER_EMOJI = '📰';
+var SCISSORS_EMOJI = '✂';
+var SMILEY_EMOJI = '🙂';
+var NEUTRAL_EMOJI = '⭕';
+var ROBOT_EMOJI = '🤖';
+
 var sleep = function sleep(ms) {
   return new Promise(function (resolve) {
     return setTimeout(resolve, ms);
@@ -114,7 +121,7 @@ var updateAgentCardWithReady = function updateAgentCardWithReady() {
 
 var updateAgentCardWithAttack = function updateAgentCardWithAttack(attack) {
   var string = void 0;
-  if (attack === ROCK) string = '💎';else if (attack === PAPER) string = '📰';else string = '✂';
+  if (attack === ROCK) string = ROCK_EMOJI;else if (attack === PAPER) string = PAPER_EMOJI;else string = SCISSORS_EMOJI;
 
   var p = document.querySelector('#agent p');
   p.innerHTML = string;
@@ -146,7 +153,7 @@ var updatePlayerCardWithAttack = function updatePlayerCardWithAttack(attack) {
   // Show selection
   var p = playerDiv.querySelector('p');
   var emoji = void 0;
-  if (attack === ROCK) emoji = '💎';else if (attack === PAPER) emoji = '📰';else emoji = '✂';
+  if (attack === ROCK) emoji = ROCK_EMOJI;else if (attack === PAPER) emoji = PAPER_EMOJI;else emoji = SCISSORS_EMOJI;
   p.innerHTML = emoji;
   p.removeAttribute('hidden');
 };
@@ -164,11 +171,11 @@ var determineWinner = function determineWinner(playerAttack, agentAttack) {
 };
 
 var updateScoreCard = function updateScoreCard(winner) {
-  var emoji = '⭕';
+  var emoji = NEUTRAL_EMOJI;
   if (winner === 'player') {
-    emoji = '🙂';
+    emoji = SMILEY_EMOJI;
   } else if (winner === 'agent') {
-    emoji = '🤖';
+    emoji = ROBOT_EMOJI;
   }
 
   var p = document.querySelector('#score p');
@@ -245,8 +252,6 @@ var onDomContentLoaded = async function onDomContentLoaded() {
   // pick his next action.
   updateAgentCardWithReady();
   updatePlayerCardWithOptions();
-
-  onPlayerPicksAttack({});
 };
 
 //

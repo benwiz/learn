@@ -8,6 +8,13 @@ const SCISSORS = 2;
 const HISTORY = [0, 0, 1, 2, 0, 0, 1, 2, 0, 0, 1, 2, 0, 0, 1, 2];
 let AGENT_ATTACK = -1;
 
+const ROCK_EMOJI = '💎';
+const PAPER_EMOJI = '📰';
+const SCISSORS_EMOJI = '✂';
+const SMILEY_EMOJI = '🙂';
+const NEUTRAL_EMOJI = '⭕';
+const ROBOT_EMOJI = '🤖';
+
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 // Although Brain.js isn't async, future Tensorflow stuff will be. So make the function async.
@@ -34,9 +41,9 @@ const updateAgentCardWithReady = () => {
 
 const updateAgentCardWithAttack = (attack) => {
   let string;
-  if (attack === ROCK) string = '💎';
-  else if (attack === PAPER) string = '📰';
-  else string = '✂';
+  if (attack === ROCK) string = ROCK_EMOJI;
+  else if (attack === PAPER) string = PAPER_EMOJI;
+  else string = SCISSORS_EMOJI;
 
   const p = document.querySelector('#agent p');
   p.innerHTML = string;
@@ -68,9 +75,9 @@ const updatePlayerCardWithAttack = (attack) => {
   // Show selection
   const p = playerDiv.querySelector('p');
   let emoji;
-  if (attack === ROCK) emoji = '💎';
-  else if (attack === PAPER) emoji = '📰';
-  else emoji = '✂';
+  if (attack === ROCK) emoji = ROCK_EMOJI;
+  else if (attack === PAPER) emoji = PAPER_EMOJI;
+  else emoji = SCISSORS_EMOJI;
   p.innerHTML = emoji;
   p.removeAttribute('hidden');
 };
@@ -96,11 +103,11 @@ const determineWinner = (playerAttack, agentAttack) => {
 };
 
 const updateScoreCard = (winner) => {
-  let emoji = '⭕';
+  let emoji = NEUTRAL_EMOJI;
   if (winner === 'player') {
-    emoji = '🙂';
+    emoji = SMILEY_EMOJI;
   } else if (winner === 'agent') {
-    emoji = '🤖';
+    emoji = ROBOT_EMOJI;
   }
 
   const p = document.querySelector('#score p');
@@ -179,8 +186,6 @@ const onDomContentLoaded = async () => {
   // pick his next action.
   updateAgentCardWithReady();
   updatePlayerCardWithOptions();
-
-  onPlayerPicksAttack({});
 };
 
 //
