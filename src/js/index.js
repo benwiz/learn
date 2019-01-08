@@ -44,14 +44,14 @@ const levelUp = () => {
   p.innerHTML += '<br>';
 };
 
-const updateAgentCardWithThinking = () => {
+const updateAgentCardWithThinking = async () => {
   const p = document.querySelector('#agent p');
-
-  const span = p.querySelector('span');
-  span.innerHTML = 'Training...';
 
   const i = p.querySelector('i');
   i.classList = '';
+
+  const span = p.querySelector('span');
+  span.innerHTML = 'Training...';
 };
 
 const updateAgentCardWithReady = () => {
@@ -224,6 +224,9 @@ const onPlayerPicksAttack = async (event) => {
 
   // Update agent UI to signal that the agent is thinking
   updateAgentCardWithThinking();
+
+  // TODO: There is a bug here where although the DOM is updated in the previous two functions,
+  // the window is not painted since the `updateModel` long-running-task is blocking.
 
   // Update the model every 10 rounds
   let duration = 0;
