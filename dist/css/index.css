@@ -3,6 +3,12 @@ body {
   height: 100%;
   width: 100%; }
 
+h3 {
+  width: 90%;
+  max-width: 500px;
+  margin: 20px auto;
+  text-align: center; }
+
 #game {
   width: 90%;
   height: 90%;
@@ -10,7 +16,8 @@ body {
   margin: auto;
   display: grid;
   grid-template-columns: auto auto;
-  grid-template-rows: auto auto auto; }
+  grid-template-rows: auto auto auto;
+  background-color: lightgoldenrodyellow; }
   #game .board-piece {
     padding-left: 10px;
     padding-right: 10px; }
@@ -20,21 +27,20 @@ body {
   #game #player {
     grid-row: 1 / span 2;
     grid-column: 1 / span 1;
-    background-color: lightgreen; }
+    border-right: 1px solid black; }
     #game #player button {
       font-size: xx-large; }
       #game #player button i {
         pointer-events: none; }
   #game #agent {
     grid-row: 1 / span 2;
-    grid-column: 2 / span 1;
-    background-color: lightblue; }
+    grid-column: 2 / span 1; }
     #game #agent h2 {
       text-align: right; }
   #game #score {
     grid-row: 3 / span 1;
     grid-column: 1 / span 2;
-    background-color: lightgoldenrodyellow; }
+    border-top: 1px solid black; }
     #game #score p {
       text-align: left;
       font-size: large; }
