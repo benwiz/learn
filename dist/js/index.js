@@ -226,7 +226,7 @@ var onPlayerPicksAttack = async function onPlayerPicksAttack(event) {
 
   // Wait some time for the user to read the result of the game.
   // TODO: Allow a click to exit this early.
-  var waitDuration = 500; // 2000;
+  var waitDuration = 1000; // 2000;
   await sleep(waitDuration);
 
   //
