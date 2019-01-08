@@ -20,7 +20,10 @@ export const train = (net, data) => {
   //   // callbackPeriod: 10, // the number of iterations through the training data between callback calls --> number greater than 0
   //   // timeout: 500, // Infinity // the max number of milliseconds to train for --> number greater than 0
   // };
-  net.train([data], { keepNetworkIntact: true /* keepNetworkIntact is apparently deprecated */, timeout: 500 /* timeout doesn't appear to work */);
+  net.train([data], {
+    keepNetworkIntact: true /* keepNetworkIntact is apparently deprecated */,
+    timeout: 500 /* timeout doesn't appear to work */,
+  });
   return net;
 };
 
