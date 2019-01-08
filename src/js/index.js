@@ -34,7 +34,6 @@ const updateAgentCardWithReady = () => {
 
 const updateAgentCardWithAttack = (attack) => {
   let string;
-  console.log(attack);
   if (attack === ROCK) string = 'Rock';
   else if (attack === PAPER) string = 'Paper';
   else string = 'Scissors';
@@ -43,13 +42,37 @@ const updateAgentCardWithAttack = (attack) => {
   p.innerHTML = string;
 };
 
-const updatePlayerCardWithReady = () => {
-  // Prepare the player card to select the player's next attack
+const updatePlayerCardWithOptions = () => {
+  const playerDiv = document.querySelector('#player');
+
+  // Show buttons
+  const buttons = playerDiv.querySelectorAll('button');
+  buttons.forEach((button) => {
+    button.removeAttribute('hidden');
+  });
+
+  // Hide selection
+  const p = playerDiv.querySelector('p');
+  p.setAttribute('hidden', null);
 };
 
 const updatePlayerCardWithAttack = (attack) => {
-  // TODO: Update the player card to show which attack was selected
-  console.log('TODO: updatePlayerCardWithAttack(attack)');
+  const playerDiv = document.querySelector('#player');
+
+  // Hide buttons
+  const buttons = playerDiv.querySelectorAll('button');
+  buttons.forEach((button) => {
+    button.setAttribute('hidden', null);
+  });
+
+  // Show selection
+  const p = playerDiv.querySelector('p');
+  let emoji;
+  if (attack === ROCK) emoji = '💎';
+  else if (attack === PAPER) emoji = '📰';
+  else emoji = '✂';
+  p.innerHTML = emoji;
+  p.removeAttribute('hidden');
 };
 
 const updateHistory = (attack) => {
@@ -139,7 +162,7 @@ const onPlayerPicksAttack = async (event) => {
   // Update player and/or agent UI to signal that the agent is ready and the player must
   // pick his next action.
   updateAgentCardWithReady();
-  updatePlayerCardWithReady();
+  updatePlayerCardWithOptions();
 };
 
 const onDomContentLoaded = async () => {
@@ -155,7 +178,7 @@ const onDomContentLoaded = async () => {
   // Update player and/or agent UI to signal that the agent is ready and the player must
   // pick his next action.
   updateAgentCardWithReady();
-  updatePlayerCardWithReady();
+  updatePlayerCardWithOptions();
 
   onPlayerPicksAttack({});
 };

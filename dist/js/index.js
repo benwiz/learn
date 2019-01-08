@@ -114,20 +114,41 @@ var updateAgentCardWithReady = function updateAgentCardWithReady() {
 
 var updateAgentCardWithAttack = function updateAgentCardWithAttack(attack) {
   var string = void 0;
-  console.log(attack);
   if (attack === ROCK) string = 'Rock';else if (attack === PAPER) string = 'Paper';else string = 'Scissors';
 
   var p = document.querySelector('#agent p');
   p.innerHTML = string;
 };
 
-var updatePlayerCardWithReady = function updatePlayerCardWithReady() {
-  // Prepare the player card to select the player's next attack
+var updatePlayerCardWithOptions = function updatePlayerCardWithOptions() {
+  var playerDiv = document.querySelector('#player');
+
+  // Show buttons
+  var buttons = playerDiv.querySelectorAll('button');
+  buttons.forEach(function (button) {
+    button.removeAttribute('hidden');
+  });
+
+  // Hide selection
+  var p = playerDiv.querySelector('p');
+  p.setAttribute('hidden', null);
 };
 
 var updatePlayerCardWithAttack = function updatePlayerCardWithAttack(attack) {
-  // TODO: Update the player card to show which attack was selected
-  console.log('TODO: updatePlayerCardWithAttack(attack)');
+  var playerDiv = document.querySelector('#player');
+
+  // Hide buttons
+  var buttons = playerDiv.querySelectorAll('button');
+  buttons.forEach(function (button) {
+    button.setAttribute('hidden', null);
+  });
+
+  // Show selection
+  var p = playerDiv.querySelector('p');
+  var emoji = void 0;
+  if (attack === ROCK) emoji = '💎';else if (attack === PAPER) emoji = '📰';else emoji = '✂';
+  p.innerHTML = emoji;
+  p.removeAttribute('hidden');
 };
 
 var updateHistory = function updateHistory(attack) {
@@ -207,7 +228,7 @@ var onPlayerPicksAttack = async function onPlayerPicksAttack(event) {
   // Update player and/or agent UI to signal that the agent is ready and the player must
   // pick his next action.
   updateAgentCardWithReady();
-  updatePlayerCardWithReady();
+  updatePlayerCardWithOptions();
 };
 
 var onDomContentLoaded = async function onDomContentLoaded() {
@@ -223,7 +244,7 @@ var onDomContentLoaded = async function onDomContentLoaded() {
   // Update player and/or agent UI to signal that the agent is ready and the player must
   // pick his next action.
   updateAgentCardWithReady();
-  updatePlayerCardWithReady();
+  updatePlayerCardWithOptions();
 
   onPlayerPicksAttack({});
 };
