@@ -326,7 +326,7 @@ var train = exports.train = function train(net, data) {
 
   var options = {
     // Defaults values --> expected validation
-    // iterations: 10000, // 20000, // the maximum times to iterate the training data --> number greater than 0
+    iterations: 500, // 20000, // the maximum times to iterate the training data --> number greater than 0
     // errorThresh: 0.01, // 0.005, // the acceptable error percentage from training data --> number between 0 and 1
     log: true, // true to use console.log, when a function is supplied it is used --> Either true or a function
     logPeriod: 10, // iterations between logging out --> number greater than 0
