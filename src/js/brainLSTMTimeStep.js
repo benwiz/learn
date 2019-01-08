@@ -3,6 +3,7 @@ import * as brain from '../../vendor/brain';
 export const train = (data) => {
   const net = new brain.recurrent.LSTMTimeStep();
   net.train([data]);
+  return net;
 };
 
 export const run = (net, data) => {
