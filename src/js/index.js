@@ -34,9 +34,9 @@ const updateAgentCardWithReady = () => {
 
 const updateAgentCardWithAttack = (attack) => {
   let string;
-  if (attack === ROCK) string = 'Rock';
-  else if (attack === PAPER) string = 'Paper';
-  else string = 'Scissors';
+  if (attack === ROCK) string = '💎';
+  else if (attack === PAPER) string = '📰';
+  else string = '✂';
 
   const p = document.querySelector('#agent p');
   p.innerHTML = string;
@@ -119,7 +119,7 @@ const pickAgentAttack = async (model, history) => {
 //
 
 const onPlayerPicksAttack = async (event) => {
-  const playerAttack = 0; // event.something;
+  const playerAttack = 1; // event.something;
 
   // Update agent card with its selected attack
   updateAgentCardWithAttack(AGENT_ATTACK);
