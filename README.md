@@ -31,7 +31,8 @@ let results = await Promise.all([
 
 ## To Do
 
-- Create the UI
+- Sequence for agent
+- BUG: Weird first row
 
 - Try multilayer perceptron
 - Try LSTM

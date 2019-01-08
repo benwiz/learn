@@ -23,7 +23,9 @@ body {
     grid-column: 2 / span 1;
     background-color: lightblue; }
     #game #agent h2 {
-      float: right; }
+      text-align: right; }
+    #game #agent p {
+      text-align: center; }
   #game #score {
     grid-row: 3 / span 1;
     grid-column: 1 / span 2;
