@@ -199,15 +199,34 @@ var determineWinner = function determineWinner(playerAttack, agentAttack) {
 };
 
 var updateScoreCard = function updateScoreCard(winner) {
+  // Update the win list
   var emoji = NEUTRAL_EMOJI;
   if (winner === 'player') {
     emoji = SMILEY_EMOJI;
   } else if (winner === 'agent') {
     emoji = ROBOT_EMOJI;
   }
-
   var p = document.querySelector('#score p');
   p.innerHTML += emoji;
+
+  // Update the win counters
+  var span = void 0;
+  if (winner === 'player') {
+    span = document.querySelector('#player-win-count');
+  } else if (winner === 'agent') {
+    span = document.querySelector('#agent-win-count');
+  } else {
+    span = document.querySelector('#draw-count');
+  }
+  var currentCount = parseInt(span.innerHTML);
+  currentCount += 1;
+  span.innerHTML = currentCount;
+
+  // Update total count
+  span = document.querySelector('#total-count');
+  currentCount = parseInt(span.innerHTML);
+  currentCount += 1;
+  span.innerHTML = currentCount;
 };
 
 var pickAgentAttack = async function pickAgentAttack(model, history) {
@@ -336,7 +355,7 @@ var train = exports.train = function train(net, data) {
 
   var options = {
     // Defaults values --> expected validation
-    iterations: 500 // 20000, // the maximum times to iterate the training data --> number greater than 0
+    // iterations: 500, // 20000, // the maximum times to iterate the training data --> number greater than 0
     // errorThresh: 0.01, // 0.005, // the acceptable error percentage from training data --> number between 0 and 1
     // log: true, // true to use console.log, when a function is supplied it is used --> Either true or a function
     // logPeriod: 10, // iterations between logging out --> number greater than 0

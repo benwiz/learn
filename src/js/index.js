@@ -131,15 +131,34 @@ const determineWinner = (playerAttack, agentAttack) => {
 };
 
 const updateScoreCard = (winner) => {
+  // Update the win list
   let emoji = NEUTRAL_EMOJI;
   if (winner === 'player') {
     emoji = SMILEY_EMOJI;
   } else if (winner === 'agent') {
     emoji = ROBOT_EMOJI;
   }
-
   const p = document.querySelector('#score p');
   p.innerHTML += emoji;
+
+  // Update the win counters
+  let span;
+  if (winner === 'player') {
+    span = document.querySelector('#player-win-count');
+  } else if (winner === 'agent') {
+    span = document.querySelector('#agent-win-count');
+  } else {
+    span = document.querySelector('#draw-count');
+  }
+  let currentCount = parseInt(span.innerHTML);
+  currentCount += 1;
+  span.innerHTML = currentCount;
+
+  // Update total count
+  span = document.querySelector('#total-count');
+  currentCount = parseInt(span.innerHTML);
+  currentCount += 1;
+  span.innerHTML = currentCount;
 };
 
 const pickAgentAttack = async (model, history) => {
