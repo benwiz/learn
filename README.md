@@ -31,9 +31,7 @@ let results = await Promise.all([
 
 ## To Do
 
-- playerThinking step... even if that's hiding all content
-
-- BUG: Weird first row, it's not 50-50
+- BUG: Weird first row of table, it's not perfectly 50-50
 - Go back and layer in cookie usage
 
 - Try multilayer perceptron
