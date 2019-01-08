@@ -96,7 +96,17 @@ var predict = async function predict(model, history) {
   return prediction;
 };
 
-var updateAgentCard = function updateAgentCard(attack) {
+var updateAgentCardWithThinking = function updateAgentCardWithThinking() {
+  var p = document.querySelector('#agent p');
+  p.innerHTML = 'Thinking...';
+};
+
+var updateAgentCardWithReady = function updateAgentCardWithReady() {
+  var p = document.querySelector('#agent p');
+  p.innerHTML = 'Ready.';
+};
+
+var updateAgentCardWithAttack = function updateAgentCardWithAttack(attack) {
   var string = void 0;
   console.log(attack);
   if (attack === ROCK) string = 'Rock';else if (attack === PAPER) string = 'Paper';else string = 'Scissors';
@@ -105,9 +115,13 @@ var updateAgentCard = function updateAgentCard(attack) {
   p.innerHTML = string;
 };
 
-var updatePlayerCard = function updatePlayerCard(attack) {
+var updatePlayerCardWithReady = function updatePlayerCardWithReady() {
+  // Prepare the player card to select the player's next attack
+};
+
+var updatePlayerCardWithAttack = function updatePlayerCardWithAttack(attack) {
   // TODO: Update the player card to show which attack was selected
-  console.log('TODO: updatePlayerCard(attack)');
+  console.log('TODO: updatePlayerCardWithAttack(attack)');
 };
 
 var updateHistory = function updateHistory(attack) {
@@ -148,10 +162,10 @@ var onPlayerPicksAttack = async function onPlayerPicksAttack(event) {
   var playerAttack = 0; // event.something;
 
   // Update agent card with its selected attack
-  updateAgentCard(AGENT_ATTACK);
+  updateAgentCardWithAttack(AGENT_ATTACK);
 
   // Update player card with selected attack
-  updatePlayerCard(playerAttack);
+  updatePlayerCardWithAttack(playerAttack);
 
   // Record the attack in global HISTORY array
   updateHistory(playerAttack);
@@ -166,33 +180,36 @@ var onPlayerPicksAttack = async function onPlayerPicksAttack(event) {
   // Next Round starting
   //
 
-  // TODO: Update player and/or agent UI to signal that the agent is thinking
-  console.log('Agent is thinking...');
-  var start = new Date();
+  // Update player and/or agent UI to signal that the agent is thinking
+  updateAgentCardWithThinking();
 
   // Update the model and select attack
+  console.log('Agent is thinking...');
+  var start = new Date();
   var model = await updateModel(HISTORY);
   await pickAgentAttack(model, HISTORY);
+  console.log('Agent thought for: ' + (new Date() - start) / 1000 + ' seconds.');
 
-  // TODO: update player and/or agent UI to signal that the agent is ready and the player must
-  // pick his next action. But first wait for a few seconds.
-  var end = new Date();
-  var duration = end - start;
-  console.log('Agent thought for: ' + duration / 1000 + ' seconds.');
+  // Update player and/or agent UI to signal that the agent is ready and the player must
+  // pick his next action.
+  updateAgentCardWithReady();
+  updatePlayerCardWithReady();
 };
 
 var onDomContentLoaded = async function onDomContentLoaded() {
   // TODO: Load history from cookie if there is a cookie
 
+  // Update player and/or agent UI to signal that the agent is thinking
+  updateAgentCardWithThinking();
+
   // Update the model and pick the agent's attack
   var model = await updateModel(HISTORY);
   await pickAgentAttack(model, HISTORY);
 
-  // TODO: update player and/or agent UI to signal that the agent is ready and the player must
-  // pick his next action. Repeat TODO from above. Do this first.
-
-  // tmp for testing
-  onPlayerPicksAttack({});
+  // Update player and/or agent UI to signal that the agent is ready and the player must
+  // pick his next action.
+  updateAgentCardWithReady();
+  updatePlayerCardWithReady();
 };
 
 //
