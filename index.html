@@ -30,7 +30,9 @@
 
 <body>
   <h3>
-    The computer uses an LSTM neural network to learn your playing strategy.
+    The computer uses a neural network to learn your strategy.<br><br>
+    Every 10 rounds, the network is trained and the computer levels up.
+    A level 1 computer picks its attacks randomly.
   </h3>
   <div id="game">
     <div id="player" class="board-piece">
@@ -41,7 +43,7 @@
       <p hidden><i></i></p>
     </div>
     <div id="agent" class="board-piece">
-      <h2>🤖 Computer</h2>
+      <h2>🤖 Computer (Lv. <span>1</span>)</h2>
       <p><i></i><span></span></p>
     </div>
     <div id="score" class="board-piece">

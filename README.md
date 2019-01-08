@@ -1,6 +1,6 @@
 # rock-paper-scissors-ai
 
-Learn to use Tensorflow.js and Brain.js by predicting next play in rock-paper-scissors.
+Learn to use Tensorflow.js and Brain.js by predicting next play in rock-paper-scissors. This is a learning project so excellent results, UI, UX, and code architecture are not goals.
 
 ## Development
 

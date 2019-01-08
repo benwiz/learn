@@ -103,7 +103,7 @@ var sleep = function sleep(ms) {
 var updateModel = async function updateModel(history) {
   var model = BrainLSTMTimeStep.train(MODEL, history);
   MODEL = model;
-  return model;
+  // return model;
 };
 
 // Although Brain.js isn't async, future Tensorflow stuff might be. So make the function async.
@@ -112,11 +112,23 @@ var predict = async function predict(model, history) {
   return prediction;
 };
 
+var levelUp = function levelUp() {
+  // Update level
+  var span = document.querySelector('#agent h2 span');
+  var level = parseInt(span.innerHTML);
+  level += 1;
+  span.innerHTML = level;
+
+  // Update score card with divider
+  var p = document.querySelector('#score p');
+  p.innerHTML += '<br>';
+};
+
 var updateAgentCardWithThinking = function updateAgentCardWithThinking() {
   var p = document.querySelector('#agent p');
 
   var span = p.querySelector('span');
-  span.innerHTML = 'Thinking...';
+  span.innerHTML = 'Training...';
 
   var i = p.querySelector('i');
   i.classList = '';
@@ -235,6 +247,11 @@ var pickAgentAttack = async function pickAgentAttack(model, history) {
   if (prediction === ROCK) AGENT_ATTACK = PAPER;else if (prediction === PAPER) AGENT_ATTACK = SCISSORS;else AGENT_ATTACK = ROCK;
 };
 
+var pickAgentAttackRandom = function pickAgentAttackRandom() {
+  var random = Math.random();
+  if (random <= 0.33) AGENT_ATTACK = ROCK;else if (random > 0.66) AGENT_ATTACK = SCISSORS;else AGENT_ATTACK = PAPER;
+};
+
 //
 // Main functions are the following two event handlers
 //
@@ -272,17 +289,28 @@ var onPlayerPicksAttack = async function onPlayerPicksAttack(event) {
   // Update agent UI to signal that the agent is thinking
   updateAgentCardWithThinking();
 
-  // Update the model and select attack
-  // TODO: Can I try to do this processing during the earlier `sleep`?
-  var start = new Date();
-  var model = await updateModel(HISTORY);
-  await pickAgentAttack(model, HISTORY);
-  var duration = new Date() - start;
-  console.log(duration);
+  // Update the model every 10 rounds
+  var duration = 0;
+  if (HISTORY.length % 10 === 0) {
+    var start = new Date();
+    await updateModel(HISTORY);
+    duration = new Date() - start;
+    console.log('training duration in ms:', duration);
 
-  // Wait some time so the `thinking...` status is readable
-  waitDuration = 200 - duration;
-  await sleep(waitDuration);
+    // Wait some time so the `thinking...` status is readable and consistent
+    waitDuration = 1500 - duration;
+    await sleep(waitDuration);
+
+    levelUp();
+  }
+
+  // Select the next attack
+  // If the model has been created, use it. Otherwise randomly pick the attack.
+  if (MODEL) {
+    await pickAgentAttack(MODEL, HISTORY);
+  } else {
+    pickAgentAttackRandom();
+  }
 
   // Update player and/or agent UI to signal that the agent is ready and the player must
   // pick his next action.
@@ -297,15 +325,16 @@ var onDomContentLoaded = async function onDomContentLoaded() {
   updateAgentCardWithThinking();
 
   if (HISTORY.length === 0) {
-    // TODO: Since we have no history, randomly select ROCK, PAPER, or SCISSORS.
-    // For now, hardcode choice.
-    AGENT_ATTACK = PAPER;
+    // Since we have no history, randomly select ROCK, PAPER, or SCISSORS.
+    pickAgentAttackRandom();
   } else {
-    // TODO: Load model from cookie
+    console.log("This should not yet be reachable since data isn't being loaded from cookie.");
 
-    // Update the model and pick the agent's attack
-    var model = await updateModel(HISTORY);
-    await pickAgentAttack(model, HISTORY);
+    // // TODO: Load model from cookie
+
+    // // Update the model and pick the agent's attack
+    // await updateModel(HISTORY);
+    // await pickAgentAttack(MODEL, HISTORY);
   }
 
   // Update player and/or agent UI to signal that the agent is ready and the player must
