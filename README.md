@@ -31,6 +31,7 @@ let results = await Promise.all([
 
 ## To Do
 
+- Include a total counter
 - BUG: Weird first row of table, it's not perfectly 50-50
 - Go back and layer in cookie usage
 - Make it pretty and deploy it. Stop trying to fix Brain.js.
