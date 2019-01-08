@@ -31,10 +31,7 @@ let results = await Promise.all([
 
 ## To Do
 
-- Make it pretty and deploy it.
-
 - BUG: Weird first row of table, it's not perfectly 50-50
-- Instead of training every game, train every X games. Then increase the level of the computer.
 - Go back and layer in cookie usage
 
 - Try LSTM using Tensorflow.js instead of Brain.js.
