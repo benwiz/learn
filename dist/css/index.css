@@ -25,7 +25,6 @@ h3 {
     font-size: xx-large; }
   #game #players {
     width: 100%;
-    background-color: red;
     display: flex; }
     #game #players #player {
       border-right: 1px solid black;
