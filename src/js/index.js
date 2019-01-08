@@ -130,6 +130,7 @@ const updateScoreCard = (winner) => {
 
 const pickAgentAttack = async (model, history) => {
   const prediction = await predict(model, history);
+
   if (prediction === ROCK) AGENT_ATTACK = PAPER;
   else if (prediction === PAPER) AGENT_ATTACK = SCISSORS;
   else AGENT_ATTACK = ROCK;
@@ -195,9 +196,15 @@ const onDomContentLoaded = async () => {
   // Update player and/or agent UI to signal that the agent is thinking
   updateAgentCardWithThinking();
 
-  // Update the model and pick the agent's attack
-  const model = await updateModel(HISTORY);
-  await pickAgentAttack(model, HISTORY);
+  if (HISTORY.length === 0) {
+    // TODO: Since we have no history, randomly select ROCK, PAPER, or SCISSORS.
+    // For now, hardcode choice.
+    AGENT_ATTACK = PAPER;
+  } else {
+    // Update the model and pick the agent's attack
+    const model = await updateModel(HISTORY);
+    await pickAgentAttack(model, HISTORY);
+  }
 
   // Update player and/or agent UI to signal that the agent is ready and the player must
   // pick his next action.
