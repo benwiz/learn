@@ -8,6 +8,8 @@ const SCISSORS = 2;
 const HISTORY = [0, 0, 1, 2, 0, 0, 1, 2, 0, 0, 1, 2, 0, 0, 1, 2];
 let AGENT_ATTACK = -1;
 
+const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+
 // Although Brain.js isn't async, future Tensorflow stuff will be. So make the function async.
 const updateModel = async (history) => {
   const model = BrainLSTMTimeStep.train(history);
@@ -94,7 +96,6 @@ const pickAgentAttack = async (model, history) => {
 //
 
 const onPlayerPicksAttack = async (event) => {
-  console.log('player picks attack');
   const playerAttack = 0; // event.something;
 
   // Update agent card with its selected attack
@@ -112,6 +113,11 @@ const onPlayerPicksAttack = async (event) => {
   // Update the score card UI
   updateScoreCard(winner);
 
+  // Wait some time for the user to read the result of the game.
+  // TODO: Allow a click to exit this early.
+  let waitDuration = 2000;
+  await sleep(waitDuration);
+
   //
   // Next Round starting
   //
@@ -120,11 +126,15 @@ const onPlayerPicksAttack = async (event) => {
   updateAgentCardWithThinking();
 
   // Update the model and select attack
-  console.log('Agent is thinking...');
+  // TODO: Can I try to do this processing during the earlier `sleep`?
   const start = new Date();
   const model = await updateModel(HISTORY);
   await pickAgentAttack(model, HISTORY);
-  console.log(`Agent thought for: ${(new Date() - start) / 1000} seconds.`);
+  const duration = new Date() - start;
+
+  // Wait some time so the `thinking...` status is readable
+  waitDuration = 2000 - duration;
+  await sleep(waitDuration);
 
   // Update player and/or agent UI to signal that the agent is ready and the player must
   // pick his next action.
@@ -146,6 +156,8 @@ const onDomContentLoaded = async () => {
   // pick his next action.
   updateAgentCardWithReady();
   updatePlayerCardWithReady();
+
+  onPlayerPicksAttack({});
 };
 
 //
@@ -154,5 +166,3 @@ const onDomContentLoaded = async () => {
 
 // When DOM is loaded
 document.addEventListener('DOMContentLoaded', onDomContentLoaded);
-
-// TODO: When payer picks attack

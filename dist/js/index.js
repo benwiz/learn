@@ -84,6 +84,12 @@ var SCISSORS = 2;
 var HISTORY = [0, 0, 1, 2, 0, 0, 1, 2, 0, 0, 1, 2, 0, 0, 1, 2];
 var AGENT_ATTACK = -1;
 
+var sleep = function sleep(ms) {
+  return new Promise(function (resolve) {
+    return setTimeout(resolve, ms);
+  });
+};
+
 // Although Brain.js isn't async, future Tensorflow stuff will be. So make the function async.
 var updateModel = async function updateModel(history) {
   var model = BrainLSTMTimeStep.train(history);
@@ -158,7 +164,6 @@ var pickAgentAttack = async function pickAgentAttack(model, history) {
 //
 
 var onPlayerPicksAttack = async function onPlayerPicksAttack(event) {
-  console.log('player picks attack');
   var playerAttack = 0; // event.something;
 
   // Update agent card with its selected attack
@@ -176,6 +181,11 @@ var onPlayerPicksAttack = async function onPlayerPicksAttack(event) {
   // Update the score card UI
   updateScoreCard(winner);
 
+  // Wait some time for the user to read the result of the game.
+  // TODO: Allow a click to exit this early.
+  var waitDuration = 2000;
+  await sleep(waitDuration);
+
   //
   // Next Round starting
   //
@@ -184,11 +194,15 @@ var onPlayerPicksAttack = async function onPlayerPicksAttack(event) {
   updateAgentCardWithThinking();
 
   // Update the model and select attack
-  console.log('Agent is thinking...');
+  // TODO: Can I try to do this processing during the earlier `sleep`?
   var start = new Date();
   var model = await updateModel(HISTORY);
   await pickAgentAttack(model, HISTORY);
-  console.log('Agent thought for: ' + (new Date() - start) / 1000 + ' seconds.');
+  var duration = new Date() - start;
+
+  // Wait some time so the `thinking...` status is readable
+  waitDuration = 2000 - duration;
+  await sleep(waitDuration);
 
   // Update player and/or agent UI to signal that the agent is ready and the player must
   // pick his next action.
@@ -210,6 +224,8 @@ var onDomContentLoaded = async function onDomContentLoaded() {
   // pick his next action.
   updateAgentCardWithReady();
   updatePlayerCardWithReady();
+
+  onPlayerPicksAttack({});
 };
 
 //
@@ -218,8 +234,6 @@ var onDomContentLoaded = async function onDomContentLoaded() {
 
 // When DOM is loaded
 document.addEventListener('DOMContentLoaded', onDomContentLoaded);
-
-// TODO: When payer picks attack
 
 /***/ }),
 /* 1 */
