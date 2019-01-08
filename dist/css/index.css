@@ -18,6 +18,8 @@ body {
     grid-row: 1 / span 2;
     grid-column: 1 / span 1;
     background-color: lightgreen; }
+    #game #player button {
+      font-size: xx-large; }
     #game #player p {
       text-align: center; }
   #game #agent {

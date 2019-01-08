@@ -10,9 +10,9 @@ const HISTORY = [];
 let MODEL = null;
 let AGENT_ATTACK = -1;
 
-const ROCK_EMOJI = '💎';
-const PAPER_EMOJI = '📰';
-const SCISSORS_EMOJI = '✂';
+// const ROCK_EMOJI = '💎';
+// const PAPER_EMOJI = '📰';
+// const SCISSORS_EMOJI = '✂';
 const SMILEY_EMOJI = '🙂';
 const NEUTRAL_EMOJI = '⭕';
 const ROBOT_EMOJI = '🤖';
@@ -34,22 +34,31 @@ const predict = async (model, history) => {
 
 const updateAgentCardWithThinking = () => {
   const p = document.querySelector('#agent p');
-  p.innerHTML = 'Thinking...';
+
+  const span = p.querySelector('span');
+  span.innerHTML = 'Thinking...';
+
+  const i = p.querySelector('i');
+  i.classList = '';
 };
 
 const updateAgentCardWithReady = () => {
-  const p = document.querySelector('#agent p');
-  p.innerHTML = 'Ready.';
+  const span = document.querySelector('#agent p span');
+  span.innerHTML = 'Ready.';
 };
 
 const updateAgentCardWithAttack = (attack) => {
-  let string;
-  if (attack === ROCK) string = ROCK_EMOJI;
-  else if (attack === PAPER) string = PAPER_EMOJI;
-  else string = SCISSORS_EMOJI;
+  let newClass;
+  if (attack === ROCK) newClass = 'fa-hand-rock';
+  else if (attack === PAPER) newClass = 'fa-hand-paper';
+  else newClass = 'fa-hand-scissors';
 
   const p = document.querySelector('#agent p');
-  p.innerHTML = string;
+  const span = p.querySelector('span');
+  span.innerHTML = '';
+
+  const i = document.querySelector('#agent p i');
+  i.classList = `far ${newClass}`;
 };
 
 const updatePlayerCardWithWaiting = () => {
@@ -89,13 +98,15 @@ const updatePlayerCardWithAttack = (attack) => {
     button.setAttribute('hidden', null);
   });
 
-  // Show selection
+  // Set new class and show selection
+  let newClass;
+  if (attack === ROCK) newClass = 'fa-hand-rock';
+  else if (attack === PAPER) newClass = 'fa-hand-paper';
+  else newClass = 'fa-hand-scissors';
+
   const p = playerDiv.querySelector('p');
-  let emoji;
-  if (attack === ROCK) emoji = ROCK_EMOJI;
-  else if (attack === PAPER) emoji = PAPER_EMOJI;
-  else emoji = SCISSORS_EMOJI;
-  p.innerHTML = emoji;
+  const i = p.querySelector('i');
+  i.classList = `far ${newClass}`;
   p.removeAttribute('hidden');
 };
 
