@@ -331,7 +331,6 @@ var train = exports.train = function train(net, data) {
     // Do nothing
   } else {
     // Create new network
-    console.log('new');
     net = new Brain.recurrent.LSTMTimeStep();
   }
 
@@ -348,7 +347,6 @@ var train = exports.train = function train(net, data) {
     // timeout: 500, // Infinity // the max number of milliseconds to train for --> number greater than 0
     // timeout appear to not work
   };
-  console.log('training data:', data);
   net.train([data], options);
   return net;
 };

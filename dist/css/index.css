@@ -20,6 +20,8 @@ body {
     background-color: lightgreen; }
     #game #player button {
       font-size: xx-large; }
+      #game #player button i {
+        pointer-events: none; }
     #game #player p {
       text-align: center; }
   #game #agent {

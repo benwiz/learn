@@ -27,6 +27,10 @@ body {
 
     button {
       font-size: xx-large;
+
+      i {
+        pointer-events: none;
+      }
     }
 
     p {
