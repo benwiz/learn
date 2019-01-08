@@ -7,6 +7,7 @@ const PAPER = 1;
 const SCISSORS = 2;
 
 const HISTORY = [];
+let MODEL = null;
 let AGENT_ATTACK = -1;
 
 const ROCK_EMOJI = '💎';
@@ -20,7 +21,8 @@ const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 // Although Brain.js isn't async, future Tensorflow stuff will be. So make the function async.
 const updateModel = async (history) => {
-  const model = BrainLSTMTimeStep.train(history);
+  const model = BrainLSTMTimeStep.train(MODEL, history);
+  MODEL = model;
   return model;
 };
 
@@ -203,6 +205,8 @@ const onDomContentLoaded = async () => {
     // For now, hardcode choice.
     AGENT_ATTACK = PAPER;
   } else {
+    // TODO: Load model from cookie
+
     // Update the model and pick the agent's attack
     const model = await updateModel(HISTORY);
     await pickAgentAttack(model, HISTORY);
