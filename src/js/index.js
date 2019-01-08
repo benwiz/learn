@@ -161,7 +161,7 @@ const onPlayerPicksAttack = async (event) => {
 
   // Wait some time for the user to read the result of the game.
   // TODO: Allow a click to exit this early.
-  const waitDuration = 1000; // 2000;
+  let waitDuration = 300;
   await sleep(waitDuration);
 
   //
@@ -180,10 +180,11 @@ const onPlayerPicksAttack = async (event) => {
   const model = await updateModel(HISTORY);
   await pickAgentAttack(model, HISTORY);
   const duration = new Date() - start;
+  console.log(duration);
 
-  // // Wait some time so the `thinking...` status is readable
-  // waitDuration = 2000 - duration;
-  // await sleep(waitDuration);
+  // Wait some time so the `thinking...` status is readable
+  waitDuration = 200 - duration;
+  await sleep(waitDuration);
 
   // Update player and/or agent UI to signal that the agent is ready and the player must
   // pick his next action.

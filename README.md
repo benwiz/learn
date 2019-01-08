@@ -31,6 +31,8 @@ let results = await Promise.all([
 
 ## To Do
 
+- Can I continue training a brain.js net instead of creating a new one from scratch?
+
 - BUG: Weird first row of table, it's not perfectly 50-50
 - Go back and layer in cookie usage
 

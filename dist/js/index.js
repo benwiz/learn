@@ -81,6 +81,7 @@ var ROCK = 0; // import * as Linear from './linear';
 
 var PAPER = 1;
 var SCISSORS = 2;
+
 var HISTORY = [];
 var AGENT_ATTACK = -1;
 
@@ -226,7 +227,7 @@ var onPlayerPicksAttack = async function onPlayerPicksAttack(event) {
 
   // Wait some time for the user to read the result of the game.
   // TODO: Allow a click to exit this early.
-  var waitDuration = 1000; // 2000;
+  var waitDuration = 300;
   await sleep(waitDuration);
 
   //
@@ -245,10 +246,11 @@ var onPlayerPicksAttack = async function onPlayerPicksAttack(event) {
   var model = await updateModel(HISTORY);
   await pickAgentAttack(model, HISTORY);
   var duration = new Date() - start;
+  console.log(duration);
 
-  // // Wait some time so the `thinking...` status is readable
-  // waitDuration = 2000 - duration;
-  // await sleep(waitDuration);
+  // Wait some time so the `thinking...` status is readable
+  waitDuration = 200 - duration;
+  await sleep(waitDuration);
 
   // Update player and/or agent UI to signal that the agent is ready and the player must
   // pick his next action.
@@ -311,7 +313,19 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 var train = exports.train = function train(data) {
   var net = new brain.recurrent.LSTMTimeStep();
-  net.train([data]);
+  var options = {
+    // Defaults values --> expected validation
+    // iterations: 20000, // the maximum times to iterate the training data --> number greater than 0
+    errorThresh: 0.01, // 0.005, // the acceptable error percentage from training data --> number between 0 and 1
+    // log: false, // true to use console.log, when a function is supplied it is used --> Either true or a function
+    // logPeriod: 10, // iterations between logging out --> number greater than 0
+    // learningRate: 0.3, // scales with delta to effect training rate --> number between 0 and 1
+    // momentum: 0.1, // scales with next layer's change value --> number between 0 and 1
+    // callback: null, // a periodic call back that can be triggered while training --> null or function
+    // callbackPeriod: 10, // the number of iterations through the training data between callback calls --> number greater than 0
+    timeout: 500 // Infinity // the max number of milliseconds to train for --> number greater than 0
+  };
+  net.train([data], options);
   return net;
 };
 
