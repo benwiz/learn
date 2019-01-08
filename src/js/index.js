@@ -237,7 +237,9 @@ const onPlayerPicksAttack = async (event) => {
 
     // Wait some time so the `thinking...` status is readable and consistent
     waitDuration = 1500 - duration;
-    await sleep(waitDuration);
+    if (waitDuration > 0) {
+      await sleep(waitDuration);
+    }
 
     levelUp();
   }
