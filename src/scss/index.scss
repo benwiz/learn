@@ -4,7 +4,7 @@ body {
   width: 100%;
 }
 
-h3 {
+h3a {
   width: 90%;
   max-width: 500px;
   margin: 20px auto;
@@ -38,7 +38,12 @@ h3 {
     grid-row: 1 / span 2;
     grid-column: 1 / span 1;
     border-right: 1px solid black;
+    text-align: center;
     // background-color: lightgreen;
+
+    h2 {
+      text-align: left;
+    }
 
     button {
       font-size: xx-large;
