@@ -194,3 +194,9 @@ const onDomContentLoaded = async () => {
 
 // When DOM is loaded
 document.addEventListener('DOMContentLoaded', onDomContentLoaded);
+
+// Attack button events
+console.log('add buttons');
+document.querySelectorAll('#player button', (event) => {
+  console.log(event);
+});
