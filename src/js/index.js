@@ -225,11 +225,10 @@ const onPlayerPicksAttack = async (event) => {
   // Update agent UI to signal that the agent is thinking
   updateAgentCardWithThinking();
 
-  // TODO: There is a bug here where although the DOM is updated in the previous two functions,
-  // the window is not painted since the `updateModel` long-running-task is blocking.
-
   // Update the model every 10 rounds
   if (HISTORY.length % 10 === 0) {
+    await sleep(500); // Sleeping here allows the DOM to handle the previous two function. Weird.
+
     const start = new Date();
     await updateModel(HISTORY);
     const duration = new Date() - start;

@@ -76,3 +76,22 @@ h3 {
     }
   }
 }
+
+#links {
+  width: 100%;
+  margin: 50px auto;
+  text-align: center;
+
+  a {
+    color: gray;
+  }
+
+  i {
+    margin: 4px;
+    font-size: 22px;
+
+    &:hover {
+      color: lightgray;
+    }
+  }
+}
