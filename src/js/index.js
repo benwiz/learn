@@ -5,7 +5,7 @@ import * as BrainLSTMTimeStep from './brainLSTMTimeStep';
 const ROCK = 0;
 const PAPER = 1;
 const SCISSORS = 2;
-const HISTORY = [0, 0, 1, 2, 0, 0, 1, 2, 0, 0, 1, 2, 0, 0, 1, 2];
+const HISTORY = [];
 let AGENT_ATTACK = -1;
 
 const ROCK_EMOJI = '💎';
@@ -159,7 +159,7 @@ const onPlayerPicksAttack = async (event) => {
 
   // Wait some time for the user to read the result of the game.
   // TODO: Allow a click to exit this early.
-  const waitDuration = 2000;
+  const waitDuration = 500; // 2000;
   await sleep(waitDuration);
 
   //

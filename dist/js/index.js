@@ -81,7 +81,7 @@ var ROCK = 0; // import * as Linear from './linear';
 
 var PAPER = 1;
 var SCISSORS = 2;
-var HISTORY = [0, 0, 1, 2, 0, 0, 1, 2, 0, 0, 1, 2, 0, 0, 1, 2];
+var HISTORY = [];
 var AGENT_ATTACK = -1;
 
 var ROCK_EMOJI = '💎';
@@ -225,7 +225,7 @@ var onPlayerPicksAttack = async function onPlayerPicksAttack(event) {
 
   // Wait some time for the user to read the result of the game.
   // TODO: Allow a click to exit this early.
-  var waitDuration = 2000;
+  var waitDuration = 500; // 2000;
   await sleep(waitDuration);
 
   //
