@@ -126,7 +126,7 @@ const pickAgentAttack = async (model, history) => {
 //
 
 const onPlayerPicksAttack = async (event) => {
-  const playerAttack = 1; // event.something;
+  const playerAttack = parseInt(event.target.value);
 
   // Update agent card with its selected attack
   updateAgentCardWithAttack(AGENT_ATTACK);
@@ -196,7 +196,7 @@ const onDomContentLoaded = async () => {
 document.addEventListener('DOMContentLoaded', onDomContentLoaded);
 
 // Attack button events
-console.log('add buttons');
-document.querySelectorAll('#player button', (event) => {
-  console.log(event);
+const playerAttackButtons = document.querySelectorAll('#player button');
+playerAttackButtons.forEach((button) => {
+  button.addEventListener('click', onPlayerPicksAttack);
 });

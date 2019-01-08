@@ -192,7 +192,7 @@ var pickAgentAttack = async function pickAgentAttack(model, history) {
 //
 
 var onPlayerPicksAttack = async function onPlayerPicksAttack(event) {
-  var playerAttack = 1; // event.something;
+  var playerAttack = parseInt(event.target.value);
 
   // Update agent card with its selected attack
   updateAgentCardWithAttack(AGENT_ATTACK);
@@ -262,9 +262,9 @@ var onDomContentLoaded = async function onDomContentLoaded() {
 document.addEventListener('DOMContentLoaded', onDomContentLoaded);
 
 // Attack button events
-console.log('add buttons');
-document.querySelectorAll('#player button', function (event) {
-  console.log(event);
+var playerAttackButtons = document.querySelectorAll('#player button');
+playerAttackButtons.forEach(function (button) {
+  button.addEventListener('click', onPlayerPicksAttack);
 });
 
 /***/ }),
