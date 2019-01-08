@@ -293,11 +293,10 @@ var onPlayerPicksAttack = async function onPlayerPicksAttack(event) {
   // the window is not painted since the `updateModel` long-running-task is blocking.
 
   // Update the model every 10 rounds
-  var duration = 0;
   if (HISTORY.length % 10 === 0) {
     var start = new Date();
     await updateModel(HISTORY);
-    duration = new Date() - start;
+    var duration = new Date() - start;
     console.log('training duration in ms:', duration);
 
     // Wait some time so the `thinking...` status is readable and consistent
