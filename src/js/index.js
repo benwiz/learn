@@ -212,7 +212,7 @@ const onPlayerPicksAttack = async (event) => {
 
   // Wait some time for the user to read the result of the game.
   // TODO: Allow a click to exit this early.
-  let waitDuration = 300;
+  let waitDuration = 600;
   await sleep(waitDuration);
 
   //
