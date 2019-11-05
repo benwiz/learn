@@ -23,7 +23,7 @@ body {
       display: inline-block;
       color: $text-gray;
       margin-bottom: 6px;
-      text-decoration: none;
+      text-decoration: underline; // none;
 
       &:hover {
         text-decoration: underline;

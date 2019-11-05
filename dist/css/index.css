@@ -14,7 +14,7 @@ body {
       display: inline-block;
       color: #707070;
       margin-bottom: 6px;
-      text-decoration: none; }
+      text-decoration: underline; }
       body #container a:hover {
         text-decoration: underline; }
     body #container i {
