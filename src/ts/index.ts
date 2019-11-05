@@ -192,8 +192,8 @@ const setupBoba = (status: String) => {
   bobaOptions.vertexColors = [
     {
       r: 255,
-      g: 0,
-      b: 0,
+      g: 56,
+      b: 96,
       a: 0.04,
     },
   ];
@@ -204,8 +204,8 @@ const setupBoba = (status: String) => {
   bobaOptions.edgeColors = [
     {
       r: 255,
-      g: 0,
-      b: 0,
+      g: 56,
+      b: 96,
       a: 0.04,
     },
   ];
@@ -215,8 +215,8 @@ const setupBoba = (status: String) => {
   bobaOptions.shapeColors = [
     {
       r: 255,
-      g: 0,
-      b: 0,
+      g: 56,
+      b: 96,
       a: 0.025,
     },
   ];
