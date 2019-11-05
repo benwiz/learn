@@ -194,7 +194,7 @@ const setupBoba = (status: String) => {
       r: 255,
       g: 0,
       b: 0,
-      a: 0.01,
+      a: 0.04,
     },
   ];
 
@@ -206,7 +206,7 @@ const setupBoba = (status: String) => {
       r: 255,
       g: 0,
       b: 0,
-      a: 0.01,
+      a: 0.04,
     },
   ];
 
@@ -217,7 +217,7 @@ const setupBoba = (status: String) => {
       r: 255,
       g: 0,
       b: 0,
-      a: 0.005,
+      a: 0.025,
     },
   ];
 
