@@ -19,22 +19,23 @@ interface Feed {
 }
 
 const burnPhrases = [
-  'Feel free to burn',
-  'Burn it all!',
-  'Burn burn burn!',
-  'Burn the midnight oil',
-  'Smoke on the water, fire in the sky',
-  "Fire that's closest kept burns most of all.",
-  "Give a man a fire and he's warm for the day. But set fire to him and he's warm for the rest of his life.",
-  'Burn not your house to rid it of the mouse.',
-  'Do not let your fire go out.',
-  'Fires all go out eventually.',
-  'Fire it up!',
-  'Run like a bunny with his tail on fire',
+  'Fires are allowed',
+  // 'Feel free to burn',
+  // 'Burn it all!',
+  // 'Burn burn burn!',
+  // 'Burn the midnight oil',
+  // 'Smoke on the water, fire in the sky',
+  // "Fire that's closest kept burns most of all.",
+  // "Give a man a fire and he's warm for the day. But set fire to him and he's warm for the rest of his life.",
+  // 'Burn not your house to rid it of the mouse.',
+  // 'Do not let your fire go out.',
+  // 'Fires all go out eventually.',
+  // 'Fire it up!',
+  // 'Run like a bunny with his tail on fire',
 ];
 
 const readRSSFeed = async (url: string): Promise<Feed> => {
-  const CORS_PROXY = 'https://cors-anywhere.herokuapp.com/';
+  const CORS_PROXY = 'https://cors-anywhere.herokuapp.com/'; // TODO: Note why I'm doing this
   const feed = await parser.parseURL(CORS_PROXY + url);
   return feed;
 };
