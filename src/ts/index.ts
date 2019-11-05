@@ -1,5 +1,5 @@
 import * as Parser from 'rss-parser';
-import * as Boba from '@benwiz/boba.wasm';
+import * as Boba from '@benwiz/boba.js';
 
 const parser = new Parser(); // should this be global?
 
@@ -19,7 +19,6 @@ interface Feed {
 }
 
 const burnPhrases = [
-  'Fires are allowed',
   // 'Feel free to burn',
   // 'Burn it all!',
   // 'Burn burn burn!',
@@ -30,7 +29,7 @@ const burnPhrases = [
   // 'Burn not your house to rid it of the mouse.',
   // 'Do not let your fire go out.',
   // 'Fires all go out eventually.',
-  // 'Fire it up!',
+  'Fire it up!',
   // 'Run like a bunny with his tail on fire',
 ];
 
@@ -114,7 +113,8 @@ const updateDetails = (
 };
 
 const setupBoba = (status: String) => {
-  // Initialize boba.wasmm options
+  // Initialize boba.js options
+  /*
   const options = {
     // Canvas
     x: 0,
@@ -135,12 +135,12 @@ const setupBoba = (status: String) => {
     },
     // Edges
     drawEdges: true,
-    edgeColor: {
+    edgeColors: [{
       r: 192,
       g: 192,
       b: 192,
       a: 0.1,
-    },
+    }],
     // Triangles
     drawTriangles: true,
     triangleColor: {
@@ -158,12 +158,12 @@ const setupBoba = (status: String) => {
       b: 96,
       a: 0.05,
     };
-    options.edgeColor = {
+    options.edgeColors = [{ // NOTE: Boba.wasm uses singular edgeColor
       r: 255,
       g: 56,
       b: 96,
       a: 0.05,
-    };
+    }];
     options.triangleColor = {
       r: 255,
       g: 56,
@@ -171,9 +171,58 @@ const setupBoba = (status: String) => {
       a: 0.02,
     };
   }
+  */
+
+  // Initialize boba.js options by grabbing the defaults
+  const bobaOptions = Boba.getDefaultOptions();
+
+  // Canvas configs
+  bobaOptions.x = 0;
+  bobaOptions.y = 0;
+  bobaOptions.width = document.documentElement.scrollWidth;
+  bobaOptions.height = document.documentElement.scrollHeight;
+
+  // Vertex configs
+  bobaOptions.numVertices = 40;
+  bobaOptions.drawVertices = true;
+  bobaOptions.vertexMinSize = 8;
+  bobaOptions.vertexMaxSize = 16;
+  bobaOptions.vertexMinSpeed = 0.5;
+  bobaOptions.vertexMaxSpeed = 2;
+  bobaOptions.vertexColors = [
+    {
+      r: 255,
+      g: 0,
+      b: 0,
+      a: 0.01,
+    },
+  ];
+
+  // Edge configs
+  bobaOptions.numNeighbors = 2;
+  bobaOptions.drawEdges = true;
+  bobaOptions.edgeColors = [
+    {
+      r: 255,
+      g: 0,
+      b: 0,
+      a: 0.01,
+    },
+  ];
+
+  // Shape configs
+  bobaOptions.drawShapes = true;
+  bobaOptions.shapeColors = [
+    {
+      r: 255,
+      g: 0,
+      b: 0,
+      a: 0.005,
+    },
+  ];
 
   // Start the animation
-  Boba.start(options, '1.0.6');
+  Boba.start(bobaOptions);
 };
 
 const main = async (): Promise<void> => {
@@ -187,7 +236,9 @@ const main = async (): Promise<void> => {
   updateSummary(summaryStatus);
 
   // Setup Boba as early as possible so the user has something to look at
+  console.log('aaa');
   setupBoba(summaryStatus);
+  console.log('bbb');
 
   // Read openBurn and aqi RSS feeds
   const openBurn: Feed = await readRSSFeed(openBurnRSS);
