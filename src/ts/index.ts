@@ -29,9 +29,11 @@ const updateSummary = (status: string): void => {
   const icon: Element = document.querySelector('#summary-icon');
   title.textContent = status;
   if (status === 'No Alert') {
-    icon.classList.add('burn');
+    icon.classList.add('burn', 'fa-fire');
+    icon.classList.remove('fa-ban');
   } else {
-    icon.classList.remove('burn');
+    icon.classList.add('fa-ban');
+    icon.classList.remove('fa-fire');
   }
 };
 
@@ -65,9 +67,21 @@ const updateDetails = (
   const northernIcon: HTMLElement = document.querySelector(`#${dayID} #northern i`);
   const southernIcon: HTMLElement = document.querySelector(`#${dayID} #southern i`);
   const coastalIcon: HTMLElement = document.querySelector(`#${dayID} #coastal i`);
-  if (northernStatus === 'Burn') northernIcon.classList.add('burn');
-  if (southernStatus === 'Burn') southernIcon.classList.add('burn');
-  if (coastalStatus === 'Burn') coastalIcon.classList.add('burn');
+  if (northernStatus === 'Burn') {
+    northernIcon.classList.add('burn', 'fa-fire');
+  } else {
+    northernIcon.classList.add('fa-ban');
+  }
+  if (southernStatus === 'Burn') {
+    southernIcon.classList.add('burn', 'fa-fire');
+  } else {
+    southernIcon.classList.add('fa-ban');
+  }
+  if (coastalStatus === 'Burn') {
+    coastalIcon.classList.add('burn', 'fa-fire');
+  } else {
+    coastalIcon.classList.add('fa-ban');
+  }
 
   // Get and set aqi values
   const northernAQIElement: HTMLElement = document.querySelector(

@@ -60,6 +60,9 @@ body {
     body #container h3 {
       margin-top: 75px;
       margin-bottom: 25px; }
+    body #container p {
+      max-width: 14rem;
+      margin: 0 auto; }
     body #container #legend {
       margin: auto; }
       body #container #legend th {
