@@ -29,11 +29,5 @@ Don't forget about new step to imports: https://webpack.js.org/guides/typescript
 
 ## To Do
 
-- Don't wait for each rss feed to load, load them all synchronously
-- Better loading messages or animation
-- Boba.js should turn on immediately
 - _index.html_ organization could be improved by using HTML5's `<secion></section>` elments
-- I could check today's date, because the RSS feed is sometimes out of day so shows yesterday's data
-
-- Tomorrow's forecast
-- 5 Day forecast
+- I could check today's date, because the RSS feed is sometimes out of sync, so shows yesterday's data
