@@ -144,7 +144,7 @@ const setupBoba = (status: String) => {
   bobaOptions.shapeColors = [{...red, a: 0.025}];
 
   // Status
-  if (status === 'No Alert') {
+  if (status !== 'No Alert') {
     bobaOptions.vertexColors = [{...gray, a: 0.16,}];
     bobaOptions.edgeColors   = [{...gray, a: 0.00,}];
     bobaOptions.shapeColors  = [{...gray, a: 0.00,}];
@@ -159,17 +159,24 @@ const main = async (): Promise<void> => {
   const openBurnRSS: string = 'http://www.baaqmd.gov/Feeds/OpenBurnRSS.aspx';
   const aqiRSS: string = 'http://www.baaqmd.gov/Feeds/AirForecastRSS.aspx';
 
+  // Setup Boba as early as possible so the user has something to look at
+  setupBoba('fake alert');
+
+  // Read rss feeds
+  const [spareTheAir, openBurn, aqi] = await Promise.all([readRSSFeed(spareTheAirRSS),
+                                                          readRSSFeed(openBurnRSS),
+                                                          readRSSFeed(aqiRSS)]);
+
   // Update summary
-  const spareTheAir: Feed = await readRSSFeed(spareTheAirRSS);
   const summaryStatus = spareTheAir.items[0].content;
   updateSummary(summaryStatus);
+  console.log(summaryStatus);
 
-  // Setup Boba as early as possible so the user has something to look at
-  setupBoba(summaryStatus);
-
-  // Read openBurn and aqi RSS feeds
-  const openBurn: Feed = await readRSSFeed(openBurnRSS);
-  const aqi: Feed = await readRSSFeed(aqiRSS);
+  // Restart Boba.js if there is no alert (not perfect but it works)
+  if (summaryStatus === 'No Alert') {
+    Boba.stop();
+    setupBoba(summaryStatus);
+  };
 
   // Update today
   const today: string = openBurn.items[0].title
