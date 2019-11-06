@@ -113,65 +113,8 @@ const updateDetails = (
 };
 
 const setupBoba = (status: String) => {
-  // Initialize boba.js options
-  /*
-  const options = {
-    // Canvas
-    x: 0,
-    y: 0,
-    width: document.documentElement.scrollWidth,
-    height: document.documentElement.scrollHeight,
-    // Vertices
-    drawVertices: true,
-    vertexMinRadius: 8,
-    vertexMaxRadius: 16,
-    vertexMinSpeed: 0.5,
-    vertexMaxSpeed: 1.0,
-    vertexColor: {
-      r: 192,
-      g: 192,
-      b: 192,
-      a: 0.1,
-    },
-    // Edges
-    drawEdges: true,
-    edgeColors: [{
-      r: 192,
-      g: 192,
-      b: 192,
-      a: 0.1,
-    }],
-    // Triangles
-    drawTriangles: true,
-    triangleColor: {
-      r: 192,
-      g: 192,
-      b: 192,
-      a: 0.05,
-    },
-  };
-
-  if (status === 'No Alert') {
-    options.vertexColor = {
-      r: 255,
-      g: 56,
-      b: 96,
-      a: 0.05,
-    };
-    options.edgeColors = [{ // NOTE: Boba.wasm uses singular edgeColor
-      r: 255,
-      g: 56,
-      b: 96,
-      a: 0.05,
-    }];
-    options.triangleColor = {
-      r: 255,
-      g: 56,
-      b: 96,
-      a: 0.02,
-    };
-  }
-  */
+  const red = {r: 255, g: 56, b: 96};
+  const gray = {r: 192, g: 192, b: 192};
 
   // Initialize boba.js options by grabbing the defaults
   const bobaOptions = Boba.getDefaultOptions();
@@ -189,37 +132,23 @@ const setupBoba = (status: String) => {
   bobaOptions.vertexMaxSize = 16;
   bobaOptions.vertexMinSpeed = 0.5;
   bobaOptions.vertexMaxSpeed = 2;
-  bobaOptions.vertexColors = [
-    {
-      r: 255,
-      g: 56,
-      b: 96,
-      a: 0.04,
-    },
-  ];
+  bobaOptions.vertexColors = [{...red, a: 0.04}];
 
   // Edge configs
   bobaOptions.numNeighbors = 2;
   bobaOptions.drawEdges = true;
-  bobaOptions.edgeColors = [
-    {
-      r: 255,
-      g: 56,
-      b: 96,
-      a: 0.04,
-    },
-  ];
+  bobaOptions.edgeColors = [{...red, a: 0.04}];
 
   // Shape configs
   bobaOptions.drawShapes = true;
-  bobaOptions.shapeColors = [
-    {
-      r: 255,
-      g: 56,
-      b: 96,
-      a: 0.025,
-    },
-  ];
+  bobaOptions.shapeColors = [{...red, a: 0.025}];
+
+  // Status
+  if (status === 'No Alert') {
+    bobaOptions.vertexColors = [{...gray, a: 0.16,}];
+    bobaOptions.edgeColors   = [{...gray, a: 0.00,}];
+    bobaOptions.shapeColors  = [{...gray, a: 0.00,}];
+  }
 
   // Start the animation
   Boba.start(bobaOptions);
@@ -236,9 +165,7 @@ const main = async (): Promise<void> => {
   updateSummary(summaryStatus);
 
   // Setup Boba as early as possible so the user has something to look at
-  console.log('aaa');
   setupBoba(summaryStatus);
-  console.log('bbb');
 
   // Read openBurn and aqi RSS feeds
   const openBurn: Feed = await readRSSFeed(openBurnRSS);
