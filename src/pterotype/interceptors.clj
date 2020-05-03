@@ -3,7 +3,26 @@
             [clojure.instant :as inst]
             [crux.api :as crux]
             [geheimtur.util.auth :as g-auth]
-            [geheimtur.impl.http-basic :as g-http-basic]))
+            [geheimtur.impl.http-basic :as g-http-basic]
+            [clojure.walk :refer [keywordize-keys]])
+  (:import [org.eclipse.jetty.util UrlEncoded MultiMap]))
+
+(defn parse-query-string
+  [query]
+  (let [params (MultiMap.)]
+    (UrlEncoded/decodeTo query params "UTF-8")
+    (into {}
+          ;; For some reason values are lists
+          (map (fn [[k v]]
+                 [k (first v)]))
+          params)))
+
+(def query-string
+  {:enter (fn [{:keys [request] :as context}]
+            (assoc-in context [:request :query-params]
+                      (some-> (:query-string request)
+                              parse-query-string
+                              keywordize-keys)))})
 
 (def db
   (fn [node]
@@ -28,7 +47,8 @@
                                 (->> (partition-by first))
                                 first
                                 (as-> d
-                                    {:user     (-> d first second)
+                                    {:id       (-> d first first)
+                                     :user     (-> d first second)
                                      :password (-> d first (nth 2))
                                      :roles    (into #{}
                                                      (map last)
@@ -56,13 +76,13 @@
                   context)
                 (unauthenticated-fn context)))}))
 
-(def keyevents
-  {:enter (fn [{{body-params :body-params} :request
-                ;; user-id                    :auth
-                :as                        ctx}]
+(def tx-keyevents
+  {:enter (fn [{{body-params                              :body-params
+                 {identity :geheimtur.util.auth/identity} :session} :request
+                :as                                                 ctx}]
             (let [{:keys [keyevents start end]} body-params
                   bucket-id                     (uuid/squuid)
-                  user-id (uuid/squuid)]
+                  user-id                       (-> identity :id)]
               (assoc ctx :tx
                      (into [[:crux.tx/put {:crux.db/id   bucket-id
                                            :bucket/start (inst/read-instant-date start)
@@ -75,3 +95,23 @@
                                                  :keyevent/key2   key2
                                                  :keyevent/delay  delay}]))
                            keyevents))))})
+
+(def q-buckets
+  {:enter (fn [{{{identity :geheimtur.util.auth/identity} :session} :request
+                node                                                :node
+                :as                                                 ctx}]
+            (let [username (:id identity)]
+              (assoc-in ctx [:request :result]
+                     (->> (crux/q (crux/db node)
+                                  {:find  '[?n ?b ?start ?end]
+                                   :where '[[?u :user/name ?n]
+                                            [?b :bucket/user ?u]
+                                            [?b :bucket/start ?start]
+                                            [?b :bucket/end ?end]]
+                                   :args  [{'?uid username}]})
+                          (into []
+                                (map (fn [[username bucket start end]]
+                                       {:user   username
+                                        :bucket bucket
+                                        :start  start
+                                        :end    end})))))))})

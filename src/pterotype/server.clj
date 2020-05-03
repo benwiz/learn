@@ -46,11 +46,18 @@
                                 ;; unauthenticated
                                 (g/access-forbidden-handler false)
                                 ;; unauthorized
-                                (g/access-forbidden-handler false :type :unauthorized))]}
+                                (g/access-forbidden-handler false :type :unauthorized))
+                       i/query-string]}
 
        ["/keyevents"
         {:interceptors []
-         :post         {:interceptors [i/keyevents]
+         :post         {:interceptors [i/tx-keyevents]
+                        :handler      h/ok}}]
+
+
+       ["/buckets"
+        {:interceptors []
+         :get          {:interceptors [i/q-buckets]
                         :handler      h/ok}}]])
 
     (ring/create-default-handler)
@@ -98,17 +105,45 @@
                            (map last)
                            d)}))
 
-  ;; Get all keyevents that belong to a bucket.
-  ;; It seems a little hacky to do it like this but I see nothing like a datoms call.
-  (crux/q (crux/db node)
-          '{:find  [?k1 ?k2 ?d ?start ?end ?u]
-            :where [[?b :bucket/user ?u]
-                    [?b :bucket/start ?start]
-                    [?b :bucket/end ?end]
-                    [?e :keyevent/bucket ?b]
-                    [?e :keyevent/key1 ?k1]
-                    [?e :keyevent/key2 ?k2]
-                    [?e :keyevent/delay ?d]]})
+
+  ;; get all buckets for user
+  (->> (crux/q (crux/db node)
+               {:find  '[?n ?b ?start ?end]
+                :where '[[?u :crux.db/id ?uid]
+                         [?u :user/name ?n]
+                         [?b :bucket/user ?u]
+                         [?b :bucket/start ?start]
+                         [?b :bucket/end ?end]]
+                :args  [{'?uid :user/ben}]})
+       (into []
+             (map (fn [[username bucket start end]]
+                    {:user   username
+                     :bucket bucket
+                     :start  start
+                     :end    end}))))
+
+  ;; Get all keyevents that belong to a user with bucket time range
+  (->> (crux/q (crux/db node)
+               {:find  '[?k1 ?k2 ?d ?start ?end ?n]
+                :where '[[?u :crux.db/id ?uid]
+                         [?u :user/name ?n]
+                         [?b :bucket/user ?u]
+                         [?b :bucket/start ?start]
+                         [?b :bucket/end ?end]
+                         [?e :keyevent/bucket ?b]
+                         [?e :keyevent/key1 ?k1]
+                         [?e :keyevent/key2 ?k2]
+                         [?e :keyevent/delay ?d]]
+                :args  [{'?uid :user/ben}]})
+       (into []
+             (map (fn [[key1 key2 delay start end username]]
+                    {:key1    key1
+                     :key2    key2
+                     :delay   delay
+                     :start   start
+                     :end     end
+                     :user    username}))))
+
   )
 
 ;; TODO store users in db and access in credentials fn

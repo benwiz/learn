@@ -1,6 +1,7 @@
 (ns pterotype.handlers)
 
 (defn ok
-  [{:keys [_body-params] :as _request}]
+  [{:keys [result] :as _request}]
   {:status 200
-   :body   {:message "ok"}})
+   :body   (cond-> {:message "ok"}
+             (some? result) (assoc :data result))})

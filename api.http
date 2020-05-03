@@ -1,5 +1,8 @@
 :ben := (base64-encode-string "ben:227spain")
 
+#
+# write keyevents
+#
 POST http://localhost:3000/api/keyevents
 Content-Type: application/json
 Authorization: Basic :ben
@@ -14,3 +17,10 @@ Authorization: Basic :ben
     "start": "2020-05-02T17:40:00Z",
     "end": "2020-05-02T17:29:00Z"
 }
+
+#
+# read buckets
+#
+GET http://localhost:3000/api/buckets
+Content-Type: application/json
+Authorization: Basic :ben
