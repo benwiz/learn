@@ -40,13 +40,13 @@
   (http/ring-handler
     (http/router
       ["/api"
-       {:interceptors [i/auth
+       {:interceptors [(i/db node)
+                       i/auth
                        (i/guard #{:user :admin}
                                 ;; unauthenticated
                                 (g/access-forbidden-handler false)
                                 ;; unauthorized
-                                (g/access-forbidden-handler false :type :unauthorized))
-                       (i/db node)]}
+                                (g/access-forbidden-handler false :type :unauthorized))]}
 
        ["/keyevents"
         {:interceptors []
@@ -74,12 +74,29 @@
 
   ;; Tx a user
   (crux/submit-tx node
-                  [[:crux.tx/put {:crux.db/id :bentest
-                                  :user/name  "Ben"}]])
-  (crux/q (crux/db node)
-          '{:find [?e ?n]
-            :where [[?e :crux.db/id :bentest]
-                    [?e :user/name ?n]]})
+                  [[:crux.tx/put {:crux.db/id    :user/ben
+                                  :user/name     "ben"
+                                  :user/password "227spain"
+                                  :user/roles         #{:user :admin}}]
+                   [:crux.tx/put {:crux.db/id    :user/bill
+                                  :user/name     "bill"
+                                  :user/password "227spain"
+                                  :user/roles         #{:user :admin}}]])
+  (some-> (crux/q (crux/db node)
+              '{:find  [?e ?n ?p ?r]
+                :where [[?e :user/name ?n]
+                        [?e :user/password ?p]
+                        [?e :user/roles ?r]]
+                :args  [{?n "ben1"}]})
+      (->> (remove #(some nil? %)))
+      (->> (partition-by first))
+      first
+      (as-> d
+          {:user     (-> d first second)
+           :password (-> d first (nth 2))
+           :roles    (into #{}
+                           (map last)
+                           d)}))
 
   ;; Get all keyevents that belong to a bucket.
   ;; It seems a little hacky to do it like this but I see nothing like a datoms call.
@@ -95,6 +112,5 @@
   )
 
 ;; TODO store users in db and access in credentials fn
-;; TODO persist db in sqlite or m2
 ;; TODO api for sincore
 ;; TODO deploy

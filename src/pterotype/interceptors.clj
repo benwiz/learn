@@ -2,16 +2,46 @@
   (:require [clj-uuid :as uuid]
             [clojure.instant :as inst]
             [crux.api :as crux]
-            [pterotype.util :as util]
             [geheimtur.util.auth :as g-auth]
             [geheimtur.impl.http-basic :as g-http-basic]))
+
+(def db
+  (fn [node]
+    {:enter (fn [ctx]
+              (assoc ctx :node node))
+     :leave (fn [ctx]
+              (assoc ctx :tx-result
+                     (crux/submit-tx
+                       (:node ctx)
+                       (:tx ctx))))}))
+
+(defn credentials
+  [node]
+  (fn [_ {:keys [username password]}]
+    (when-let [identity (some-> (crux/q (crux/db node)
+                                        {:find  '[?e ?n ?p ?r]
+                                         :where '[[?e :user/name ?n]
+                                                  [?e :user/password ?p]
+                                                  [?e :user/roles ?r]]
+                                         :args  [{'?n username}]})
+                                (->> (remove #(some nil? %)))
+                                (->> (partition-by first))
+                                first
+                                (as-> d
+                                    {:user     (-> d first second)
+                                     :password (-> d first (nth 2))
+                                     :roles    (into #{}
+                                                     (map last)
+                                                     d)}))]
+      (when (= password (:password identity))
+        (dissoc identity :password)))))
 
 (def auth
   "Hijack some geheimtur features while bypassing Pedestal interceptors.
    See g/http-basic to see Pedestal implementation."
   {:enter (fn [{request :request :as context}]
             (if-not (g-auth/authenticated? request)
-              (g-http-basic/http-basic-authenticate context util/credentials)
+              (g-http-basic/http-basic-authenticate context (credentials (:node context)))
               context))})
 
 (def guard
@@ -25,16 +55,6 @@
                   (unauthorized-fn context)
                   context)
                 (unauthenticated-fn context)))}))
-
-(def db
-  (fn [node]
-    {:enter (fn [ctx]
-              (assoc ctx :node node))
-     :leave (fn [ctx]
-              (assoc ctx :tx-result
-                     (crux/submit-tx
-                       (:node ctx)
-                       (:tx ctx))))}))
 
 (def keyevents
   {:enter (fn [{{body-params :body-params} :request
