@@ -66,7 +66,7 @@
                     [?e :keyevent/delay ?d]]})
   )
 
+;; TODO store users in db and access in credentials fn
 ;; TODO persist db in sqlite or m2
 ;; TODO api for sincore
-;; TODO auth
 ;; TODO deploy

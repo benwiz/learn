@@ -2,30 +2,16 @@
   (:require [clj-uuid :as uuid]
             [clojure.instant :as inst]
             [crux.api :as crux]
+            [pterotype.util :as util]
             [geheimtur.util.auth :as g-auth]
             [geheimtur.impl.http-basic :as g-http-basic]))
-
-(def users
-  "A sample user store."
-  {"ben"  {:display-name "Ben Wiz"
-           :password     "secret"
-           :roles        #{:user}} ;; must be a set
-   "bill" {:display-name "Bill Wiz"
-           :password     "secret"
-           :roles        #{:admin}}})
-
-(defn credentials
-  [_ {:keys [username password]}]
-  (when-let [identity (get users username)]
-    (when (= password (:password identity))
-      (dissoc identity :password))))
 
 (def auth
   "Hijack some geheimtur features while bypassing Pedestal interceptors.
    See g/http-basic to see Pedestal implementation."
   {:enter (fn [{request :request :as context}]
             (if-not (g-auth/authenticated? request)
-              (g-http-basic/http-basic-authenticate context credentials)
+              (g-http-basic/http-basic-authenticate context util/credentials)
               context))})
 
 (def guard
