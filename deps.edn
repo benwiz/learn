@@ -1,10 +1,13 @@
 {:paths   ["src" "resources"]
- :deps    {org.clojure/clojure     {:mvn/version "1.10.1"}
+ :deps    {org.clojure/clojure      {:mvn/version "1.10.1"}
            ;; com.datomic/datomic-free {:mvn/version "0.9.5697"}
-           danlentz/clj-uuid       {:mvn/version "0.1.9"}
-           juxt/crux-core          {:mvn/version "20.04-1.8.2-alpha"}
-           ring/ring-jetty-adapter {:mvn/version "1.7.1"}
-           metosin/reitit          {:mvn/version "0.4.2"}}
+           danlentz/clj-uuid        {:mvn/version "0.1.9"}
+           buddy/buddy-auth         {:mvn/version "2.2.0"} ;; TODO I think I can remove this
+           io.pedestal/pedestal.log {:mvn/version "0.5.7"} ;; need for geheimtur
+           geheimtur                {:mvn/version "0.4.0"}
+           juxt/crux-core           {:mvn/version "20.04-1.8.2-alpha"}
+           ring/ring-jetty-adapter  {:mvn/version "1.7.1"}
+           metosin/reitit           {:mvn/version "0.4.2"}}
  :aliases {:test    {:extra-paths ["test"]
                      :extra-deps  {org.clojure/test.check {:mvn/version "1.0.0"}}}
            :runner  {:extra-deps {com.cognitect/test-runner

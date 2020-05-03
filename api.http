@@ -1,5 +1,8 @@
+:ben := (base64-encode-string "ben:secret")
+
 POST http://localhost:3000/api/keyevents
 Content-Type: application/json
+Authorization: Basic :ben
 
 {
     "keyevents": [{"key1": "a",

@@ -1,6 +1,7 @@
 (ns pterotype.serverexample.server
   (:require [clojure.java.io :as io]
             [crux.api :as crux]
+            [geheimtur.interceptor :as g]
             [muuntaja.interceptor]
             [pterotype.handlers :as h]
             [pterotype.interceptors :as i]
@@ -23,7 +24,13 @@
   (http/ring-handler
     (http/router
       ["/api"
-       {:interceptors [i/auth (i/db node)]}
+       {:interceptors [i/auth
+                       (i/guard #{:user :admin}
+                                ;; unauthenticated
+                                (g/access-forbidden-handler false)
+                                ;; unauthorized
+                                (g/access-forbidden-handler false :type :unauthorized))
+                       (i/db node)]}
 
        ["/keyevents"
         {:interceptors []
@@ -58,3 +65,8 @@
                     [?e :keyevent/key2 ?k2]
                     [?e :keyevent/delay ?d]]})
   )
+
+;; TODO persist db in sqlite or m2
+;; TODO api for sincore
+;; TODO auth
+;; TODO deploy
