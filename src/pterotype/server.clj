@@ -11,14 +11,30 @@
             [ring.adapter.jetty :as jetty]))
 
 
-(defn start-standalone-node ^crux.api.ICruxAPI [storage-dir]
-  (crux/start-node {:crux.node/topology '[crux.standalone/topology]
-                    :crux.kv/db-dir     (str (io/file storage-dir "db"))}))
+;; [crux.kafka.embedded :as ek]
+;; (defn start-embedded-kafka
+;;   [kafka-port storage-dir]
+;;   (ek/start-embedded-kafka {:crux.kafka.embedded/zookeeper-data-dir (str (io/file storage-dir "zk-data"))
+;;                             :crux.kafka.embedded/kafka-log-dir      (str (io/file storage-dir "kafka-log"))
+;;                             :crux.kafka.embedded/kafka-port         kafka-port}))
+;; (defn start-node
+;;   [kafka-port storage-dir]
+;;   (crux/start-node {:crux.node/topology           '[crux.kafka/topology crux.kv.rocksdb/kv-store]
+;;                     :crux.kafka/bootstrap-servers (str "localhost:" kafka-port)
+;;                     :crux.kv/db-dir               (str (io/file storage-dir "db"))}))
+
+(defn start-node ^crux.api.ICruxAPI
+  [storage-dir]
+  (crux/start-node {:crux.node/topology              '[crux.standalone/topology crux.kv.rocksdb/kv-store]
+                    :crux.kv/db-dir                  (str (io/file storage-dir "db"))
+                    :crux.kv/sync?                   true
+                    :crux.standalone/event-log-dir   (str (io/file storage-dir "eventlog-1"))
+                    :crux.standalone/event-log-sync? true}))
 
 ;; This is absolutely not the way I want to start a node. But
 ;; will probably tide me over for a while until using either
 ;; an external database or using Integrant to start the node.
-(defonce node (start-standalone-node "crux-store"))
+(defonce node (start-node "resources/crux-store"))
 
 (def app
   (http/ring-handler
@@ -52,6 +68,18 @@
 
 (comment
   (.stop server) ;; Should never need stop, just re-compile files, here for reference
+  (.start server)
+
+
+
+  ;; Tx a user
+  (crux/submit-tx node
+                  [[:crux.tx/put {:crux.db/id :bentest
+                                  :user/name  "Ben"}]])
+  (crux/q (crux/db node)
+          '{:find [?e ?n]
+            :where [[?e :crux.db/id :bentest]
+                    [?e :user/name ?n]]})
 
   ;; Get all keyevents that belong to a bucket.
   ;; It seems a little hacky to do it like this but I see nothing like a datoms call.

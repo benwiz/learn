@@ -11,3 +11,4 @@
 .hg/
 *~
 pom.xml
+resources/crux-store
