@@ -13,10 +13,20 @@ Authorization: Basic :ben
                    "delay": 1000000},
                    {"key1": "x",
                     "key2": "y",
+                    "delay": 2000000},
+                   {"key1": "x",
+                    "key2": "y",
                     "delay": 2000000}],
     "start": "2020-05-02T17:40:00Z",
     "end": "2020-05-02T17:29:00Z"
 }
+
+#
+# read keyevents
+#
+GET http://localhost:3000/api/keyevents
+Content-Type: application/json
+Authorization: Basic :ben
 
 #
 # read buckets

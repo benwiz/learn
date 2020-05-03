@@ -52,6 +52,8 @@
        ["/keyevents"
         {:interceptors []
          :post         {:interceptors [i/tx-keyevents]
+                        :handler      h/ok}
+         :get          {:interceptors [i/q-keyevents]
                         :handler      h/ok}}]
 
 
@@ -124,7 +126,7 @@
 
   ;; Get all keyevents that belong to a user with bucket time range
   (->> (crux/q (crux/db node)
-               {:find  '[?k1 ?k2 ?d ?start ?end ?n]
+               {:find  '[?e ?k1 ?k2 ?d ?start ?end ?n]
                 :where '[[?u :crux.db/id ?uid]
                          [?u :user/name ?n]
                          [?b :bucket/user ?u]
@@ -134,9 +136,10 @@
                          [?e :keyevent/key1 ?k1]
                          [?e :keyevent/key2 ?k2]
                          [?e :keyevent/delay ?d]]
-                :args  [{'?uid :user/ben}]})
+                :args  [{'?n "ben"}]})
        (into []
-             (map (fn [[key1 key2 delay start end username]]
+             ;; TODO need to aggregate delays on k1 & k2 and maybe start & end
+             (map (fn [[_id key1 key2 delay start end username]]
                     {:key1    key1
                      :key2    key2
                      :delay   delay
@@ -146,6 +149,6 @@
 
   )
 
-;; TODO store users in db and access in credentials fn
+;; TODO api for csv
 ;; TODO api for sincore
 ;; TODO deploy

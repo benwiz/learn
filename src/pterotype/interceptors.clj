@@ -96,19 +96,47 @@
                                                  :keyevent/delay  delay}]))
                            keyevents))))})
 
+(def q-keyevents
+  {:enter (fn [{{{identity :geheimtur.util.auth/identity} :session} :request
+                node                                                :node
+                :as                                                 ctx}]
+            (let [user (:id identity)]
+              (assoc-in ctx [:request :result]
+                     (->> (crux/q (crux/db node)
+                                  {:find  '[?e ?k1 ?k2 ?d ?start ?end ?n]
+                                   :where '[[?u :crux.db/id ?uid]
+                                            [?u :user/name ?n]
+                                            [?b :bucket/user ?u]
+                                            [?b :bucket/start ?start]
+                                            [?b :bucket/end ?end]
+                                            [?e :keyevent/bucket ?b]
+                                            [?e :keyevent/key1 ?k1]
+                                            [?e :keyevent/key2 ?k2]
+                                            [?e :keyevent/delay ?d]]
+                                   :args  [{'?uid user}]})
+                          (into []
+                                (map (fn [[_ key1 key2 delay start end username]]
+                                       {:key1  key1
+                                        :key2  key2
+                                        :delay delay
+                                        :start start
+                                        :end   end
+                                        :user  username})))))))})
+
 (def q-buckets
   {:enter (fn [{{{identity :geheimtur.util.auth/identity} :session} :request
                 node                                                :node
                 :as                                                 ctx}]
-            (let [username (:id identity)]
+            (let [user (:id identity)]
               (assoc-in ctx [:request :result]
                      (->> (crux/q (crux/db node)
                                   {:find  '[?n ?b ?start ?end]
-                                   :where '[[?u :user/name ?n]
+                                   :where '[[?u :crux.db/id ?uid]
+                                            [?u :user/name ?n]
                                             [?b :bucket/user ?u]
                                             [?b :bucket/start ?start]
                                             [?b :bucket/end ?end]]
-                                   :args  [{'?uid username}]})
+                                   :args  [{'?uid user}]})
                           (into []
                                 (map (fn [[username bucket start end]]
                                        {:user   username
