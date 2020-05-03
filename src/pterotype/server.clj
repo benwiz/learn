@@ -57,7 +57,12 @@
         ["/csv"
          {:interceptors []
           :get          {:interceptors [i/q-keyevents]
-                         :handler      h/csv}}]]
+                         :handler      h/csv}}]
+
+        ["/sincor"
+         {:interceptors []
+          :get          {:interceptors [i/q-keyevents]
+                         :handler      h/sincor}}]]
 
        ["/buckets"
         {:interceptors []
