@@ -40,19 +40,21 @@
     (println "starting server on port" port)
     (jetty/run-jetty #'app {:port port, :join? false, :async? true})))
 
-(comment
+;; I also don't really like starting the server like this
+(defonce server (start))
 
-  (def server (start))
+(comment
   (.stop server) ;; Should never need stop, just re-compile files, here for reference
 
   ;; Get all keyevents that belong to a bucket.
   ;; It seems a little hacky to do it like this but I see nothing like a datoms call.
   (crux/q (crux/db node)
-          '{:find  [?k1 ?k2 ?d ?start ?end]
-            :where [[?e :keyevent/key1 ?k1]
-                    [?e :keyevent/key2 ?k2]
-                    [?e :keyevent/delay ?d]
-                    [?e :keyevent/bucket ?b]
+          '{:find  [?k1 ?k2 ?d ?start ?end ?u]
+            :where [[?b :bucket/user ?u]
                     [?b :bucket/start ?start]
-                    [?b :bucket/end ?end]]})
+                    [?b :bucket/end ?end]
+                    [?e :keyevent/bucket ?b]
+                    [?e :keyevent/key1 ?k1]
+                    [?e :keyevent/key2 ?k2]
+                    [?e :keyevent/delay ?d]]})
   )
