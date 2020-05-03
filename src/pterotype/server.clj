@@ -46,16 +46,18 @@
                                 ;; unauthenticated
                                 (g/access-forbidden-handler false)
                                 ;; unauthorized
-                                (g/access-forbidden-handler false :type :unauthorized))
-                       i/query-string]}
+                                (g/access-forbidden-handler false :type :unauthorized))]}
 
        ["/keyevents"
         {:interceptors []
          :post         {:interceptors [i/tx-keyevents]
                         :handler      h/ok}
          :get          {:interceptors [i/q-keyevents]
-                        :handler      h/ok}}]
-
+                        :handler      h/ok}}
+        ["/csv"
+         {:interceptors []
+          :get          {:interceptors [i/q-keyevents]
+                         :handler      h/csv}}]]
 
        ["/buckets"
         {:interceptors []

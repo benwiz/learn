@@ -29,6 +29,13 @@ Content-Type: application/json
 Authorization: Basic :ben
 
 #
+# read keyevents
+#
+GET http://localhost:3000/api/keyevents/csv
+Content-Type: application/csv
+Authorization: Basic :ben
+
+#
 # read buckets
 #
 GET http://localhost:3000/api/buckets

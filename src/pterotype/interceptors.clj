@@ -17,7 +17,8 @@
                  [k (first v)]))
           params)))
 
-(def query-string
+;; don't use this, use input coersion
+#_(def query-string
   {:enter (fn [{:keys [request] :as context}]
             (assoc-in context [:request :query-params]
                       (some-> (:query-string request)
