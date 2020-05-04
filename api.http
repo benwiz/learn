@@ -54,12 +54,11 @@ Authorization: Basic :ben
 #
 POST http://localhost:3000/admin-api/users
 Content-Type: application/json
-Authorization: Basic :ben
 X-Pterotype-Api-Key: mysupersecretkey
 
 {
-    "users": [{"name": "sarah",
-               "password": "secret"}]
+    "users": [{"name": "ben",
+               "password": "227spain"}]
 }
 
 #

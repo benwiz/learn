@@ -1,4 +1,4 @@
-(ns pterotype.serverexample.server
+(ns pterotype.server
   (:require [clojure.java.io :as io]
             [crux.api :as crux]
             [geheimtur.interceptor :as g]
@@ -103,11 +103,11 @@
     (jetty/run-jetty #'app {:port port, :join? false, :async? true})))
 
 ;; I also don't really like starting the server like this
-(defonce server (start))
+;; (defonce server (start))
 
 (comment
-  (.stop server) ;; Should never need stop, just re-compile files, here for reference
-  (.start server)
+  ;; (.stop server) ;; Should never need stop, just re-compile files, here for reference
+  ;; (.start server)
 
 
 
@@ -176,6 +176,3 @@
                      :user    username}))))
 
   )
-
-;; TODO render chart
-;; TODO deploy

@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-clojure -A:depstar -m hf.depstar.uberjar pterotype.jar
+clojure -A:uberjar

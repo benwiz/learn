@@ -164,7 +164,6 @@
                  #_#_{identity :geheimtur.util.auth/identity} :session} :request
                 :as                                                 ctx}]
             (let [{:keys [users]} body-params]
-              (prn "tx")
               (assoc ctx :tx
                      (into []
                            (map (fn [{:keys [name password]}]
