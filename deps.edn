@@ -4,10 +4,11 @@
            danlentz/clj-uuid        {:mvn/version "0.1.9"}
            buddy/buddy-auth         {:mvn/version "2.2.0"} ;; TODO I think I can remove this
            io.pedestal/pedestal.log {:mvn/version "0.5.7"} ;; need for geheimtur
-           clj-time {:mvn/version "0.15.2"}
+           clj-time                 {:mvn/version "0.15.2"}
            geheimtur                {:mvn/version "0.4.0"}
            juxt/crux-core           {:mvn/version "20.04-1.8.2-alpha"}
            ;; juxt/crux-kafka-embedded {:mvn/version "20.04-1.8.2-alpha"} ;; would use kafka if multiple nodes
+           com.cemerick/drawbridge  {:mvn/version "0.0.6"}
            org.clojure/data.csv     {:mvn/version "1.0.0"}
            juxt/crux-rocksdb        {:mvn/version "20.04-1.8.2-alpha"}
            ring/ring-jetty-adapter  {:mvn/version "1.7.1"}

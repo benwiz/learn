@@ -30,7 +30,6 @@
     {:enter (fn [ctx]
               (assoc ctx :node node))
      :leave (fn [ctx]
-              (prn "tx" (:tx ctx))
               (if (:tx ctx)
                 (assoc ctx :tx-result
                        (crux/submit-tx
@@ -66,6 +65,18 @@
   {:enter (fn [{request :request :as context}]
             (if-not (g-auth/authenticated? request)
               (g-http-basic/http-basic-authenticate context (credentials (:node context)))
+              context))})
+
+(def auth-key
+  "Hijack some geheimtur features while bypassing Pedestal interceptors.
+   See g/http-basic to see Pedestal implementation."
+  {:enter (fn [{request :request :as context}]
+            (if-not (g-auth/authenticated? request)
+              (if (-> request :headers (get "x-pterotype-api-key") (= "mysupersecretkey"))
+                (assoc context :request
+                       (g-auth/authenticate request {:user  :user/api-key-admin
+                                                     :roles #{:user :admin}}))
+                context)
               context))})
 
 (def guard
@@ -147,3 +158,18 @@
                                         :bucket bucket
                                         :start  start
                                         :end    end})))))))})
+
+(def tx-users
+  {:enter (fn [{{body-params                              :body-params
+                 #_#_{identity :geheimtur.util.auth/identity} :session} :request
+                :as                                                 ctx}]
+            (let [{:keys [users]} body-params]
+              (prn "tx")
+              (assoc ctx :tx
+                     (into []
+                           (map (fn [{:keys [name password]}]
+                                  [:crux.tx/put {:crux.db/id    (keyword "user" name)
+                                                 :user/name     name
+                                                 :user/password password
+                                                 :user/roles    #{:user :admin}}]))
+                           users))))})

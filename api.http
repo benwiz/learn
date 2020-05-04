@@ -50,6 +50,19 @@ Content-Type: application/json
 Authorization: Basic :ben
 
 #
-# read buckets
+# create users
+#
+POST http://localhost:3000/admin-api/users
+Content-Type: application/json
+Authorization: Basic :ben
+X-Pterotype-Api-Key: mysupersecretkey
+
+{
+    "users": [{"name": "sarah",
+               "password": "secret"}]
+}
+
+#
+# gui
 #
 GET http://localhost:3000/

@@ -72,6 +72,21 @@
          {:interceptors []
           :get          {:interceptors [i/q-buckets]
                          :handler      h/ok}}]]
+
+       ["/admin-api" ;; hacky, temporary
+        {:interceptors [(i/db node)
+                        i/auth-key
+                        (i/guard #{:user :admin}
+                                 ;; unauthenticated
+                                 (g/access-forbidden-handler false)
+                                 ;; unauthorized
+                                 (g/access-forbidden-handler false :type :unauthorized))]}
+
+        ["/users"
+         {:interceptors []
+          :post         {:interceptors [i/tx-users]
+                         :handler      h/ok}}]]
+
        ["/"
         {:interceptors []
          :get          {:interceptors []
@@ -101,26 +116,25 @@
                   [[:crux.tx/put {:crux.db/id    :user/ben
                                   :user/name     "ben"
                                   :user/password "227spain"
-                                  :user/roles         #{:user :admin}}]
+                                  :user/roles    #{:user :admin}}]
                    [:crux.tx/put {:crux.db/id    :user/bill
                                   :user/name     "bill"
                                   :user/password "227spain"
-                                  :user/roles         #{:user :admin}}]])
-  (some-> (crux/q (crux/db node)
-              '{:find  [?e ?n ?p ?r]
-                :where [[?e :user/name ?n]
-                        [?e :user/password ?p]
-                        [?e :user/roles ?r]]
-                :args  [{?n "ben1"}]})
-      (->> (remove #(some nil? %)))
-      (->> (partition-by first))
-      first
-      (as-> d
-          {:user     (-> d first second)
-           :password (-> d first (nth 2))
-           :roles    (into #{}
-                           (map last)
-                           d)}))
+                                  :user/roles    #{:user :admin}}]
+                   #_[:crux.tx/put {:crux.db/id    :user/karen
+                                  :user/name     "karen"
+                                  :user/password "secret"
+                                  :user/roles    #{:admin :user}}]])
+
+  (crux/q (crux/db node)
+          '{:find  [?e #_?n #_#_?p ?r]
+            :where [[?e :user/name]
+                    #_[?e :user/password ?p]
+                    #_[?e :user/roles ?r]]})
+
+  (crux/q (crux/db node)
+          {:find  '[?e]
+           :where '[[?e :crux.db/id :user/sarah]]})
 
 
   ;; get all buckets for user
