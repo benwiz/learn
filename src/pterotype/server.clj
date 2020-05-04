@@ -98,7 +98,7 @@
 
 (defn start
   []
-  (let [port (or (System/getenv "PORT") 3000)]
+  (let [port (or (str (System/getenv "PORT")) 3000)]
     (println "starting server on port" port)
     (jetty/run-jetty #'app {:port port, :join? false, :async? true})))
 
