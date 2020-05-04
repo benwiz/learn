@@ -34,7 +34,8 @@
             :data    (->> result
                           (group-by (fn [r]
                                       (let [end (tc/from-date (:end r))]
-                                        (t/date-time (t/year end)
+                                        end
+                                        #_(t/date-time (t/year end)
                                                      (t/month end)
                                                      (t/day end)
                                                      (t/hour end)

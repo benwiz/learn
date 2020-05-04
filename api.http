@@ -1,4 +1,5 @@
 :ben := (base64-encode-string "ben:227spain")
+:bill := (base64-encode-string "bill:227spain")
 
 #
 # write keyevents
@@ -42,7 +43,7 @@ Authorization: Basic :ben
 # GET http://localhost:3000/api/keyevents/sincor
 GET https://pterotype.herokuapp.com/api/keyevents/sincor
 Content-Type: application/json
-Authorization: Basic :ben
+Authorization: Basic :bill
 
 #
 # read buckets
@@ -60,9 +61,7 @@ Content-Type: application/json
 X-Pterotype-Api-Key: mysupersecretkey
 
 {
-    "users": [{"name": "ben",
-               "password": "227spain"},
-              {"name": "bill",
+    "users": [{"name": "bill",
                "password": "227spain"}]
 }
 
