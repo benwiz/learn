@@ -1,7 +1,7 @@
-(ns pterotype.ui)
+(ns pterotype.ui
+  (:require  [clojure.java.io :as io]))
 
 (defn home
   [request]
-  (prn "hey!!")
   {:status 200
-   :body   "<h2>hey</h2>"})
+   :body   (slurp (io/resource "index.html"))})
