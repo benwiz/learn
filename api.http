@@ -3,7 +3,7 @@
 #
 # write keyevents
 #
-POST http://localhost:3000/api/keyevents
+POST http://localhost:3000/api/keyevents/raw
 Content-Type: application/json
 Authorization: Basic :ben
 
@@ -17,22 +17,37 @@ Authorization: Basic :ben
                    {"key1": "x",
                     "key2": "y",
                     "delay": 2000000}],
-    "start": "2020-05-02T17:40:00Z",
-    "end": "2020-05-02T17:29:00Z"
+    "start": "2020-05-03T19:40:00Z",
+    "end": "2020-05-03T19:29:00Z"
 }
 
 #
-# read keyevents
+# read keyevents as json
 #
-GET http://localhost:3000/api/keyevents
+GET http://localhost:3000/api/keyevents/raw
 Content-Type: application/json
 Authorization: Basic :ben
 
 #
-# read keyevents
+# read keyevents as csv
+#
+GET http://localhost:3000/api/keyevents/sincor
+Content-Type: application/csv
+Authorization: Basic :ben
+
+#
+# read sincor
 #
 GET http://localhost:3000/api/keyevents/csv
 Content-Type: application/csv
+Authorization: Basic :ben
+
+
+#
+# calculate sincor
+#
+GET http://localhost:3000/api/keyevents/sincor
+Content-Type: application/json
 Authorization: Basic :ben
 
 #

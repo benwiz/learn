@@ -49,11 +49,14 @@
                                 (g/access-forbidden-handler false :type :unauthorized))]}
 
        ["/keyevents"
-        {:interceptors []
-         :post         {:interceptors [i/tx-keyevents]
-                        :handler      h/ok}
-         :get          {:interceptors [i/q-keyevents]
-                        :handler      h/ok}}
+        {:interceptors []}
+
+        ["/raw"
+         {:interceptors []
+          :post         {:interceptors [i/tx-keyevents]
+                         :handler      h/ok}
+          :get          {:interceptors [i/q-keyevents]
+                         :handler      h/ok}}]
         ["/csv"
          {:interceptors []
           :get          {:interceptors [i/q-keyevents]
@@ -145,7 +148,6 @@
                          [?e :keyevent/delay ?d]]
                 :args  [{'?n "ben"}]})
        (into []
-             ;; TODO need to aggregate delays on k1 & k2 and maybe start & end
              (map (fn [[_id key1 key2 delay start end username]]
                     {:key1    key1
                      :key2    key2
@@ -156,6 +158,5 @@
 
   )
 
-;; TODO api for csv
-;; TODO api for sincore
+;; TODO render chart
 ;; TODO deploy

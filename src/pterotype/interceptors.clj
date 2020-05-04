@@ -1,10 +1,10 @@
 (ns pterotype.interceptors
   (:require [clj-uuid :as uuid]
             [clojure.instant :as inst]
+            [clojure.walk :refer [keywordize-keys]]
             [crux.api :as crux]
-            [geheimtur.util.auth :as g-auth]
             [geheimtur.impl.http-basic :as g-http-basic]
-            [clojure.walk :refer [keywordize-keys]])
+            [geheimtur.util.auth :as g-auth])
   (:import [org.eclipse.jetty.util UrlEncoded MultiMap]))
 
 (defn parse-query-string
@@ -30,10 +30,13 @@
     {:enter (fn [ctx]
               (assoc ctx :node node))
      :leave (fn [ctx]
-              (assoc ctx :tx-result
-                     (crux/submit-tx
-                       (:node ctx)
-                       (:tx ctx))))}))
+              (prn "tx" (:tx ctx))
+              (if (:tx ctx)
+                (assoc ctx :tx-result
+                       (crux/submit-tx
+                         (:node ctx)
+                         (:tx ctx)))
+                ctx))}))
 
 (defn credentials
   [node]
