@@ -1,2 +1,32 @@
-<h1>Pterotype</h1>
-<p>test</p>
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Pterotype</title>
+  <meta name="description" content="Pterotype">
+  <meta name="author" content="Ben Wiz">
+</head>
+
+<body>
+  <script>
+    var username = prompt('Username:');
+    var password = prompt('Password:');
+    console.log(username, password);
+    fetch('/api/keyevents/sincor',
+          {method: 'GET',
+           headers: {'Authorization': 'Basic ' + btoa(username + ':' + password)}})
+    .then(response => {
+        if (response.ok) {
+            return response.json();
+        } else {
+            alert('incorrect username or password');
+        }
+    })
+    .then(json => {
+        console.log(json);
+        // TODO render graph
+    });
+  </script>
+</body>
+</html>
