@@ -58,6 +58,8 @@ X-Pterotype-Api-Key: mysupersecretkey
 
 {
     "users": [{"name": "ben",
+               "password": "227spain"},
+              {"name": "bill",
                "password": "227spain"}]
 }
 
