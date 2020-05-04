@@ -39,7 +39,8 @@ Authorization: Basic :ben
 #
 # calculate sincor
 #
-GET http://localhost:3000/api/keyevents/sincor
+# GET http://localhost:3000/api/keyevents/sincor
+GET https://pterotype.herokuapp.com/api/keyevents/sincor
 Content-Type: application/json
 Authorization: Basic :ben
 

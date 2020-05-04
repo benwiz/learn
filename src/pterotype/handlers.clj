@@ -37,7 +37,8 @@
                                         (t/date-time (t/year end)
                                                      (t/month end)
                                                      (t/day end)
-                                                     (t/hour end)))))
+                                                     (t/hour end)
+                                                     (t/minute end)))))
                           (into []
                                 (map (fn [[datetime keyevents]] ;; NOTE not considering keys, yet
                                        [(str datetime)

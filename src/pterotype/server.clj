@@ -98,7 +98,7 @@
 
 (defn start
   []
-  (let [port (or (Integer. (System/getenv "PORT")) 3000)]
+  (let [port (or (Integer. (System/getenv "PORT")) 3000)] ;; TODO handle port like this https://github.com/heroku/clojure-getting-started/blob/master/src/clojure_getting_started/web.clj#L20
     (println "starting server on port" port)
     (jetty/run-jetty #'app {:port port, :join? false, :async? true})))
 
