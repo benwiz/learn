@@ -6,9 +6,11 @@
   <title>Pterotype</title>
   <meta name="description" content="Pterotype">
   <meta name="author" content="Ben Wiz">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
 </head>
 
 <body>
+  <canvas id="myChart" width="400" height="200"></canvas>
   <script>
     var username = prompt('Username:');
     var password = prompt('Password:');
@@ -24,8 +26,32 @@
         }
     })
     .then(json => {
-        console.log(json);
-        // TODO render graph
+        var data = json.data;
+        var xs = data.map(d => d[0]);
+        var ys = data.map(d => d[1]);
+        console.log(xs[0]);
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: xs,
+                datasets: [{
+                    label: 'Sincor',
+                    data: ys,
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                fill: false,
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
     });
   </script>
 </body>

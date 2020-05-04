@@ -40,7 +40,7 @@
                                                      (t/hour end)))))
                           (into []
                                 (map (fn [[datetime keyevents]] ;; NOTE not considering keys, yet
-                                       [datetime
+                                       [(str datetime)
                                         (-> (into []
                                                   (map :delay)
                                                   keyevents)
