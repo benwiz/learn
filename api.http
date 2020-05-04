@@ -36,14 +36,6 @@ Content-Type: application/csv
 Authorization: Basic :ben
 
 #
-# read sincor
-#
-GET http://localhost:3000/api/keyevents/csv
-Content-Type: application/csv
-Authorization: Basic :ben
-
-
-#
 # calculate sincor
 #
 GET http://localhost:3000/api/keyevents/sincor
@@ -56,3 +48,8 @@ Authorization: Basic :ben
 GET http://localhost:3000/api/buckets
 Content-Type: application/json
 Authorization: Basic :ben
+
+#
+# read buckets
+#
+GET http://localhost:3000/

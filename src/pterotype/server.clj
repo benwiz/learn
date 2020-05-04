@@ -5,6 +5,7 @@
             [muuntaja.interceptor]
             [pterotype.handlers :as h]
             [pterotype.interceptors :as i]
+            [pterotype.ui :as ui]
             [reitit.http :as http]
             [reitit.interceptor.sieppari]
             [reitit.ring :as ring]
@@ -39,38 +40,42 @@
 (def app
   (http/ring-handler
     (http/router
-      ["/api"
-       {:interceptors [(i/db node)
-                       i/auth
-                       (i/guard #{:user :admin}
-                                ;; unauthenticated
-                                (g/access-forbidden-handler false)
-                                ;; unauthorized
-                                (g/access-forbidden-handler false :type :unauthorized))]}
+      [["/api"
+        {:interceptors [(i/db node)
+                        i/auth
+                        (i/guard #{:user :admin}
+                                 ;; unauthenticated
+                                 (g/access-forbidden-handler false)
+                                 ;; unauthorized
+                                 (g/access-forbidden-handler false :type :unauthorized))]}
 
-       ["/keyevents"
-        {:interceptors []}
+        ["/keyevents"
+         {:interceptors []}
 
-        ["/raw"
+         ["/raw"
+          {:interceptors []
+           :post         {:interceptors [i/tx-keyevents]
+                          :handler      h/ok}
+           :get          {:interceptors [i/q-keyevents]
+                          :handler      h/ok}}]
+         ["/csv"
+          {:interceptors []
+           :get          {:interceptors [i/q-keyevents]
+                          :handler      h/csv}}]
+
+         ["/sincor"
+          {:interceptors []
+           :get          {:interceptors [i/q-keyevents]
+                          :handler      h/sincor}}]]
+
+        ["/buckets"
          {:interceptors []
-          :post         {:interceptors [i/tx-keyevents]
-                         :handler      h/ok}
-          :get          {:interceptors [i/q-keyevents]
-                         :handler      h/ok}}]
-        ["/csv"
-         {:interceptors []
-          :get          {:interceptors [i/q-keyevents]
-                         :handler      h/csv}}]
-
-        ["/sincor"
-         {:interceptors []
-          :get          {:interceptors [i/q-keyevents]
-                         :handler      h/sincor}}]]
-
-       ["/buckets"
+          :get          {:interceptors [i/q-buckets]
+                         :handler      h/ok}}]]
+       ["/"
         {:interceptors []
-         :get          {:interceptors [i/q-buckets]
-                        :handler      h/ok}}]])
+         :get          {:interceptors []
+                        :handler      ui/home}}]])
 
     (ring/create-default-handler)
     {:executor     reitit.interceptor.sieppari/executor
