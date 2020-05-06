@@ -1,0 +1,59 @@
+html,
+body {
+  height: 100%;
+  width: 100%; }
+
+h1,
+h3 {
+  width: 90%;
+  max-width: 500px;
+  margin: 20px auto;
+  text-align: center; }
+
+#game {
+  width: 90%;
+  height: 60%;
+  max-width: 500px;
+  margin: auto;
+  margin-bottom: 50px;
+  background-color: lightgoldenrodyellow; }
+  #game .board-piece {
+    padding-left: 10px;
+    padding-right: 10px; }
+  #game p {
+    text-align: center;
+    font-size: xx-large; }
+  #game #players {
+    width: 100%;
+    display: flex; }
+    #game #players #player {
+      border-right: 1px solid black;
+      text-align: center;
+      width: 50%; }
+      #game #players #player h2 {
+        text-align: left; }
+      #game #players #player button {
+        font-size: xx-large; }
+        #game #players #player button i {
+          pointer-events: none; }
+  #game #agent {
+    width: 50%; }
+    #game #agent h2 {
+      text-align: right; }
+  #game #score {
+    border-top: 1px solid black; }
+    #game #score p {
+      text-align: left;
+      font-size: large; }
+
+#links {
+  width: 100%;
+  margin: 25px auto;
+  text-align: center; }
+  #links a {
+    color: gray; }
+  #links i {
+    margin: 4px;
+    font-size: 22px; }
+    #links i:hover {
+      color: lightgray; }
