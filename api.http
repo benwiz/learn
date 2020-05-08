@@ -33,7 +33,7 @@ Authorization: Basic :ben
 #
 # read keyevents as csv
 #
-GET http://localhost:3000/api/keyevents/sincor
+GET http://localhost:3000/api/keyevents/csv
 Content-Type: application/csv
 Authorization: Basic :ben
 
