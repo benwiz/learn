@@ -1,0 +1,71 @@
+:ben := (base64-encode-string "ben:227spain")
+:bill := (base64-encode-string "bill:227spain")
+
+#
+# write keyevents
+#
+# POST http://localhost:3000/api/keyevents/raw
+POST https://pterotype.herokuapp.com/api/keyevents/raw
+Content-Type: application/json
+Authorization: Basic :ben
+
+{
+    "keyevents": [{"key1": "a",
+                   "key2": "b",
+                   "delay": 1000000},
+                   {"key1": "x",
+                    "key2": "y",
+                    "delay": 2000000},
+                   {"key1": "x",
+                    "key2": "y",
+                    "delay": 2000000}],
+    "start": "2020-05-03T19:40:00Z",
+    "end": "2020-05-03T19:29:00Z"
+}
+
+#
+# read keyevents as json
+#
+GET http://localhost:3000/api/keyevents/raw
+Content-Type: application/json
+Authorization: Basic :ben
+
+#
+# read keyevents as csv
+#
+GET http://localhost:3000/api/keyevents/csv
+Content-Type: application/csv
+Authorization: Basic :ben
+
+#
+# calculate sincor
+#
+# GET http://localhost:3000/api/keyevents/sincor
+GET https://pterotype.herokuapp.com/api/keyevents/sincor
+Content-Type: application/json
+Authorization: Basic :bill
+
+#
+# read buckets
+#
+GET http://localhost:3000/api/buckets
+Content-Type: application/json
+Authorization: Basic :ben
+
+#
+# create users
+#
+# POST http://localhost:3000/admin-api/users
+POST https://pterotype.herokuapp.com/admin-api/users
+Content-Type: application/json
+X-Pterotype-Api-Key: mysupersecretkey
+
+{
+    "users": [{"name": "bill",
+               "password": "227spain"}]
+}
+
+#
+# gui
+#
+GET http://localhost:3000/

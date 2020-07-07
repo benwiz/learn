@@ -1,0 +1,24 @@
+{:paths   ["src" "resources"]
+ :deps    {org.clojure/clojure      {:mvn/version "1.10.1"}
+           danlentz/clj-uuid        {:mvn/version "0.1.9"}
+           buddy/buddy-auth         {:mvn/version "2.2.0"} ;; TODO I think I can remove this
+           io.pedestal/pedestal.log {:mvn/version "0.5.7"} ;; need for geheimtur
+           clj-time                 {:mvn/version "0.15.2"}
+           geheimtur                {:mvn/version "0.4.0"}
+           juxt/crux-core           {:mvn/version "20.04-1.8.2-alpha"}
+           ;; juxt/crux-kafka-embedded {:mvn/version "20.04-1.8.2-alpha"} ;; would use kafka if multiple nodes
+           com.cemerick/drawbridge  {:mvn/version "0.0.6"}
+           org.clojure/data.csv     {:mvn/version "1.0.0"}
+           juxt/crux-rocksdb        {:mvn/version "20.04-1.8.2-alpha"}
+           ring/ring-jetty-adapter  {:mvn/version "1.7.1"}
+           metosin/reitit           {:mvn/version "0.4.2"}}
+ :aliases {:test    {:extra-paths ["test"]
+                     :extra-deps  {org.clojure/test.check {:mvn/version "1.0.0"}}}
+           :runner  {:extra-deps {com.cognitect/test-runner
+                                  {:git/url "https://github.com/cognitect-labs/test-runner"
+                                   :sha     "f7ef16dc3b8332b0d77bc0274578ad5270fbfedd"}}
+                     :main-opts  ["-m" "cognitect.test-runner"
+                                  "-d" "test"]}
+           :uberjar {:extra-deps {seancorfield/depstar {:mvn/version "1.0.94"}}
+                     :main-opts  ["-m" "hf.depstar.uberjar" "pterotype.jar"
+                                  "-C" "-m" "pterotype.core"]}}}
