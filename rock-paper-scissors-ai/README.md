@@ -2,6 +2,8 @@
 
 Learn to use Tensorflow.js and Brain.js by predicting next play in rock-paper-scissors. This is a learning project so excellent results, UI, UX, and code architecture are not goals.
 
+**Update:** I never got around to using Tensorflow.js for this project.
+
 ## Development
 
 Compile js and scss
