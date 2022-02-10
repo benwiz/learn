@@ -23,7 +23,7 @@
     "extract-loader": "^3.1.0",
     "file-loader": "^3.0.1",
     "node-loader": "^0.6.0",
-    "node-sass": "^4.11.0",
+    "node-sass": "^7.0.0",
     "sass-loader": "^7.1.0",
     "ts-loader": "^5.3.2",
     "tslint": "^5.12.0",
